@@ -1,4 +1,4 @@
-TARGET = pluto
+TARGET = example
 CC = gcc
 SRCDIR = src
 SRCS := $(shell find $(SRCDIR) -name '*.c')
