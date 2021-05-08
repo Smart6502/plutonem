@@ -11,7 +11,6 @@ const uint8_t pluto_pixmap[4][2] = {
     [1] = {0x02, 0x10},
     [2] = {0x04, 0x20},
     [3] = {0x40, 0x80}};
-
 struct termios pluto_mode_term, pluto_mode_restore;
 int8_t pluto_init_mode(struct pluto_struct_t *__ret)
 {
@@ -21,9 +20,9 @@ int8_t pluto_init_mode(struct pluto_struct_t *__ret)
     __ret->width = wsize.ws_col;
     __ret->in_use = 1;
 
-    __ret->buffer = malloc(__ret->height * sizeof(uint8_t *));
+    __ret->buffer = (uint8_t **)malloc(__ret->height * sizeof(uint8_t *));
     for (int i = 0; i < __ret->height; i++)
-        __ret->buffer[i] = malloc(__ret->width * sizeof(uint8_t));
+        __ret->buffer[i] = (uint8_t *)malloc(__ret->width * sizeof(uint8_t));
     printf("Created buffer of size %d\n", __ret->height * __ret->width);
 
     tcgetattr(0, &pluto_mode_term);
@@ -42,7 +41,7 @@ void pluto_close_mode(struct pluto_struct_t *__close)
         free(__close->buffer[i]);
     free(__close->buffer);
 
-    printf("\033[%d;%dH", __close->height, __close->width);
+    printf("\e[%d;%dH", __close->height, __close->width);
     tcsetattr(0, TCSANOW, &pluto_mode_restore);
 
     __close->height = 0;
@@ -55,14 +54,14 @@ void pluto_write_pix(struct pluto_struct_t *__info, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
     __info->buffer[cy][cx] |= pluto_pixmap[posy % 4][posx % 2];
-    printf("\033[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]);
+    printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]);
 }
 
 void pluto_del_pix(struct pluto_struct_t *__info, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
     __info->buffer[cy][cx] &= ~pluto_pixmap[posy % 4][posx % 2];
-    printf("\033[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]); // TODO: fix remanants after complete deletion of block
+    printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]); // TODO: fix remanants after complete deletion of block
 }
 
 void pluto_clear(struct pluto_struct_t *__info)
@@ -72,8 +71,16 @@ void pluto_clear(struct pluto_struct_t *__info)
         for (int bw = 0; bw < __info->width; bw++)
         {
             __info->buffer[bh][bw] = 0;
-            printf("\033[%d;%dH ", bh, bw);
+            #ifndef SPACE_CLEAR
+            printf("\e[%d;%dH\u2800", bh, bw);
+            #else
+            printf("\e[%d;%dH ", bh, bw);
+            #endif
         }
     }
     fflush(stdout);
 }
+
+#ifdef __cplusplus
+#warning "Why C++ ? Stop it!"
+#endif
