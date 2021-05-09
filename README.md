@@ -4,8 +4,11 @@
 
 ### Building
 Plutonem supports a variety of options
+
 ERROR_CHECK checks for errors in functions
+
 SPACE_CLEAR clears the screen with spaces instead of the \u2800 Unicode character
+
 PLUTO_EXTRAS are extra functions
 
 All of these can be un/opted in the Makefile CFLAGS
