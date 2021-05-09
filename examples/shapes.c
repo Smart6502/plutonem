@@ -1,4 +1,4 @@
-#include "lib/pluto.h"
+#include "../src/lib/pluto.h"
 #include <stdio.h>
 
 struct pluto_struct_t test;
@@ -13,6 +13,12 @@ void draw_tri(int x0, int y0, int x1, int y1, int x2, int y2)
 int main()
 {
     pluto_init_mode(&test);
+    if (test.height < 31 || test.width < 119) 
+    {
+        printf("\nThis example will not work as the terminal size is too small (min. needed 31 rows and 119 columns)");
+        pluto_close_mode(&test);
+        return 1;
+    }
     pluto_clear(&test);
     for (int i = 32; i < 64; i++)
     {
@@ -21,7 +27,7 @@ int main()
             pluto_write_pix(&test, j, i);
         }
     }                                        // Rectangle
-    pluto_draw_line(&test, 80, 20, 150, 100);// Drawing a line between any 2 points in the terminal accurately
+    pluto_draw_line(&test, 80, 25, 150, 100);// Drawing a line between any 2 points in the terminal accurately
     draw_tri(25, 25, 100, 100, 25, 120);     // Triangle
 
     // I recommend fflush(stdout) after drawing a shape to avoid weird stuff happening

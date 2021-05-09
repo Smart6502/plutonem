@@ -1,4 +1,4 @@
-#include "pluto.h"
+#include "lib/pluto.h"
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,6 +59,9 @@ void pluto_write_pix(struct pluto_struct_t *__info, int posx, int posy)
 void pluto_del_pix(struct pluto_struct_t *__info, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
+    #ifdef ERROR_CHECK
+    if (cx > __info->width || cy > __info->height) return;
+    #endif
     __info->buffer[cy][cx] &= ~pluto_pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]); // TODO: fix remanants after complete deletion of block
 }
@@ -80,13 +83,14 @@ void pluto_clear(struct pluto_struct_t *__info)
     fflush(stdout);
 }
 
+#ifdef EXTRAS
 static int pluto_abs(int i) { return (i < 0) ? -i : i; }
 void pluto_draw_line(struct pluto_struct_t *__info, int x0, int y0, int x1, int y1)
 {
     #ifdef ERROR_CHECK
     if (x0 < 0 || y0 < 0 || __info->width * 2 < x1 || __info->height * 4 < y1) return;
     #endif
-    int dx = pluto_abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+    int dx = ((x1 - x0) < 0) ? -(x1 - x0) : (x1 - x0), sx = x0 < x1 ? 1 : -1;
     int dy = pluto_abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
     int err = (dx > dy ? dx : -dy) / 2, e2;
 
@@ -113,3 +117,4 @@ void pluto_draw_line(struct pluto_struct_t *__info, int x0, int y0, int x1, int 
     }
     fflush(stdout);
 }
+#endif

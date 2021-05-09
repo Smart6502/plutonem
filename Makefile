@@ -1,18 +1,22 @@
-TARGET = example
 CC = gcc
-SRCDIR = src
-SRCS := $(shell find $(SRCDIR) -name '*.c')
-OBJS := $(addsuffix .o,$(basename $(SRCS)))
-CFLAGS = -Wall -Wextra -Werror -D SPACE_CLEAR -D PLUTO_PIX_CHAR_OFF=0x2800
+LIBSRCDIR = src/
+EXDIR := examples/
+LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
+EXSRCS := $(shell find $(EXDIR) -name '*.c')
+LIBOBJS := $(addsuffix .o,$(basename $(LIBSRCS)))
+EXBINS := $(basename $(EXSRCS))
+CFLAGS = -Wall -Wextra -Werror 
+LIBCFLAGS = $(CFLAGS) -D SPACE_CLEAR -D EXTRAS -D PLUTO_PIX_CHAR_OFF=0x2800
 
-all: $(TARGET)
+all: $(LIBOBJS) $(EXBINS)
+
+%: %.c
+	@echo "Compiling example $<"
+	@$(CC) $(CFLAGS) $(LIBOBJS) $< -o $@
 
 %.o: %.c
 	@echo "Compiling $<"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(TARGET): $(OBJS)
-	@$(CC) $(OBJS) -o $@
+	@$(CC) $(LIBCFLAGS) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJS) $(TARGET)
+	@$(RM) $(LIBOBJS) $(EXBINS)
