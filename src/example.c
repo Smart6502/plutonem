@@ -12,11 +12,7 @@ void draw_tri(int x0, int y0, int x1, int y1, int x2, int y2)
 
 int main()
 {
-    if (pluto_init_mode(&test))
-    {
-        printf("pluto lib init failed\n");
-        return 1;
-    }
+    pluto_init_mode(&test);
     pluto_clear(&test);
     for (int i = 32; i < 64; i++)
     {
@@ -24,8 +20,11 @@ int main()
         {
             pluto_write_pix(&test, j, i);
         }
-    }                                       // Rectangle
-    draw_tri(25, 25, 100, 100, 25, 100);    // Triangle
+    }                                        // Rectangle
+    pluto_draw_line(&test, 80, 20, 150, 100);// Drawing a line between any 2 points in the terminal accurately
+    draw_tri(25, 25, 100, 100, 25, 120);     // Triangle
+
+    // I recommend fflush(stdout) after drawing a shape to avoid weird stuff happening
 
     pluto_close_mode(&test);
     return 0; 

@@ -12,7 +12,7 @@ const uint8_t pluto_pixmap[4][2] = {
     [2] = {0x04, 0x20},
     [3] = {0x40, 0x80}};
 struct termios pluto_mode_term, pluto_mode_restore;
-int8_t pluto_init_mode(struct pluto_struct_t *__ret)
+void pluto_init_mode(struct pluto_struct_t *__ret)
 {
     struct winsize wsize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
@@ -30,9 +30,8 @@ int8_t pluto_init_mode(struct pluto_struct_t *__ret)
     pluto_mode_term.c_iflag &= ~(ICANON | ECHO);
     tcsetattr(0, TCSANOW, &pluto_mode_term);
     setlocale(LC_ALL, "");
+    
     printf("%d %d\n", __ret->height, __ret->width);
-
-    return 0;
 }
 
 void pluto_close_mode(struct pluto_struct_t *__close)
@@ -84,6 +83,9 @@ void pluto_clear(struct pluto_struct_t *__info)
 static int pluto_abs(int i) { return (i < 0) ? -i : i; }
 void pluto_draw_line(struct pluto_struct_t *__info, int x0, int y0, int x1, int y1)
 {
+    #ifdef ERROR_CHECK
+    if (x0 < 0 || y0 < 0 || __info->width * 2 < x1 || __info->height * 4 < y1) return;
+    #endif
     int dx = pluto_abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
     int dy = pluto_abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
     int err = (dx > dy ? dx : -dy) / 2, e2;
@@ -109,8 +111,5 @@ void pluto_draw_line(struct pluto_struct_t *__info, int x0, int y0, int x1, int 
             y0 += sy;
         }
     }
+    fflush(stdout);
 }
-
-#ifdef __cplusplus
-#warning "C++ :("
-#endif
