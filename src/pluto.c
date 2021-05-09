@@ -52,6 +52,9 @@ void pluto_close_mode(struct pluto_struct_t *__close)
 void pluto_write_pix(struct pluto_struct_t *__info, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
+    #ifdef ERROR_CHECK
+    if (cx > __info->width || cy > __info->height) return;
+    #endif
     __info->buffer[cy][cx] |= pluto_pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + __info->buffer[cy][cx]);
 }

@@ -3,13 +3,13 @@
 <p> A library to draw pixels in the terminal </p>
 
 ### Building
-Plutonem supports a variety of options
+Plutonem supports a variety of options <br>
 
-ERROR_CHECK checks for errors in functions
+- ERROR_CHECK - checks for errors in functions <br>
 
-SPACE_CLEAR clears the screen with spaces instead of the \u2800 Unicode character
+- SPACE_CLEAR - clears the screen with spaces instead of the \u2800 Unicode character <br>
 
-PLUTO_EXTRAS are extra functions
+- PLUTO_EXTRAS - extra functions <br>
 
 All of these can be un/opted in the Makefile CFLAGS
 
