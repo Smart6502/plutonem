@@ -5,9 +5,9 @@
 ### Building
 Plutonem supports a variety of options <br>
 
-- ERROR_CHECK - checks for errors in functions <br>
+- ERROR_CHECK - checks for errors in functions (reduces performance) <br>
 
-- SPACE_CLEAR - clears the screen with spaces instead of the \u2800 Unicode character <br>
+- SPACE_CLEAR - clears the screen with spaces instead of the \u2800 Unicode character (increases performance) <br>
 
 - PLUTO_EXTRAS - extra functions <br>
 
@@ -47,7 +47,10 @@ gcc -o program program.o <path/s to library object/s>
 4. You're done! Just run your program now!
 
 <p>Example shapes in space mode</p>
-<img src="space_mode.png" align="center">
+<img src="shapes_space_mode.png" align="center">
+<br>
+<p>Accuracy of the pixel drawing (noclear mode)</p>
+<img src="shapes_noclear.png" align="center">
 
 ### Troubleshooting
 
