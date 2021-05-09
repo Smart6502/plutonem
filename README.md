@@ -50,7 +50,7 @@ gcc -o program program.o <path/s to library object/s>
 <img src="shapes_space_mode.png" align="center">
 <br>
 <p>Accuracy of the pixel drawing (noclear mode)</p>
-<img src="shapes_noclear.png" align="center">
+<img src="shapes_nospace_clear.png" align="center">
 
 ### Troubleshooting
 
