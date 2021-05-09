@@ -31,8 +31,8 @@ int main()
 
     pluto_init_mode(&demo);                 // Initializes pluto
     pluto_clear(&demo);                     // Clears the screen
-    pluto_draw_line(&demo, 5, 10, 20, 25);   // Draws a line from (5x, 10y) to (20x, 25y)
-    pluto_close_mode(&demo);                // Closes it
+    pluto_draw_line(&demo, 5, 10, 20, 25);  // Draws a line from (5x, 10y) to (20x, 25y)
+    pluto_close_mode(&demo);                // Closes pluto
 
     return 0;
 }
@@ -54,6 +54,6 @@ gcc -o program program.o <path/s to library object/s>
 
 ### Troubleshooting
 
-1. Check if proper fonts are installed. Pluto uses Unicode characters from \u2800 to \u28FF
+1. Check if proper fonts are installed. Pluto uses Unicode characters from `\u2800` to `\u28FF`
 2. Check if your terminal supports Unicode
 3. Idk
