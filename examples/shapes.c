@@ -1,4 +1,4 @@
-#include "../src/lib/pluto.h"
+#include "../src/inc/pluto.h"
 #include <stdio.h>
 
 struct pluto_struct_t test;
@@ -26,9 +26,9 @@ int main()
         {
             pluto_write_pix(&test, j, i);
         }
-    }                                        // Rectangle
-    pluto_draw_line(&test, 80, 25, 150, 100);// Drawing a line between any 2 points in the terminal accurately
-    draw_tri(25, 25, 100, 100, 25, 120);     // Triangle
+    }                                         // Rectangle
+    pluto_draw_line(&test, 80, 25, 150, 100); // Drawing a line between any 2 points in the terminal accurately
+    draw_tri(25, 25, 100, 100, 25, 120);      // Triangle
 
     // I recommend fflush(stdout) after drawing a shape to avoid weird stuff happening
 

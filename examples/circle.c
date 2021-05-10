@@ -1,4 +1,4 @@
-#include "../src/lib/pluto.h"
+#include "../src/inc/pluto.h"
 
 struct pluto_struct_t test;
 
@@ -29,9 +29,8 @@ void display_circle(int xc, int yc, int rad)
             d = d + 4 * (x - y) + 10;
         }
         else
-        {
             d = d + 4 * x + 6;
-        }
+        
         draw_circle(xc, yc, x, y);
     }
 }
@@ -42,7 +41,8 @@ int main()
     pluto_init_mode(&test);
     pluto_clear(&test);
 
-    display_circle(40, 40, 30);
+    display_circle(60, 60, 45);
+    display_circle(90, 75, 20);
 
     pluto_close_mode(&test);
 }

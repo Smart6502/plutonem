@@ -1,4 +1,4 @@
-#include "lib/pluto.h"
+#include "inc/pluto.h"
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,10 +7,10 @@
 #include <unistd.h>
 
 const uint8_t pluto_pixmap[4][2] = {
-    [0] = {0x01, 0x08},
-    [1] = {0x02, 0x10},
-    [2] = {0x04, 0x20},
-    [3] = {0x40, 0x80}};
+    {0x01, 0x08},
+    {0x02, 0x10},
+    {0x04, 0x20},
+    {0x40, 0x80}};
 struct termios pluto_mode_term, pluto_mode_restore;
 void pluto_init_mode(struct pluto_struct_t *__ret)
 {
@@ -40,7 +40,7 @@ void pluto_close_mode(struct pluto_struct_t *__close)
         free(__close->buffer[i]);
     free(__close->buffer);
 
-    printf("\e[%d;%dH", __close->height, __close->width);
+    printf("\e[%d;%dH\n", __close->height, __close->width);
     tcsetattr(0, TCSANOW, &pluto_mode_restore);
 
     __close->height = 0;
@@ -71,53 +71,11 @@ void pluto_del_pix(struct pluto_struct_t *__info, int posx, int posy)
 
 void pluto_clear(struct pluto_struct_t *__info)
 {
-    for (int bh = 0; bh < __info->height; bh++)
+    for (int i = 0; i < __info->height; i++)
     {
-        for (int bw = 0; bw < __info->width; bw++)
-        {
-            __info->buffer[bh][bw] = 0;
-            #ifndef SPACE_CLEAR
-            printf("\e[%d;%dH\u2800", bh, bw);
-            #else
-            printf("\e[%d;%dH ", bh, bw);
-            #endif
-        }
-    }
-    fflush(stdout);
+        for (int j = 0; j < __info->width; j++)
+            __info->buffer[i][j] = 0;
+    }    
+	printf("\e[H\e[2J\e[3J");
+	fflush(stdout);
 }
-
-#ifdef EXTRAS
-static int pluto_abs(int i) { return (i < 0) ? -i : i; }
-void pluto_draw_line(struct pluto_struct_t *__info, int x0, int y0, int x1, int y1)
-{
-    #ifdef ERROR_CHECK
-    if (x0 < 0 || y0 < 0 || __info->width * 2 < x1 || __info->height * 4 < y1) return;
-    #endif
-    int dx = ((x1 - x0) < 0) ? -(x1 - x0) : (x1 - x0), sx = x0 < x1 ? 1 : -1;
-    int dy = pluto_abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-    int err = (dx > dy ? dx : -dy) / 2, e2;
-
-    for (;;)
-    {
-        pluto_write_pix(__info, x0, y0);
-
-        if (x0 == x1 && y0 == y1)
-            break;
-
-        e2 = err;
-
-        if (e2 > -dx)
-        {
-            err -= dy;
-            x0 += sx;
-        }
-
-        if (e2 < dy)
-        {
-            err += dx;
-            y0 += sy;
-        }
-    }
-    fflush(stdout);
-}
-#endif
