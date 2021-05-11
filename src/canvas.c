@@ -2,6 +2,7 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -25,6 +26,10 @@ pluto_canvas_t *pluto_init_canvas()
     for (int i = 0; i < canvas->cheight; i++)
         canvas->buffer[i] = (uchar *)malloc(canvas->cwidth * sizeof(uchar));
 
+    for (int i = 0; i < canvas->cheight; i++)
+    	for (int j = 0; j < canvas->cwidth; j++)
+	    canvas->buffer[i][j] = 0;
+
     setlocale(LC_CTYPE, "en_US.UTF-8");
     return canvas;
 }
@@ -37,6 +42,16 @@ void pluto_free_canvas(pluto_canvas_t *canvas)
 
     printf("\e[%d;%dH\n", canvas->cheight, canvas->cwidth);
     free(canvas);
+}
+
+void pluto_set_pix(pluto_canvas_t *canvas, int posx, int posy)
+{
+    canvas->buffer[posy / 4][posx / 2] |= pluto_pixmap[posy % 4][posx % 2];
+}
+
+void pluto_unset_pix(pluto_canvas_t *canvas, int posx, int posy)
+{
+    canvas->buffer[posy / 4][posx / 2] &= ~pluto_pixmap[posy % 4][posx % 2];
 }
 
 void pluto_write_pix(pluto_canvas_t *canvas, int posx, int posy)
@@ -53,13 +68,19 @@ void pluto_del_pix(pluto_canvas_t *canvas, int posx, int posy)
     printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx]); // TODO: fix remanants after complete deletion of block
 }
 
+void pluto_draw_canvas(pluto_canvas_t *canvas)
+{
+    for (int i = 0; i < canvas->cheight; i++)
+        for (int j = 0; j < canvas->cwidth; j++)
+            printf("\e[%d;%dH%lc", i, j, (canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : ' ');
+}
+
 void pluto_clear(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
-    {
-        for (int j = 0; j < canvas->cwidth; j++)
-            canvas->buffer[i][j] = 0;
-    }
-	printf("\e[H\e[2J\e[3J");
-	fflush(stdout);
+	for (int j = 0; j < canvas->cwidth; j++)
+	    canvas->buffer[i][j] = 0;
+
+    printf("\e[H\e[2J\e[3J");
+    fflush(stdout);
 }
