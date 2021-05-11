@@ -12,7 +12,6 @@ To compile some examples, run:
 make test
 ```
 
-
 ### Using the library
 
 1. Include the pluto header in your source file
@@ -27,12 +26,10 @@ make test
 
 int main()
 {
-    struct pluto_struct_t demo;
-
-    pluto_init_mode(&demo);                 // Initializes pluto
-    pluto_clear(&demo);                     // Clears the screen
-    pluto_draw_line(&demo, 5, 10, 20, 25);  // Draws a line from (5x, 10y) to (20x, 25y)
-    pluto_close_mode(&demo);                // Closes pluto
+    pluto_canvas_t *canvas = pluto_init_canvas();               // Initializes pluto canvas
+    pluto_clear(canvas);                                        // Clears the canvas
+    pluto_draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
+    pluto_free_canvas(canvas);                                  // Frees canvas
 
     return 0;
 }
