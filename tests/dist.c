@@ -1,13 +1,19 @@
 #include "../src/inc/pluto.h"
 #include <stdio.h>
 
+#define END_RIGHT_BASE 150
+#define ST_RIGHT_BASE 45
+#define DIV 25
+#define XS 10
+#define XE 80
+
 int main()
 {
     pluto_canvas_t *canvas = pluto_init_canvas();
     pluto_clear(canvas);
     
-    for (int i = 150; i > 45; i -= i / 25)
-    	pluto_draw_line(canvas, (pt_t){10, i / 2}, (pt_t){80, i});
+    for (int i = END_RIGHT_BASE; i > ST_RIGHT_BASE; i -= i / DIV)
+    	pluto_draw_line(canvas, (pt_t){XS, i / 2}, (pt_t){XE, i});
     
     int h = canvas->height, w = canvas->width, ch = canvas->cheight, cw = canvas->cwidth;
     pluto_free_canvas(canvas);

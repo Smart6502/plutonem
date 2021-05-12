@@ -35,8 +35,11 @@ extern void pluto_del_pix(pluto_canvas_t *canvas, int posx, int posy);
 
 extern void pluto_draw_frame(pluto_canvas_t *canvas);
 extern void pluto_clear(pluto_canvas_t *canvas);
-
 extern void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1);
+
+extern void pluto_rast_bftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
+extern void pluto_rast_tftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
+extern void pluto_rast_tri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
 
 extern polygon_t *pluto_new_polygon(int sides, double radius, double ort);
 extern void pluto_calc_polygon_verts(polygon_t *polygon);

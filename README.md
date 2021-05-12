@@ -1,4 +1,4 @@
-# plutonem
+<img src="screenshots/pluto.png" align="center">
 
 <p> A library to draw pixels in the terminal </p>
 
@@ -43,10 +43,10 @@ gcc -o program program.c -L<path to where libpluto.a is located> -lpluto
 4. You're done! Just run your program now!
 
 <p>Example shapes</p>
-<img src="hexagon.png" align="center">
+<img src="screenshots/hexagon.png" align="center">
 <br>
 <p>Intersecting circles drawn using plutonem</p>
-<img src="intersecting_circles.png" align="center">
+<img src="screenshots/intersecting_circles.png" align="center">
 
 ### Troubleshooting
 
