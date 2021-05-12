@@ -1,8 +1,8 @@
 #include "../src/inc/pluto.h"
 #include <stdio.h>
 
-#define END_RIGHT_BASE 150
 #define ST_RIGHT_BASE 45
+#define END_RIGHT_BASE (ST_RIGHT_BASE * 3)
 #define DIV 25
 #define XS 10
 #define XE 80

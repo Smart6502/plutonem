@@ -7,6 +7,10 @@ To generate `libpluto.a`, run:
 ```
 make
 ```
+To enable anti-aliasing, add this option to LIBCFLAGS in the Makefile:
+```
+-D ENABLE_LINE_ANTIALIAS
+```
 To compile some examples, run:
 ```
 make test

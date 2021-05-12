@@ -2,6 +2,65 @@
 #include <math.h>
 #include <stdlib.h>
 
+#ifdef ENABLE_LINE_ANTIALIAS
+float pluto_abs(float i) { return (i < 0) ? -i : i; }
+
+void pluto_swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+int pluto_round(float i) { return ((int)i) + 0.5; }
+float pluto_fpon(float i) { return (i > 0) ? i - (int)i : i - ((int)i + 1); }
+
+void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
+{
+    int steep = pluto_abs(p1.y - p0.y) > pluto_abs(p1.x - p0.x);
+
+    if (steep)
+    {
+	pluto_swap(&p0.x, &p0.y);
+	pluto_swap(&p1.x, &p1.y);
+    }
+    if (p0.x > p1.x)
+    {
+	pluto_swap(&p0.x, &p1.x);
+	pluto_swap(&p0.y, &p1.y);
+    }
+
+    float dx = p1.x - p0.x, dy = p1.y - p0.y;
+    float gradient = dy/dx;
+    if (dx == 0.0)
+	gradient = 1;
+
+    int xpxl0 = p0.x;
+    int xpxl1 = p1.x;
+    float intersect_y = p0.y;
+
+    if (steep)
+    {
+	int x;
+	for (x = xpxl0; x <= xpxl1; x++)
+	{
+	    pluto_write_pix(canvas, (int)intersect_y, x);
+	    pluto_write_pix(canvas, (int)intersect_y - 1, x);
+	    intersect_y += gradient;
+	}
+    }
+    else
+    {
+	int x;
+	for (x = xpxl0; x <= xpxl1; x++)
+	{
+	    pluto_write_pix(canvas, x, (int)intersect_y);
+	    pluto_write_pix(canvas, x, (int)intersect_y - 1);
+	    intersect_y += gradient;
+	}
+    }
+}
+
+#else
 static int pluto_abs(int i) { return (i < 0) ? -i : i; }
 void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 {
@@ -31,6 +90,7 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
         }
     }
 }
+#endif
 
 void pluto_rast_bftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
 {
