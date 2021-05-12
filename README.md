@@ -42,11 +42,12 @@ gcc -o program program.c -L<path to where libpluto.a is located> -lpluto
 
 4. You're done! Just run your program now!
 
-<p>Example shapes</p>
+<p>Polygons</p>
 <img src="screenshots/hexagon.png" align="center">
 <br>
 <p>Intersecting circles drawn using plutonem</p>
 <img src="screenshots/intersecting_circles.png" align="center">
+<img src="screenshots/raster.png" align="center">
 
 ### Troubleshooting
 
