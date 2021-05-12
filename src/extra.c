@@ -20,19 +20,19 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 
     if (steep)
     {
-	pluto_swap(&p0.x, &p0.y);
-	pluto_swap(&p1.x, &p1.y);
+        pluto_swap(&p0.x, &p0.y);
+        pluto_swap(&p1.x, &p1.y);
     }
     if (p0.x > p1.x)
     {
-	pluto_swap(&p0.x, &p1.x);
-	pluto_swap(&p0.y, &p1.y);
+        pluto_swap(&p0.x, &p1.x);
+        pluto_swap(&p0.y, &p1.y);
     }
 
     float dx = p1.x - p0.x, dy = p1.y - p0.y;
-    float gradient = dy/dx;
+    float gradient = dy / dx;
     if (dx == 0.0)
-	gradient = 1;
+        gradient = 1;
 
     int xpxl0 = p0.x;
     int xpxl1 = p1.x;
@@ -40,23 +40,23 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 
     if (steep)
     {
-	int x;
-	for (x = xpxl0; x <= xpxl1; x++)
-	{
-	    pluto_write_pix(canvas, (int)intersect_y, x);
-	    pluto_write_pix(canvas, (int)intersect_y - 1, x);
-	    intersect_y += gradient;
-	}
+        int x;
+        for (x = xpxl0; x <= xpxl1; x++)
+        {
+            pluto_write_pix(canvas, (int)intersect_y, x);
+            pluto_write_pix(canvas, (int)intersect_y - 1, x);
+            intersect_y += gradient;
+        }
     }
     else
     {
-	int x;
-	for (x = xpxl0; x <= xpxl1; x++)
-	{
-	    pluto_write_pix(canvas, x, (int)intersect_y);
-	    pluto_write_pix(canvas, x, (int)intersect_y - 1);
-	    intersect_y += gradient;
-	}
+        int x;
+        for (x = xpxl0; x <= xpxl1; x++)
+        {
+            pluto_write_pix(canvas, x, (int)intersect_y);
+            pluto_write_pix(canvas, x, (int)intersect_y - 1);
+            intersect_y += gradient;
+        }
     }
 }
 
