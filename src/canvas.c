@@ -27,8 +27,8 @@ pluto_canvas_t *pluto_init_canvas()
         canvas->buffer[i] = (uchar *)malloc(canvas->cwidth * sizeof(uchar));
 
     for (int i = 0; i < canvas->cheight; i++)
-    	for (int j = 0; j < canvas->cwidth; j++)
-	    canvas->buffer[i][j] = 0;
+        for (int j = 0; j < canvas->cwidth; j++)
+            canvas->buffer[i][j] = 0;
 
     setlocale(LC_ALL, "");
     return canvas;
@@ -82,5 +82,4 @@ void pluto_clear(pluto_canvas_t *canvas)
             canvas->buffer[i][j] = 0;
 
     printf("\e[H\e[2J\e[3J");
-    fflush(stdout);
 }

@@ -22,7 +22,7 @@ typedef struct
 } polygon_t;
 
 #ifndef PLUTO_PIX_CHAR_OFF
-#define PLUTO_PIX_CHAR_OFF
+#    define PLUTO_PIX_CHAR_OFF
 #endif
 extern pluto_canvas_t *pluto_init_canvas();
 extern void pluto_free_canvas(pluto_canvas_t *canvas);

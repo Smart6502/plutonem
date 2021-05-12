@@ -41,7 +41,7 @@ polygon_t *pluto_new_polygon(int sides, double radius, double ort)
     polygon->points = malloc(sizeof(pt_t) * sides);
 
     pluto_calc_polygon_verts(polygon);
-    
+
     return polygon;
 }
 
@@ -60,11 +60,11 @@ void pluto_draw_polygon(pluto_canvas_t *canvas, polygon_t *polygon, pt_t centre)
 {
     for (int i = 0; i < polygon->sides - 1; i++)
     {
-        pluto_draw_line(canvas, (pt_t){polygon->points[i].x     + centre.x, polygon->points[i].y     + centre.y},
-                                (pt_t){polygon->points[i + 1].x + centre.x, polygon->points[i + 1].y + centre.y});
+        pluto_draw_line(canvas, (pt_t){polygon->points[i].x + centre.x, polygon->points[i].y + centre.y},
+                        (pt_t){polygon->points[i + 1].x + centre.x, polygon->points[i + 1].y + centre.y});
     }
-    pluto_draw_line(canvas, (pt_t){polygon->points[0].x                  + centre.x, polygon->points[0].y                  + centre.y},
-                            (pt_t){polygon->points[polygon->sides - 1].x + centre.x, polygon->points[polygon->sides - 1].y + centre.y});
+    pluto_draw_line(canvas, (pt_t){polygon->points[0].x + centre.x, polygon->points[0].y + centre.y},
+                    (pt_t){polygon->points[polygon->sides - 1].x + centre.x, polygon->points[polygon->sides - 1].y + centre.y});
 }
 
 void pluto_free_polygon(polygon_t *polygon)
