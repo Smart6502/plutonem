@@ -2,19 +2,16 @@
 #include <math.h>
 #include <stdlib.h>
 
-#ifdef ENABLE_LINE_ANTIALIAS
-float pluto_abs(float i) { return (i < 0) ? -i : i; }
-
 void pluto_swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
+float pluto_abs(float i) { return (i < 0) ? -i : i; }
 int pluto_round(float i) { return ((int)i) + 0.5; }
 float pluto_fpon(float i) { return (i > 0) ? i - (int)i : i - ((int)i + 1); }
-
-void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
+void pluto_draw_aa_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 {
     int steep = pluto_abs(p1.y - p0.y) > pluto_abs(p1.x - p0.x);
 
@@ -60,12 +57,15 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
     }
 }
 
-#else
-static int pluto_abs(int i) { return (i < 0) ? -i : i; }
 void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 {
-    int dx = pluto_abs(p1.x - p0.x), sx = p0.x < p1.x ? 1 : -1;
-    int dy = pluto_abs(p1.y - p0.y), sy = p0.y < p1.y ? 1 : -1;
+    if (canvas->anti_alias)
+    {
+        pluto_draw_aa_line(canvas, p0, p1);
+        return;
+    }
+    int dx = (int)pluto_abs(p1.x - p0.x), sx = p0.x < p1.x ? 1 : -1;
+    int dy = (int)pluto_abs(p1.y - p0.y), sy = p0.y < p1.y ? 1 : -1;
     int err = (dx > dy ? dx : -dy) / 2, e2;
 
     for (;;)
@@ -90,7 +90,6 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
         }
     }
 }
-#endif
 
 void pluto_rast_bftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
 {

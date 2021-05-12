@@ -6,6 +6,7 @@ typedef struct
     int height, width;
     int cheight, cwidth;
     unsigned char **buffer;
+    signed char anti_alias;
 } pluto_canvas_t;
 
 typedef struct
@@ -24,7 +25,7 @@ typedef struct
 #ifndef PLUTO_PIX_CHAR_OFF
 #define PLUTO_PIX_CHAR_OFF
 #endif
-extern pluto_canvas_t *pluto_init_canvas();
+extern pluto_canvas_t *pluto_init_canvas(signed char anti_alias);
 extern void pluto_free_canvas(pluto_canvas_t *canvas);
 
 extern void pluto_set_pix(pluto_canvas_t *canvas, int posx, int posy);

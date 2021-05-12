@@ -12,7 +12,7 @@ const uchar pluto_pixmap[4][2] = {
     {0x04, 0x20},
     {0x40, 0x80}};
 
-pluto_canvas_t *pluto_init_canvas()
+pluto_canvas_t *pluto_init_canvas(signed char anti_alias)
 {
     pluto_canvas_t *canvas = malloc(sizeof(pluto_canvas_t));
     struct winsize wsize;
@@ -29,6 +29,11 @@ pluto_canvas_t *pluto_init_canvas()
     for (int i = 0; i < canvas->cheight; i++)
         for (int j = 0; j < canvas->cwidth; j++)
             canvas->buffer[i][j] = 0;
+
+    if (!anti_alias)
+        canvas->anti_alias = 0;
+    else
+        canvas->anti_alias = 1;
 
     setlocale(LC_ALL, "");
     return canvas;

@@ -9,7 +9,7 @@
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto_init_canvas();
+    pluto_canvas_t *canvas = pluto_init_canvas(0);
     pluto_clear(canvas);
 
     for (int i = END_RIGHT_BASE; i > ST_RIGHT_BASE; i -= i / DIV)

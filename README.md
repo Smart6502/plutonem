@@ -7,10 +7,6 @@ To generate `libpluto.a`, run:
 ```
 make
 ```
-To enable anti-aliasing, add this option to LIBCFLAGS in the Makefile:
-```
--D ENABLE_LINE_ANTIALIAS
-```
 To compile some examples, run:
 ```
 make test
@@ -30,7 +26,7 @@ make test
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto_init_canvas();               // Initializes pluto canvas
+    pluto_canvas_t *canvas = pluto_init_canvas(1);              // Initializes pluto canvas. If the first arg is not 0, canvas uses antialiasing
     pluto_clear(canvas);                                        // Clears the canvas
     pluto_draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
     pluto_free_canvas(canvas);                                  // Frees canvas

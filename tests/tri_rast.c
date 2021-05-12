@@ -2,7 +2,7 @@
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto_init_canvas();
+    pluto_canvas_t *canvas = pluto_init_canvas(0);
     pluto_clear(canvas);
 
     pluto_rast_tri(canvas, (pt_t){20, 10}, (pt_t){30, 55}, (pt_t){70, 40});
