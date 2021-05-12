@@ -1,6 +1,6 @@
 CC = gcc
 LIBSRCDIR = src/
-EXDIR := examples/
+EXDIR := tests/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c')
 LIBOBJS := $(addsuffix .o,$(basename $(LIBSRCS)))
