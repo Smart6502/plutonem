@@ -38,8 +38,8 @@ void pluto_draw_aa_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
         int x;
         for (x = xpxl0; x <= xpxl1; x++)
         {
-            pluto_write_pix(canvas, (int)intersect_y, x);
-            pluto_write_pix(canvas, (int)intersect_y - 1, x);
+            PLUTO_WRITE_PIX(canvas, (int)intersect_y, x);
+            PLUTO_WRITE_PIX(canvas, (int)intersect_y - 1, x);
             intersect_y += gradient;
         }
     }
@@ -48,8 +48,8 @@ void pluto_draw_aa_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
         int x;
         for (x = xpxl0; x <= xpxl1; x++)
         {
-            pluto_write_pix(canvas, x, (int)intersect_y);
-            pluto_write_pix(canvas, x, (int)intersect_y - 1);
+            PLUTO_WRITE_PIX(canvas, x, (int)intersect_y);
+            PLUTO_WRITE_PIX(canvas, x, (int)intersect_y - 1);
             intersect_y += gradient;
         }
     }
@@ -68,7 +68,7 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 
     for (;;)
     {
-        pluto_write_pix(canvas, p0.x, p0.y);
+        PLUTO_WRITE_PIX(canvas, p0.x, p0.y);
 
         if (p0.x == p1.x && p0.y == p1.y)
             break;
@@ -121,7 +121,6 @@ void pluto_rast_tftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
 
 void pluto_rast_tri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
 {
-    // TODO: sort verts
 
     if (p1.y == p2.y)
         pluto_rast_bftri(canvas, p0, p1, p2);
@@ -143,8 +142,8 @@ void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
     int asq = a * a, bsq = b * b;
     int xa, ya;
 
-    pluto_write_pix(canvas, p0.x, p0.y + b);
-    pluto_write_pix(canvas, p0.x, p0.y - b);
+    PLUTO_WRITE_PIX(canvas, p0.x, p0.y + b);
+    PLUTO_WRITE_PIX(canvas, p0.x, p0.y - b);
 
     wx = 0;
     wy = b;
@@ -156,7 +155,8 @@ void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
     {
         t += xa + bsq;
 
-        if (t >= 0) {
+        if (t >= 0)
+        {
             ya -= asq * 2;
             t -= ya;
             wy--;
@@ -166,17 +166,16 @@ void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
         wx++;
 
         if (xa >= ya)
-          break;
+            break;
 
-
-        pluto_write_pix(canvas, p0.x + wx, p0.y - wy);
-        pluto_write_pix(canvas, p0.x - wx, p0.y - wy);
-        pluto_write_pix(canvas, p0.x + wx, p0.y + wy);
-        pluto_write_pix(canvas, p0.x - wx, p0.y + wy);
+        PLUTO_WRITE_PIX(canvas, p0.x + wx, p0.y - wy);
+        PLUTO_WRITE_PIX(canvas, p0.x - wx, p0.y - wy);
+        PLUTO_WRITE_PIX(canvas, p0.x + wx, p0.y + wy);
+        PLUTO_WRITE_PIX(canvas, p0.x - wx, p0.y + wy);
     }
 
-    pluto_write_pix(canvas, p0.x + a, p0.y);
-    pluto_write_pix(canvas, p0.x - a, p0.y);
+    PLUTO_WRITE_PIX(canvas, p0.x + a, p0.y);
+    PLUTO_WRITE_PIX(canvas, p0.x - a, p0.y);
 
     wx = a;
     wy = 0;
@@ -185,10 +184,12 @@ void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
     ya = 0;
     t = bsq / 4 - bsq * a;
 
-    for (;;) {
+    for (;;)
+    {
         t += ya + asq;
 
-        if (t >= 0) {
+        if (t >= 0)
+        {
             xa -= bsq * 2;
             t = t - xa;
             wx--;
@@ -198,11 +199,11 @@ void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
         wy++;
 
         if (ya > xa)
-          break;
+            break;
 
-        pluto_write_pix(canvas, p0.x + wx, p0.y - wy);
-        pluto_write_pix(canvas, p0.x - wx, p0.y - wy);
-        pluto_write_pix(canvas, p0.x + wx, p0.y + wy);
-        pluto_write_pix(canvas, p0.x - wx, p0.y + wy);
+        PLUTO_WRITE_PIX(canvas, p0.x + wx, p0.y - wy);
+        PLUTO_WRITE_PIX(canvas, p0.x - wx, p0.y - wy);
+        PLUTO_WRITE_PIX(canvas, p0.x + wx, p0.y + wy);
+        PLUTO_WRITE_PIX(canvas, p0.x - wx, p0.y + wy);
     }
 }

@@ -26,5 +26,10 @@ test: $(EXBINS)
 	@echo "Generating $(LIBA)"
 	@ar rcs $@ $(LIBOBJS)
 
-clean:
-	@$(RM) $(LIBOBJS) $(LIBA) $(EXBINS)
+eclean:
+	@$(RM) $(EXBINS)
+
+lclean:
+	@$(RM) $(LIBOBJS) $(LIBA)
+
+clean: eclean lclean

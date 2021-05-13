@@ -23,8 +23,9 @@ typedef struct
 } polygon_t;
 
 #ifndef PLUTO_PIX_CHAR_OFF
-#define PLUTO_PIX_CHAR_OFF
+#    define PLUTO_PIX_CHAR_OFF
 #endif
+#define PLUTO_WRITE_PIX pluto_write_pix
 extern pluto_canvas_t *pluto_init_canvas(signed char anti_alias);
 extern void pluto_free_canvas(pluto_canvas_t *canvas);
 
