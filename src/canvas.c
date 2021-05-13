@@ -80,6 +80,13 @@ void pluto_draw_frame(pluto_canvas_t *canvas)
             printf("\e[%d;%dH%lc", i, j, (canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : ' ');
 }
 
+void pluto_draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
+{
+    for (int i = start_y; i < height; i++)
+        for (int j = start_x; j < width; j++)
+            printf("\e[%d;%dH%lc", i, j, (canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : ' ');
+}
+
 void pluto_clear(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
