@@ -3,7 +3,7 @@
 
 #define ST_RIGHT_BASE 45
 #define END_RIGHT_BASE (ST_RIGHT_BASE * 3)
-#define DIV 25
+#define DIV (ST_RIGHT_BASE - 20)
 #define XS 10
 #define XE 80
 

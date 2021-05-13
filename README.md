@@ -51,7 +51,7 @@ $ gcc -o program program.c -L<path to where libpluto.a is located> -lpluto
 
 ### Troubleshooting
 
-1. Check if proper fonts are installed. Pluto uses Unicode characters from `\u2800` to `\u28FF`
+1. Check if proper fonts are installed. Pluto uses Unicode characters from `\u2800` to `\u28FF`. I recommend the `Cascadia` font for best quality.
 2. Check if your terminal supports Unicode
 3. Check your locale, lang. I have my locale set to `en_US.UTF-8`. On Arch Linux, which I use, I would use this command to set it:
 ```

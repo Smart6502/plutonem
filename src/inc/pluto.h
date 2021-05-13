@@ -46,5 +46,7 @@ extern polygon_t *pluto_new_polygon(int sides, double radius, double ort);
 extern void pluto_calc_polygon_verts(polygon_t *polygon);
 extern void pluto_draw_polygon(pluto_canvas_t *canvas, polygon_t *polygon, pt_t centre);
 extern void pluto_free_polygon(polygon_t *polygon);
+
+extern void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b);
 typedef unsigned char uchar;
 #endif

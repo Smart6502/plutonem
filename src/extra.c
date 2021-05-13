@@ -9,8 +9,6 @@ void pluto_swap(int *a, int *b)
     *b = temp;
 }
 float pluto_abs(float i) { return (i < 0) ? -i : i; }
-int pluto_round(float i) { return ((int)i) + 0.5; }
-float pluto_fpon(float i) { return (i > 0) ? i - (int)i : i - ((int)i + 1); }
 void pluto_draw_aa_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 {
     int steep = pluto_abs(p1.y - p0.y) > pluto_abs(p1.x - p0.x);
@@ -178,4 +176,74 @@ void pluto_free_polygon(polygon_t *polygon)
 {
     free(polygon->points);
     free(polygon);
+}
+
+void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
+{
+    int wx, wy, t;
+    int asq = a * a, bsq = b * b;
+    int xa, ya;
+
+    pluto_write_pix(canvas, p0.x, p0.y + b);
+    pluto_write_pix(canvas, p0.x, p0.y - b);
+
+    wx = 0;
+    wy = b;
+    xa = 0;
+    ya = asq * 2 * b;
+    t = asq / 4 - asq * b;
+
+    for (;;)
+    {
+        t += xa + bsq;
+
+        if (t >= 0) {
+            ya -= asq * 2;
+            t -= ya;
+            wy--;
+        }
+
+        xa += bsq * 2;
+        wx++;
+
+        if (xa >= ya)
+          break;
+
+
+        pluto_write_pix(canvas, p0.x + wx, p0.y - wy);
+        pluto_write_pix(canvas, p0.x - wx, p0.y - wy);
+        pluto_write_pix(canvas, p0.x + wx, p0.y + wy);
+        pluto_write_pix(canvas, p0.x - wx, p0.y + wy);
+    }
+
+    pluto_write_pix(canvas, p0.x + a, p0.y);
+    pluto_write_pix(canvas, p0.x - a, p0.y);
+
+    wx = a;
+    wy = 0;
+    xa = bsq * 2 * a;
+
+    ya = 0;
+    t = bsq / 4 - bsq * a;
+
+    for (;;) {
+        t += ya + asq;
+
+        if (t >= 0) {
+            xa -= bsq * 2;
+            t = t - xa;
+            wx--;
+        }
+
+        ya += asq * 2;
+        wy++;
+
+        if (ya > xa)
+          break;
+
+        pluto_write_pix(canvas, p0.x + wx, p0.y - wy);
+        pluto_write_pix(canvas, p0.x - wx, p0.y - wy);
+        pluto_write_pix(canvas, p0.x + wx, p0.y + wy);
+        pluto_write_pix(canvas, p0.x - wx, p0.y + wy);
+    }
 }
