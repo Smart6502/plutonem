@@ -136,6 +136,42 @@ void pluto_rast_tri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
     }
 }
 
+void pluto_plot_circle(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
+{
+    PLUTO_WRITE_PIX(canvas, p0.x + p1.x, p0.y + p1.y);
+    PLUTO_WRITE_PIX(canvas, p0.x - p1.x, p0.y + p1.y);
+    PLUTO_WRITE_PIX(canvas, p0.x + p1.x, p0.y - p1.y);
+    PLUTO_WRITE_PIX(canvas, p0.x - p1.x, p0.y - p1.y);
+    PLUTO_WRITE_PIX(canvas, p0.x + p1.y, p0.y + p1.x);
+    PLUTO_WRITE_PIX(canvas, p0.x - p1.y, p0.y + p1.x);
+    PLUTO_WRITE_PIX(canvas, p0.x + p1.y, p0.y - p1.x);
+    PLUTO_WRITE_PIX(canvas, p0.x - p1.y, p0.y - p1.x);
+}
+
+void pluto_draw_circle(pluto_canvas_t *canvas, pt_t p0, int radius)
+{
+    int x = 0;
+    int y = radius;
+    int d = 3 - 2 * radius;
+
+    pluto_plot_circle(canvas, p0, (pt_t){x, y});
+
+    while (y >= x)
+    {
+        x++;
+
+        if (d > 0)
+        {
+            y--;
+            d = d + 4 * (x - y) + 10;
+        }
+        else
+            d = d + 4 * x + 6;
+
+        pluto_plot_circle(canvas, p0, (pt_t){x, y});
+    }
+}
+
 void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b)
 {
     int wx, wy, t;

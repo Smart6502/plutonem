@@ -39,12 +39,13 @@ extern void pluto_del_pix(pluto_canvas_t *canvas, int posx, int posy);
 extern void pluto_draw_frame(pluto_canvas_t *canvas);
 extern void pluto_draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width);
 extern void pluto_clear(pluto_canvas_t *canvas);
-extern void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1);
 
 extern void pluto_rast_bftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
 extern void pluto_rast_tftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
 extern void pluto_rast_tri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2);
 
+extern void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1);
 extern void pluto_draw_ellipse(pluto_canvas_t *canvas, pt_t p0, int a, int b);
+extern void pluto_draw_circle(pluto_canvas_t *canvas, pt_t p0, int radius);
 typedef unsigned char uchar;
 #endif
