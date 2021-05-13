@@ -70,7 +70,7 @@ void pluto_del_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
     canvas->buffer[cy][cx] &= ~pluto_pixmap[posy % 4][posx % 2];
-    printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx]); // TODO: fix remanants after complete deletion of block
+    printf("\e[%d;%dH%lc", cy, cx, (canvas->buffer[cy][cx]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx] : ' '); // TODO: fix remanants after complete deletion of block
 }
 
 void pluto_draw_frame(pluto_canvas_t *canvas)

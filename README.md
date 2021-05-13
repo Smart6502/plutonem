@@ -37,7 +37,7 @@ int main()
 
 3. Link all of the library object files generated, for example:
 ```
-$ gcc -o program program.c -L<path to where libpluto.a is located> -lpluto
+$ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -lpluto
 ```
 
 4. You're done! Just run your program now!
