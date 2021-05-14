@@ -1,5 +1,4 @@
 #include "inc/pluto.h"
-#include <math.h>
 #include <stdlib.h>
 
 void pluto_swap(int *a, int *b)
@@ -59,8 +58,7 @@ void pluto_draw_line(pluto_canvas_t *canvas, pt_t p0, pt_t p1)
 {
     if (canvas->anti_alias)
     {
-        pluto_draw_aa_line(canvas, p0, p1);
-        return;
+        pluto_draw_aa_line(canvas, p0, p1); return;
     }
     int dx = (int)pluto_abs(p1.x - p0.x), sx = p0.x < p1.x ? 1 : -1;
     int dy = (int)pluto_abs(p1.y - p0.y), sy = p0.y < p1.y ? 1 : -1;

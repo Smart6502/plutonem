@@ -7,6 +7,10 @@ To generate `libpluto.a`, run:
 ```
 $ make
 ```
+To install it so that gcc can use it directly, run:
+```
+# make install
+```
 To compile some examples, run:
 ```
 $ make test
@@ -16,13 +20,14 @@ $ make test
 
 1. Include the pluto header in your source file
 ```
-#include <path to pluto.h>
+#include <path to pluto.h> // do #include <pluto.h> if the lib is already installed
 ```
 
 2. Write your source code. An example program which draws a line:
 ```
 // program.c
 #include "pluto.h"
+// If you have installed the library, you can do #include <pluto.h>
 
 int main()
 {
@@ -37,7 +42,7 @@ int main()
 
 3. Link all of the library object files generated, for example:
 ```
-$ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -lpluto
+$ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -lpluto  # if you have installed the lib already, there is no need to use -L
 ```
 
 4. You're done! Just run your program now!
