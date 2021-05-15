@@ -35,12 +35,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <unistd.h>
 #include "inc/pluto.h"
 
-const uchar pluto_pixmap[4][2] = {
+const uchar pluto__pixmap[4][2] = {
     {0x01, 0x08},
     {0x02, 0x10},
     {0x04, 0x20},
     {0x40, 0x80}};
-pluto_canvas_t *pluto_init_canvas(signed char anti_alias)
+pluto_canvas_t *pluto__init_canvas(signed char anti_alias)
 {
     pluto_canvas_t *canvas = malloc(sizeof(pluto_canvas_t));
     struct winsize wsize;
@@ -66,7 +66,7 @@ pluto_canvas_t *pluto_init_canvas(signed char anti_alias)
     return canvas;
 }
 
-void pluto_free_canvas(pluto_canvas_t *canvas)
+void pluto__free_canvas(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
         free(canvas->buffer[i]);
@@ -76,31 +76,31 @@ void pluto_free_canvas(pluto_canvas_t *canvas)
     free(canvas);
 }
 
-void pluto_set_pix(pluto_canvas_t *canvas, int posx, int posy)
+void pluto__set_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    canvas->buffer[posy / 4][posx / 2] |= pluto_pixmap[posy % 4][posx % 2];
+    canvas->buffer[posy / 4][posx / 2] |= pluto__pixmap[posy % 4][posx % 2];
 }
 
-void pluto_unset_pix(pluto_canvas_t *canvas, int posx, int posy)
+void pluto__unset_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    canvas->buffer[posy / 4][posx / 2] &= ~pluto_pixmap[posy % 4][posx % 2];
+    canvas->buffer[posy / 4][posx / 2] &= ~pluto__pixmap[posy % 4][posx % 2];
 }
 
-void pluto_write_pix(pluto_canvas_t *canvas, int posx, int posy)
+void pluto__write_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
-    canvas->buffer[cy][cx] |= pluto_pixmap[posy % 4][posx % 2];
+    canvas->buffer[cy][cx] |= pluto__pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx]);
 }
 
-void pluto_del_pix(pluto_canvas_t *canvas, int posx, int posy)
+void pluto__del_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
     int cx = posx / 2, cy = posy / 4;
-    canvas->buffer[cy][cx] &= ~pluto_pixmap[posy % 4][posx % 2];
+    canvas->buffer[cy][cx] &= ~pluto__pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, (canvas->buffer[cy][cx]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx] : ' ');
 }
 
-void pluto_draw_frame(pluto_canvas_t *canvas)
+void pluto__draw_frame(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
         for (int j = 0; j < canvas->cwidth; j++)
@@ -108,7 +108,7 @@ void pluto_draw_frame(pluto_canvas_t *canvas)
             	printf("\e[%d;%dH%lc", i, j, PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j]);
 }
 
-void pluto_draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
+void pluto__draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
 {
     for (int i = start_y; i < height; i++)
         for (int j = start_x; j < width; j++)
@@ -116,7 +116,7 @@ void pluto_draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int heigh
 		printf("\e[%d;%dH%lc", i, j, PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j]);
 }
 
-void pluto_clear(pluto_canvas_t *canvas)
+void pluto__clear(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
         for (int j = 0; j < canvas->cwidth; j++)

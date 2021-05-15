@@ -9,13 +9,13 @@
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto_init_canvas(0);
-    pluto_clear(canvas);
+    pluto_canvas_t *canvas = pluto__init_canvas(0);
+    pluto__clear(canvas);
 
     for (int i = END_RIGHT_BASE; i > ST_RIGHT_BASE; i -= i / DIV)
-        pluto_draw_line(canvas, (pt_t){XS, i / 2}, (pt_t){XE, i});
+        pluto__draw_line(canvas, (pt_t){XS, i / 2}, (pt_t){XE, i});
 
     int h = canvas->height, w = canvas->width, ch = canvas->cheight, cw = canvas->cwidth;
-    pluto_free_canvas(canvas);
+    pluto__free_canvas(canvas);
     printf("CH: %d CW: %d TH: %d TW: %d\n", h, w, ch, cw);
 }

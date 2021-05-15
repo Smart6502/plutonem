@@ -31,10 +31,10 @@ $ make test
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto_init_canvas(1);              // Initializes pluto canvas. If the first arg is not 0, canvas uses antialiasing
-    pluto_clear(canvas);                                        // Clears the canvas
-    pluto_draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
-    pluto_free_canvas(canvas);                                  // Frees canvas
+    pluto_canvas_t *canvas = pluto__init_canvas(1);              // Initializes pluto canvas. If the first arg is not 0, canvas uses antialiasing
+    pluto__clear(canvas);                                        // Clears the canvas
+    pluto__draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
+    pluto__free_canvas(canvas);                                  // Frees canvas
 
     return 0;
 }
