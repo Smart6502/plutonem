@@ -28,6 +28,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+#include <curses.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,6 +64,8 @@ pluto_canvas_t *pluto__init_canvas(signed char anti_alias)
         canvas->anti_alias = 1;
 
     setlocale(LC_ALL, "");
+    printf("\e[?25l");
+
     return canvas;
 }
 
@@ -73,6 +76,7 @@ void pluto__free_canvas(pluto_canvas_t *canvas)
     free(canvas->buffer);
 
     printf("\e[%d;%dH\n", canvas->cheight, canvas->cwidth);
+    printf("\e[?25h");
     free(canvas);
 }
 
