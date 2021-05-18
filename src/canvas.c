@@ -28,7 +28,6 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-#include <curses.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -108,8 +107,7 @@ void pluto__draw_frame(pluto_canvas_t *canvas)
 {
     for (int i = 0; i < canvas->cheight; i++)
         for (int j = 0; j < canvas->cwidth; j++)
-	    if (canvas->buffer[i][j])
-            	printf("\e[%d;%dH%lc", i, j, PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j]);
+            	printf("\e[%d;%dH%lc", i, j, (canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : ' ');
 }
 
 void pluto__draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
