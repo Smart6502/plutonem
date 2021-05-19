@@ -33,23 +33,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 typedef struct
 {
-    int height, width;											/* Height, width in pixels */
-    int cheight, cwidth;										/* Height, width in characters */
-    unsigned char **buffer;										/* Buffer which stores pixel states */
-    signed char anti_alias;										/* Set to 0 for no anti-aliasing */
-} pluto_canvas_t;											/* Pluto's canvas structure */
+    int height, width;		/* Height, width in pixels */
+    int cheight, cwidth;	/* Height, width in characters */
+    unsigned char **buffer;	/* Buffer which stores pixel states */
+    signed char anti_alias;	/* Set to 0 for no anti-aliasing */
+} pluto_canvas_t;		/* Pluto's canvas structure */
 
 typedef struct
 {
     int x;
     int y;
-} pt_t;													/* Point structure */
+} pt_t;				/* Point structure */
 
 #ifndef PLUTO_PIX_CHAR_OFF
-#define PLUTO_PIX_CHAR_OFF										/* Unicode character offset */
+#define PLUTO_PIX_CHAR_OFF			/* Unicode character offset (already in libpluto.a) */
 #endif
 #ifndef PLUTO__WRITE_PIX
-#define PLUTO__WRITE_PIX pluto__write_pix								/* Defines how functions write pixels */
+#define PLUTO__WRITE_PIX pluto__write_pix	/* Defines how functions write pixels (just write to the buffer, or also to the screen) */
 #endif
 extern pluto_canvas_t *pluto__init_canvas(signed char anti_alias); 					/* Initializes canvas, anti-aliasing is enabled if anti_alias is not 0 */
 extern void pluto__free_canvas(pluto_canvas_t *canvas);		  					/* Frees canvas */
