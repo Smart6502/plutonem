@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <wchar.h>
 #include "inc/pluto.h"
 
 const uchar pluto__pixmap[4][2] = {
@@ -104,18 +105,28 @@ void pluto__del_pix(pluto_canvas_t *canvas, int posx, int posy)
 }
 
 void pluto__draw_frame(pluto_canvas_t *canvas)
-{
+{ 
     for (int i = 0; i < canvas->cheight; i++)
-        for (int j = 0; j < canvas->cwidth; j++)
-            	printf("\e[%d;%dH%lc", i, j, (canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : ' ');
+    {
+	printf("\e[%d;%dH", i, 0);
+	freopen(NULL, "w", stdout);
+	for (int j = 0; j < canvas->cwidth; j++)
+            putwchar((wchar_t)((canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : L' '));
+    }
+    freopen(NULL, "w", stdout);
 }
 
 void pluto__draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
 {
-    for (int i = start_y; i < height; i++)
-        for (int j = start_x; j < width; j++)
-            if (canvas->buffer[i][j])
-		printf("\e[%d;%dH%lc", i, j, PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j]);
+    for (int i = start_y; i < start_y + height; i++)
+    {
+	printf("\e[%d;%dH", i, start_x);
+        freopen(NULL, "w", stdout);
+	for (int j = start_x; j < start_x + width; j++)
+	    putwchar((wchar_t)((canvas->buffer[i][j] ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : L' ')));
+
+	freopen(NULL, "w", stdout);
+    }
 }
 
 void pluto__clear(pluto_canvas_t *canvas)
