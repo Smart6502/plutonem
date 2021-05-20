@@ -35,12 +35,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-/* Standard Game of Life (B3/S23) */
+/* Conway's Game of Life - Standard Game of Life (B3/S23) */
 
 pluto_canvas_t *canvas;
 uint8_t *m_out, *m_state;
 uint64_t phase_cycles = 0;
-const int wait_t = 80000;
+const int wait_t = 75000;
 const struct timespec wts = {
 	.tv_sec = wait_t / 1000000,
 	.tv_nsec = (wait_t % 1000000) * 1000
@@ -83,7 +83,7 @@ void jump_next_phase()
 void _setat(int x, int y, char *str)
 {
     for (unsigned long i = 0; i < strlen(str); i++)
-	m_state[y * canvas->width + x + i] = str[i] == '#' ? 1 : 0;
+	m_state[y * canvas->width + x + i] = str[i] == 'O' ? 1 : 0;
 }
 
 void cleanup()
@@ -108,30 +108,46 @@ int main()
     memset(m_state, 0, m_size);
 
     /* Gosper's Glider */
-    _setat(40, 40, "........................#............");
-    _setat(40, 41, "......................#.#............");
-    _setat(40, 42, "............##......##............##.");
-    _setat(40, 43, "...........#...#....##............##.");
-    _setat(40, 44, "##........#.....#...##...............");
-    _setat(40, 45, "##........#...#.##....#.#............");
-    _setat(40, 46, "..........#.....#.......#............");
-    _setat(40, 47, "...........#...#.....................");
-    _setat(40, 48, "............##.......................");
+    _setat(40, 40, "........................O............");
+    _setat(40, 41, "......................O.O............");
+    _setat(40, 42, "............OO......OO............OO.");
+    _setat(40, 43, "...........O...O....OO............OO.");
+    _setat(40, 44, "OO........O.....O...OO...............");
+    _setat(40, 45, "OO........O...O.OO....O.O............");
+    _setat(40, 46, "..........O.....O.......O............");
+    _setat(40, 47, "...........O...O.....................");
+    _setat(40, 48, "............OO.......................");
 
     /*for (int i = 0; i < canvas->width * canvas->height; i++)
 	    m_state[i] = rand() % 2;*/
 
     /* Copperhead Spaceship */
-    _setat(250, 80, ".##..##.");
-    _setat(250, 81, "...##...");
-    _setat(250, 82, "...##...");
-    _setat(250, 83, "#.#..#.#");
-    _setat(250, 84, "#......#");
-    _setat(250, 86, "#......#");
-    _setat(250, 87, ".##..##.");
-    _setat(250, 88, "..####..");
-    _setat(250, 90, "...##...");
-    _setat(250, 91, "...##...");
+    _setat(250, 80, ".OO..OO.");
+    _setat(250, 81, "...OO...");
+    _setat(250, 82, "...OO...");
+    _setat(250, 83, "O.O..O.O");
+    _setat(250, 84, "O......O");
+    _setat(250, 86, "O......O");
+    _setat(250, 87, ".OO..OO.");
+    _setat(250, 88, "..OOOO..");
+    _setat(250, 90, "...OO...");
+    _setat(250, 91, "...OO...");
+
+    #define SGG_X 144 
+    /* Simkin glider gun */
+    _setat(SGG_X, 150, "OO.....OO");
+    _setat(SGG_X, 151, "OO.....OO");
+    _setat(SGG_X, 153, "....OO...");
+    _setat(SGG_X, 154, "....OO...");
+    _setat(SGG_X, 159, "......................OO.OO......");
+    _setat(SGG_X, 160, ".....................O.....O.....");
+    _setat(SGG_X, 161, ".....................O......O..OO");
+    _setat(SGG_X, 162, ".....................OOO...O...OO");
+    _setat(SGG_X, 163, "..........................O......");
+    _setat(SGG_X, 167, ".................................");
+    _setat(SGG_X, 168, ".................................");
+    _setat(SGG_X, 169, "................................");
+    _setat(SGG_X, 170, ".................................");
 
     signal(SIGINT, cleanup);
 
