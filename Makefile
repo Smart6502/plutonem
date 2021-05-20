@@ -1,6 +1,6 @@
 CC = gcc
 LIBSRCDIR = src/
-EXDIR := tests/
+EXDIR := examples/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c')
 LIBOBJS := $(addsuffix .o,$(basename $(LIBSRCS)))
@@ -12,7 +12,7 @@ LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 .PHONY: clean
 
 all: $(LIBA)
-test: $(EXBINS)
+exp: $(EXBINS)
 
 %: %.c $(LIBA)
 	@echo "Compiling example $<"

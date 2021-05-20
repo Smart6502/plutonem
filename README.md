@@ -13,7 +13,7 @@ To install it so that gcc can use it directly, run:
 ```
 To compile some examples, run:
 ```
-$ make test
+$ make exp
 ```
 
 ### Using the library
@@ -47,12 +47,12 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 
 4. You're done! Just run your program now!
 
-<p>Polygons</p>
 <img src="screenshots/hexagon.png" align="center">
-<br>
-<p>Intersecting circles drawn using plutonem</p>
 <img src="screenshots/intersecting_circles.png" align="center">
 <img src="screenshots/raster.png" align="center">
+<br>
+<p>Conway's Game of Life written using plutonem</p>
+<img src="screenshots/conways_game_of_life.png" align="center">
 
 ### Troubleshooting
 
