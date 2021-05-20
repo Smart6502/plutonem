@@ -106,10 +106,10 @@ void pluto__del_pix(pluto_canvas_t *canvas, int posx, int posy)
 
 void pluto__draw_frame(pluto_canvas_t *canvas)
 { 
+    freopen(NULL, "w", stdout);
     for (int i = 0; i < canvas->cheight; i++)
     {
-	printf("\e[%d;%dH", i, 0);
-	freopen(NULL, "w", stdout);
+	wprintf(L"\e[%d;%dH", i, 0);
 	for (int j = 0; j < canvas->cwidth; j++)
             putwchar((wchar_t)((canvas->buffer[i][j]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : L' '));
     }
@@ -118,15 +118,14 @@ void pluto__draw_frame(pluto_canvas_t *canvas)
 
 void pluto__draw_area(pluto_canvas_t *canvas, int start_x, int start_y, int height, int width)
 {
+    freopen(NULL, "w", stdout);
     for (int i = start_y; i < start_y + height; i++)
     {
-	printf("\e[%d;%dH", i, start_x);
-        freopen(NULL, "w", stdout);
+	wprintf(L"\e[%d;%dH", i, start_x);
 	for (int j = start_x; j < start_x + width; j++)
 	    putwchar((wchar_t)((canvas->buffer[i][j] ? PLUTO_PIX_CHAR_OFF + canvas->buffer[i][j] : L' ')));
-
-	freopen(NULL, "w", stdout);
     }
+    freopen(NULL, "w", stdout);
 }
 
 void pluto__clear(pluto_canvas_t *canvas)
