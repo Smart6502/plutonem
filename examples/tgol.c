@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 pluto_canvas_t *canvas;
 uint8_t *m_out, *m_state;
 uint64_t phase_cycles = 0;
-const int wait_t = 75000;
+const int wait_t = 45000;
 const struct timespec wts = {
 	.tv_sec = wait_t / 1000000,
 	.tv_nsec = (wait_t % 1000000) * 1000
@@ -133,12 +133,12 @@ int main()
     _setat(250, 90, "...OO...");
     _setat(250, 91, "...OO...");
 
-    #define SGG_X 144 
+    #define SGG_X 143 
     /* Simkin glider gun */
-    _setat(SGG_X, 150, "OO.....OO");
-    _setat(SGG_X, 151, "OO.....OO");
-    _setat(SGG_X, 153, "....OO...");
-    _setat(SGG_X, 154, "....OO...");
+    _setat(SGG_X, 150, "OO.....OO........................");
+    _setat(SGG_X, 151, "OO.....OO........................");
+    _setat(SGG_X, 153, "....OO...........................");
+    _setat(SGG_X, 154, "....OO...........................");
     _setat(SGG_X, 159, "......................OO.OO......");
     _setat(SGG_X, 160, ".....................O.....O.....");
     _setat(SGG_X, 161, ".....................O......O..OO");

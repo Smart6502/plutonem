@@ -29,6 +29,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 #include <locale.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
@@ -41,6 +42,16 @@ const uchar pluto__pixmap[4][2] = {
     {0x02, 0x10},
     {0x04, 0x20},
     {0x40, 0x80}};
+pluto_canvas_t *ccan;
+void pluto__handle_wres()
+{
+    struct winsize wsize;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
+    ccan->cheight = wsize.ws_row;
+    ccan->cwidth = wsize.ws_col;
+    ccan->height = wsize.ws_row * 4;
+    ccan->width = wsize.ws_col * 2;
+}
 pluto_canvas_t *pluto__init_canvas(signed char anti_alias)
 {
     pluto_canvas_t *canvas = malloc(sizeof(pluto_canvas_t));
@@ -65,6 +76,8 @@ pluto_canvas_t *pluto__init_canvas(signed char anti_alias)
 
     setlocale(LC_ALL, "");
     printf("\e[?25l");
+    ccan = canvas;
+    signal(SIGWINCH, pluto__handle_wres);
 
     return canvas;
 }
