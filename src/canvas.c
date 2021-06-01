@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
+#include <time.h>
 #include <unistd.h>
 #include <wchar.h>
 #include "inc/pluto.h"
@@ -43,14 +44,41 @@ const uchar pluto__pixmap[4][2] = {
     {0x04, 0x20},
     {0x40, 0x80}};
 pluto_canvas_t *ccan;
+const struct timespec pluto_wres_handle_wait = {
+	.tv_sec = 60000 / 1000000,
+	.tv_nsec = (60000 % 1000000) * 1000
+};
+
+void pluto__dummy_handle()
+{
+    nanosleep(&pluto_wres_handle_wait, NULL);
+}
+
 void pluto__handle_wres()
 {
+    signal(SIGWINCH, pluto__dummy_handle);
+    int tmph = ccan->cheight, tmpw = ccan->cwidth;
     struct winsize wsize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
     ccan->cheight = wsize.ws_row;
     ccan->cwidth = wsize.ws_col;
     ccan->height = wsize.ws_row * 4;
     ccan->width = wsize.ws_col * 2;
+    ccan->buffer = (unsigned char **)realloc(ccan->buffer, ccan->cheight * sizeof(uchar **));
+    for (int i = 0; i < ccan->cheight; i++)
+    ccan->buffer[i] = (unsigned char *)realloc(ccan->buffer[i], ccan->cwidth * sizeof(uchar));
+
+    if (tmph < ccan->cheight)
+	for (int i = tmph; i < ccan->cheight; i++)
+	    for (int j = 0; j < ccan->cwidth; j++)
+		ccan->buffer[i][j] = 0;
+
+    if (tmpw < ccan->cwidth)
+	for (int i = 0; i < ccan->cheight; i++)
+	    for (int j = tmpw; j < ccan->cwidth; j++)
+		ccan->buffer[i][j] = 0;
+
+    signal(SIGWINCH, pluto__dummy_handle);
 }
 pluto_canvas_t *pluto__init_canvas(signed char anti_alias)
 {

@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 pluto_canvas_t *canvas;
 uint8_t *m_out, *m_state;
 uint64_t phase_cycles = 0;
-const int wait_t = 45000;
+const int wait_t = 75000;
 const struct timespec wts = {
 	.tv_sec = wait_t / 1000000,
 	.tv_nsec = (wait_t % 1000000) * 1000
