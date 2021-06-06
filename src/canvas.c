@@ -123,24 +123,24 @@ void pluto__free_canvas(pluto_canvas_t *canvas)
 
 void pluto__set_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    canvas->buffer[posy / 4][posx / 2] |= pluto__pixmap[posy % 4][posx % 2];
+    canvas->buffer[posy >> 2][posx >> 1] |= pluto__pixmap[posy % 4][posx % 2];
 }
 
 void pluto__unset_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    canvas->buffer[posy / 4][posx / 2] &= ~pluto__pixmap[posy % 4][posx % 2];
+    canvas->buffer[posy >> 2][posx >> 1] &= ~pluto__pixmap[posy % 4][posx % 2];
 }
 
 void pluto__write_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    int cx = posx / 2, cy = posy / 4;
+    int cx = posx >> 1, cy = posy >> 2;
     canvas->buffer[cy][cx] |= pluto__pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx]);
 }
 
 void pluto__del_pix(pluto_canvas_t *canvas, int posx, int posy)
 {
-    int cx = posx / 2, cy = posy / 4;
+    int cx = posx >> 1, cy = posy >> 2;
     canvas->buffer[cy][cx] &= ~pluto__pixmap[posy % 4][posx % 2];
     printf("\e[%d;%dH%lc", cy, cx, (canvas->buffer[cy][cx]) ? PLUTO_PIX_CHAR_OFF + canvas->buffer[cy][cx] : ' ');
 }

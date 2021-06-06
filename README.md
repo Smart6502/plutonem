@@ -28,6 +28,7 @@ $ make exp
 // program.c
 #include "pluto.h"
 // If you have installed the library, you can do #include <pluto.h>
+// This is the file "examples/simple.c"
 
 int main()
 {

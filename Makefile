@@ -6,7 +6,7 @@ EXSRCS := $(shell find $(EXDIR) -name '*.c')
 LIBOBJS := $(addsuffix .o,$(basename $(LIBSRCS)))
 LIBA := libpluto.a
 EXBINS := $(basename $(EXSRCS))
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -O3
 LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 
 .PHONY: clean

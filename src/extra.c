@@ -126,7 +126,7 @@ void pluto__rast_bftri(pluto_canvas_t *canvas, pt_t p0, pt_t p1, pt_t p2)
 
     for (int sy = p0.y; sy <= p1.y; sy++)
     {
-        pluto__draw_line(canvas, (pt_t){(int)curx0, sy}, (pt_t){(int)curx1, sy});
+	pluto__draw_line(canvas, (pt_t){(int)curx0, sy}, (pt_t){(int)curx1, sy});
         curx0 += invslope0;
         curx1 += invslope1;
     }
