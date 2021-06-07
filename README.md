@@ -1,6 +1,7 @@
 <img src="screenshots/pluto.png" align="center">
 
 <p> A library to draw graphics with pixels in the terminal </p>
+### This is currently being refactored
 
 ### Building
 To generate `libpluto.a`, run:
@@ -28,14 +29,14 @@ $ make exp
 // program.c
 #include "pluto.h"
 // If you have installed the library, you can do #include <pluto.h>
-// This is the file "examples/simple.c"
 
 int main()
 {
-    pluto_canvas_t *canvas = pluto__init_canvas(1);              // Initializes pluto canvas. If the first arg is not 0, canvas uses antialiasing
-    pluto__clear(canvas);                                        // Clears the canvas
-    pluto__draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
-    pluto__free_canvas(canvas);                                  // Frees canvas
+    pluto__init_window(true);              			// Initializes pluto w/ anti-aliasing
+    pluto_draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
+    pluto_write_out();						// Writes bitmap to UTF-8 buffer
+    pluto_write_frame();					// Writes the UTF-8 buffer to STDOUT
+    pluto__free_canvas(canvas);                                 // De-initializes pluto
 
     return 0;
 }

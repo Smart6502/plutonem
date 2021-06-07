@@ -36,5 +36,5 @@ clean: eclean lclean
 
 install: $(LIBA)
 	@cp $(LIBA) /usr/lib/
-	@cp $(LIBSRCDIR)/inc/pluto.h /usr/include/
+	@cp $(LIBSRCDIR)pluto.h /usr/include/
 	@echo "Copied header to /usr/include/ and libpluto.a to /usr/lib/"
