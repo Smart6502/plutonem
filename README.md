@@ -1,7 +1,8 @@
 <img src="screenshots/pluto.png" align="center">
 
 <p> A library to draw graphics with pixels in the terminal </p>
-### This is currently being refactored
+
+### This library is currently being refactored. I advise developing with the previous releases 
 
 ### Building
 To generate `libpluto.a`, run:
