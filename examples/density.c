@@ -10,8 +10,8 @@ const struct timespec wts = {
 	.tv_nsec = (wait % 100000) * 1000
 };
 
-const float density = 0.65;
-const int count = 4;
+const float density = 0.6;	// Pixel density (low => high density, high => low density) 
+const int count = 4;		// Number of objects
 
 int main()
 {

@@ -50,7 +50,7 @@ void pluto_deinit()
 {
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
-    printf("\e[%d;%dH\e[?25h", _pluto_canvas.height, _pluto_canvas.width);
+    printf("\e[%d;%dH\e[?25h\n", _pluto_canvas.height, _pluto_canvas.width);
 
     _pluto_canvas.antialias = false;
     _pluto_isinit = false;

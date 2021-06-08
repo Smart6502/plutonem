@@ -33,11 +33,11 @@ $ make exp
 
 int main()
 {
-    pluto__init_window(true);              			// Initializes pluto w/ anti-aliasing
+    pluto_init_window(true);              			// Initializes pluto w/ anti-aliasing
     pluto_draw_line(canvas, (pt_t){5, 10}, (pt_t){20, 25});     // Draws a line from (5x, 10y) to (20x, 25y)
     pluto_write_out();						// Writes bitmap to UTF-8 buffer
     pluto_write_frame();					// Writes the UTF-8 buffer to STDOUT
-    pluto__free_canvas(canvas);                                 // De-initializes pluto
+    pluto_free_canvas(canvas);                                 // De-initializes pluto
 
     return 0;
 }
@@ -51,7 +51,11 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 4. You're done! Just run your program now!
 
 <img src="screenshots/hexagon.png" align="center">
-<img src="screenshots/intersecting_circles.png" align="center">
+<br>
+<p>Depth with pixel density (examples/density.c)</p>
+<img src="screenshots/pixel_density.png" align="center">
+<br>
+<p>Rasterized triangle (examples/raster.c)</p>
 <img src="screenshots/raster.png" align="center">
 <br>
 <p>Conway's Game of Life written using plutonem</p>
