@@ -11,13 +11,13 @@ const struct timespec wts = {
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window(true, 94, 129, 172);
     
     for (int x = 0; x < _pluto_canvas.cwidth; x++)
     {
 	for (int y = 0; y < _pluto_canvas.cheight; y++)
 	{
-	    pluto_set_pix((x >> y), (y >> x));
+	    pluto_set_pix((x >> y), _pluto_canvas.cheight - 1 - (y >> x));
 	}
     	
 	pluto_write_out();

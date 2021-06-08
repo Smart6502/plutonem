@@ -9,6 +9,7 @@ typedef struct
     int height, width;
     int cheight, cwidth;
     int bufsize, bmsize;
+    uchar fr, fg, fb;
 
     uchar *bitmap;
     uchar *buffer;
@@ -20,7 +21,7 @@ typedef struct
 } pt_t;
 
 extern pluto_canvas_t _pluto_canvas;
-extern void pluto_init_window(bool antialias);
+extern void pluto_init_window(bool antialias, uchar fr, uchar fg, uchar fb);
 extern void pluto_write_frame();
 extern void pluto_clear();
 extern void pluto_deinit();

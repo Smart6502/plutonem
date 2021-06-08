@@ -10,12 +10,12 @@ const struct timespec wts = {
 	.tv_nsec = (wait % 100000) * 1000
 };
 
-const float density = 0.6;
+const float density = 0.65;
 const int count = 4;
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window(true, 191, 97, 106);
 
     float x, y;
     for (x = 1; x < _pluto_canvas.cwidth / count; x += density)

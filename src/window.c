@@ -1,5 +1,6 @@
 #include "pluto.h"
 #include <locale.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,13 +10,21 @@
 pluto_canvas_t _pluto_canvas;
 bool _pluto_isinit = false;
 
-void pluto_init_window(bool antialias)
+void pluto_check()
+{
+    if (_pluto_isinit) pluto_deinit();
+}
+
+void pluto_init_window(bool antialias, uchar fr, uchar fg, uchar fb)
 {
     struct winsize wsize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
 
     _pluto_canvas.height = wsize.ws_row;
     _pluto_canvas.width = wsize.ws_col;
+    _pluto_canvas.fr = fr;
+    _pluto_canvas.fg = fg;
+    _pluto_canvas.fb = fb;
 
     _pluto_canvas.cheight = wsize.ws_row * 4;
     _pluto_canvas.cwidth = wsize.ws_col * 2;
@@ -30,9 +39,11 @@ void pluto_init_window(bool antialias)
 
     _pluto_canvas.antialias = antialias;
     _pluto_isinit = true;
+    atexit(pluto_check);
+    signal(SIGINT, pluto_check);
 
     setlocale(LC_ALL, "");
-    printf("\e[?25l\e[0;0H");
+    printf("\e[?25l\e[0;0H\e[38;2;%d;%d;%dm", _pluto_canvas.fr, _pluto_canvas.fg, _pluto_canvas.fb);
 }
 
 void pluto_deinit()
