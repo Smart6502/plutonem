@@ -7,7 +7,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-pluto_canvas_t _pluto_canvas;
+pluto_lib_t _pluto_canvas;
 bool _pluto_isinit = false;
 
 void pluto_check()
