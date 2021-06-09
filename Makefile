@@ -14,6 +14,11 @@ LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 all: $(LIBA)
 exp: $(EXBINS)
 
+%.math: %.math.c $(LIBA)
+	@echo "Compiling example [m] $<"
+	@$(CC) -o $@ $< $(CFLAGS) -L. -lm -lpluto
+
+
 %: %.c $(LIBA)
 	@echo "Compiling example $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lpluto

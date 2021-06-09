@@ -10,7 +10,7 @@ const uchar _pluto_pixmap[4][2] = {
     { 0x04, 0x20 },
     { 0x40, 0x80 }};
 
-void unichr_to_utf8(uchar *ret, uint16_t unichr)
+void ucp_to_u8(uchar *ret, uint16_t unichr)
 {
     ret[0] = (uchar) (((unichr >> 12) & 0x0F) | 0xE0);
     ret[1] = (uchar) (((unichr >>  6) & 0x3F) | 0x80);
@@ -30,7 +30,7 @@ void pluto_unset_pix(int x, int y)
 void pluto_write_out()
 {
     for (int i = 0; i < _pluto_canvas.bmsize; i++)
-        unichr_to_utf8(&_pluto_canvas.buffer[i * 3], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
+        ucp_to_u8(&_pluto_canvas.buffer[i * 3], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
 }
 
 void pluto_write_frame()

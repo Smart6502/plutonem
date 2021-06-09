@@ -13,6 +13,7 @@ typedef struct
 
     uchar *bitmap;		// Bitmap buffer
     uchar *buffer;		// UTF-8 output buffer
+    bool is_init;
 } pluto_lib_t;
 
 typedef struct
@@ -61,7 +62,24 @@ extern void pluto_draw_line(pt_t p0, pt_t p1);
 /* Draw a line in the bitmap buffer from p0 to p1 */
 
 extern void pluto_rast_bftri(pt_t p0, pt_t p1, pt_t p2);
+/* Rasterize a bottom-flat triangle:
+ * 	- pt_t p0: highest point 
+ * 	- pt_t p0: lower point 
+ * 	- pt_t p0 lowest point
+ */
+
 extern void pluto_rast_tftri(pt_t p0, pt_t p1, pt_t p2);
+/* Rasterize a top-flat triangle:
+ * 	- pt_t p0: highest point 
+ * 	- pt_t p0: lower point 
+ * 	- pt_t p0 lowest point
+ */
+
 extern void pluto_rast_tri(pt_t p0, pt_t p1, pt_t p2);
+/* Rasterize any triangle:
+ * 	- pt_t p0: highest point 
+ * 	- pt_t p0: lower point 
+ * 	- pt_t p0 lowest point
+ */
 
 #endif

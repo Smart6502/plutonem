@@ -8,11 +8,10 @@
 #include <unistd.h>
 
 pluto_lib_t _pluto_canvas;
-bool _pluto_isinit = false;
 
 void pluto_check()
 {
-    if (_pluto_isinit) pluto_deinit();
+    if (_pluto_canvas.is_init) pluto_deinit();
 }
 
 void pluto_init_window(bool antialias, uchar fr, uchar fg, uchar fb)
@@ -38,7 +37,7 @@ void pluto_init_window(bool antialias, uchar fr, uchar fg, uchar fb)
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
 
     _pluto_canvas.antialias = antialias;
-    _pluto_isinit = true;
+    _pluto_canvas.is_init = true;
     atexit(pluto_check);
     signal(SIGINT, pluto_check);
 
@@ -53,7 +52,7 @@ void pluto_deinit()
     printf("\e[%d;%dH\e[?25h\n", _pluto_canvas.height, _pluto_canvas.width);
 
     _pluto_canvas.antialias = false;
-    _pluto_isinit = false;
+    _pluto_canvas.is_init = false;
     _pluto_canvas.bmsize = 0;
     _pluto_canvas.bufsize = 0;
     _pluto_canvas.cwidth = 0;
