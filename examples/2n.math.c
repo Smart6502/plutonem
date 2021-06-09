@@ -12,7 +12,7 @@ const struct timespec wts = {
 
 int main()
 {
-    pluto_init_window(true, 94, 129, 172);
+    pluto_init_window(true, 35);
     
     float ang = 0;
     int org = 2 * _pluto_canvas.cheight / 3 - 1;

@@ -99,7 +99,7 @@ void cleanup()
 
 int main()
 {
-    pluto_init_window(true, 94, 129, 172); 
+    pluto_init_window(true, 33); 
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);

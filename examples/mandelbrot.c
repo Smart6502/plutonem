@@ -29,7 +29,7 @@ void create_mandelbrot()
 
 int main()
 {
-    pluto_init_window(true, 94, 129, 172);
+    pluto_init_window(true, 31);
 
     create_mandelbrot();
     pluto_write_out();

@@ -15,7 +15,7 @@ const int count = 4;		// Number of objects
 
 int main()
 {
-    pluto_init_window(true, 191, 97, 106);
+    pluto_init_window(true, 33);
 
     float x, y;
     for (x = 1; x < _pluto_canvas.cwidth / count; x += density)
