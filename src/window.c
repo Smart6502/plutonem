@@ -11,7 +11,8 @@ pluto_lib_t _pluto_canvas;
 
 void pluto_check()
 {
-    if (_pluto_canvas.is_init) pluto_deinit();
+    if (_pluto_canvas.is_init)
+        pluto_deinit();
 }
 
 void pluto_init_window(bool antialias, uchar fg)

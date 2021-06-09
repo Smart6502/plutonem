@@ -5,14 +5,14 @@
 typedef unsigned char uchar;
 typedef struct
 {
-    bool antialias;		// If not 0, use anti-antialiasing
-    int height, width;		// Height and width of the terminal in chars
-    int cheight, cwidth;	// Height and width in pixels
-    int bufsize, bmsize;	// Bitmap and buffer sizes
-    uchar fg;			// Standard colour fg
+    bool antialias;      /* If not 0, use anti-antialiasing */
+    int height, width;   /* Height and width of the terminal in chars */
+    int cheight, cwidth; /* Height and width in pixels */
+    int bufsize, bmsize; /* Bitmap and buffer sizes */
+    uchar fg;            /* Standard colour fg */
 
-    uchar *bitmap;		// Bitmap buffer
-    uchar *buffer;		// UTF-8 output buffer
+    uchar *bitmap; /* Bitmap buffer */
+    uchar *buffer; /* UTF-8 output buffer */
     bool is_init;
 } pluto_lib_t;
 
@@ -22,12 +22,15 @@ typedef struct
 } pt_t;
 /* Origin: (0x, 0y) */
 
+#ifndef PLUTO_PIX_CHAR_OFF
+#    define PLUTO_PIX_CHAR_OFF /* VSCode keeps complaining lol, so this is the fix */
+#endif
+
 extern pluto_lib_t _pluto_canvas;
 /* Instance */
 
 extern void pluto_init_window(bool antialias, uchar fg);
 /* Initialize library:
- * Parameters:
  * 	- bool antialias: use antialiased lines ?
  * 	- uchar fr: foreground red
  * 	- uchar fg: foreground green
@@ -80,6 +83,13 @@ extern void pluto_rast_tri(pt_t p0, pt_t p1, pt_t p2);
  * 	- pt_t p0: highest point 
  * 	- pt_t p0: lower point 
  * 	- pt_t p0 lowest point
+ */
+
+extern void pluto_draw_ellipse(pt_t p0, int a, int b);
+/* Draw an ellipse
+ * 	- pt_t p0: centre
+ * 	- int a: a offset
+ * 	- int b: b offset
  */
 
 #endif

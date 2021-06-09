@@ -9,7 +9,7 @@ void pluto_rast_bftri(pt_t p0, pt_t p1, pt_t p2)
 
     for (int sy = p0.y; sy <= p1.y; sy++)
     {
-	pluto_draw_line((pt_t){(int)curx0, sy}, (pt_t){(int)curx1, sy});
+        pluto_draw_line((pt_t){(int)curx0, sy}, (pt_t){(int)curx1, sy});
         curx0 += invslope0;
         curx1 += invslope1;
     }

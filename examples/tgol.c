@@ -41,40 +41,38 @@ uint8_t *m_out, *m_state;
 uint64_t phase_cycles = 0;
 const int wait_t = 75000;
 const struct timespec wts = {
-	.tv_sec = wait_t / 1000000,
-	.tv_nsec = (wait_t % 1000000) * 1000
-};
+    .tv_sec = wait_t / 1000000,
+    .tv_nsec = (wait_t % 1000000) * 1000};
 
 int _get_cell(int x, int y)
 {
-    return m_out[y * _pluto_canvas.cwidth + x]; 
+    return m_out[y * _pluto_canvas.cwidth + x];
 }
 
 void jump_next_phase()
 {
     for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++)
-	m_out[i] = m_state[i];
-    
+        m_out[i] = m_state[i];
 
     for (int x = 1; x < _pluto_canvas.cwidth - 1; x++)
     {
-	for (int y = 1; y < _pluto_canvas.cheight - 1; y++)
-	{
-	     int n_nb = _get_cell(x - 1, y - 1) + _get_cell(x - 0, y - 1) + _get_cell(x + 1, y - 1) +
-		     	_get_cell(x - 1, y + 0) + 	     0		  + _get_cell(x + 1, y + 0) +
-			_get_cell(x - 1, y + 1) + _get_cell(x + 0, y + 1) + _get_cell(x + 1, y + 1);
+        for (int y = 1; y < _pluto_canvas.cheight - 1; y++)
+        {
+            int n_nb = _get_cell(x - 1, y - 1) + _get_cell(x - 0, y - 1) + _get_cell(x + 1, y - 1) +
+                       _get_cell(x - 1, y + 0) + 0 + _get_cell(x + 1, y + 0) +
+                       _get_cell(x - 1, y + 1) + _get_cell(x + 0, y + 1) + _get_cell(x + 1, y + 1);
 
-	     if (_get_cell(x, y) == 1)
-	     {
-		 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
-		 pluto_set_pix(x, y);
-	     }
-	     else
-	     {
-		 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 3;
-		 pluto_unset_pix(x, y);
-	     }
-	}
+            if (_get_cell(x, y) == 1)
+            {
+                m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
+                pluto_set_pix(x, y);
+            }
+            else
+            {
+                m_state[y * _pluto_canvas.cwidth + x] = n_nb == 3;
+                pluto_unset_pix(x, y);
+            }
+        }
     }
     pluto_write_out();
     pluto_write_frame();
@@ -83,7 +81,7 @@ void jump_next_phase()
 void _setat(int x, int y, char *str)
 {
     for (unsigned long i = 0; i < strlen(str); i++)
-	m_state[y * _pluto_canvas.cwidth + x + i] = str[i] == 'O' ? 1 : 0;
+        m_state[y * _pluto_canvas.cwidth + x + i] = str[i] == 'O' ? 1 : 0;
 }
 
 void cleanup()
@@ -96,10 +94,9 @@ void cleanup()
     exit(0);
 }
 
-
 int main()
 {
-    pluto_init_window(true, 33); 
+    pluto_init_window(true, 31);
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);
@@ -132,7 +129,7 @@ int main()
     _setat(250, 90, "...OO...");
     _setat(250, 91, "...OO...");
 
-    #define SGG_X 143 
+#define SGG_X 143
     /* Simkin glider gun */
     _setat(SGG_X, 150, "OO.....OO........................");
     _setat(SGG_X, 151, "OO.....OO........................");
@@ -152,9 +149,9 @@ int main()
 
     while (1)
     {
-	jump_next_phase();
-	phase_cycles++;
-	nanosleep(&wts, NULL);
+        jump_next_phase();
+        phase_cycles++;
+        nanosleep(&wts, NULL);
     }
     return 0;
 }

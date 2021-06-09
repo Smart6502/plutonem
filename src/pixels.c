@@ -5,16 +5,16 @@
 #include <unistd.h>
 
 const uchar _pluto_pixmap[4][2] = {
-    { 0x01, 0x08 },
-    { 0x02, 0x10 },
-    { 0x04, 0x20 },
-    { 0x40, 0x80 }};
+    {0x01, 0x08},
+    {0x02, 0x10},
+    {0x04, 0x20},
+    {0x40, 0x80}};
 
 void ucp_to_u8(uchar *ret, uint16_t unichr)
 {
-    ret[0] = (uchar) (((unichr >> 12) & 0x0F) | 0xE0);
-    ret[1] = (uchar) (((unichr >>  6) & 0x3F) | 0x80);
-    ret[2] = (uchar) (((unichr >>  0) & 0x3F) | 0x80);
+    ret[0] = (uchar)(((unichr >> 12) & 0x0F) | 0xE0);
+    ret[1] = (uchar)(((unichr >> 6) & 0x3F) | 0x80);
+    ret[2] = (uchar)(((unichr >> 0) & 0x3F) | 0x80);
 }
 
 void pluto_set_pix(int x, int y)

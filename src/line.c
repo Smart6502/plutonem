@@ -58,8 +58,8 @@ void pluto_draw_line(pt_t p0, pt_t p1)
 {
     if (_pluto_canvas.antialias)
     {
-	pluto_draw_aa_line(p0, p1);
-	return;
+        pluto_draw_aa_line(p0, p1);
+        return;
     }
 
     int dx = (int)abs(p1.x - p0.x), sx = p0.x < p1.x ? 1 : -1;
@@ -86,5 +86,77 @@ void pluto_draw_line(pt_t p0, pt_t p1)
             err += dx;
             p0.y += sy;
         }
+    }
+}
+
+void pluto_draw_ellipse(pt_t p0, int a, int b)
+{
+    int wx, wy, t;
+    int asq = a * a, bsq = b * b;
+    int xa, ya;
+
+    pluto_set_pix(p0.x, p0.y + b);
+    pluto_set_pix(p0.x, p0.y - b);
+
+    wx = 0;
+    wy = b;
+    xa = 0;
+    ya = asq * 2 * b;
+    t = asq / 4 - asq * b;
+
+    for (;;)
+    {
+        t += xa + bsq;
+
+        if (t >= 0)
+        {
+            ya -= asq * 2;
+            t -= ya;
+            wy--;
+        }
+
+        xa += bsq * 2;
+        wx++;
+
+        if (xa >= ya)
+            break;
+
+        pluto_set_pix(p0.x + wx, p0.y - wy);
+        pluto_set_pix(p0.x - wx, p0.y - wy);
+        pluto_set_pix(p0.x + wx, p0.y + wy);
+        pluto_set_pix(p0.x - wx, p0.y + wy);
+    }
+
+    pluto_set_pix(p0.x + a, p0.y);
+    pluto_set_pix(p0.x - a, p0.y);
+
+    wx = a;
+    wy = 0;
+    xa = bsq * 2 * a;
+
+    ya = 0;
+    t = bsq / 4 - bsq * a;
+
+    for (;;)
+    {
+        t += ya + asq;
+
+        if (t >= 0)
+        {
+            xa -= bsq * 2;
+            t = t - xa;
+            wx--;
+        }
+
+        ya += asq * 2;
+        wy++;
+
+        if (ya > xa)
+            break;
+
+        pluto_set_pix(p0.x + wx, p0.y - wy);
+        pluto_set_pix(p0.x - wx, p0.y - wy);
+        pluto_set_pix(p0.x + wx, p0.y + wy);
+        pluto_set_pix(p0.x - wx, p0.y + wy);
     }
 }
