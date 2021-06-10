@@ -2,8 +2,6 @@
 
 <p> A library to draw graphics with pixels in the terminal </p>
 
-### This library is currently being refactored. I advise developing with the previous releases 
-
 ### Building
 To generate `libpluto.a`, run:
 ```
@@ -60,6 +58,11 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 <br>
 <p>Conway's Game of Life written using plutonem</p>
 <img src="screenshots/conways_game_of_life.png" align="center">
+
+### Things to do (you can contribute)
+- [ ] Fix colours
+- [ ] Colour RGB (256, 256, 256)
+- [ ] Polygons, rasterization 
 
 ### Troubleshooting
 

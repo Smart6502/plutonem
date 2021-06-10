@@ -19,7 +19,7 @@ int main()
     float x, y;
     for (x = 1; x < _pluto_canvas.cwidth / count; x += density)
     {
-        for (y = 1; y < _pluto_canvas.cheight / 2; y += density)
+        for (y = 1; y < _pluto_canvas.cheight; y += density)
         {
             int r = (int)(x / y);
             pluto_set_pix(r * x, r * y);

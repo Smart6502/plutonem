@@ -21,9 +21,7 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-            if (iter < maxi)
-                ;
-            else
+            if (iter >= maxi)
                 pluto_set_pix(col, row);
         }
     }
@@ -31,7 +29,7 @@ void create_mandelbrot()
 
 int main()
 {
-    pluto_init_window(true, 31);
+    pluto_init_window(true, 35);
 
     create_mandelbrot();
     pluto_write_out();

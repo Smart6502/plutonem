@@ -18,7 +18,6 @@ exp: $(EXBINS)
 	@echo "Compiling example [m] $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lm -lpluto
 
-
 %: %.c $(LIBA)
 	@echo "Compiling example $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lpluto
