@@ -50,13 +50,16 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 
 <img src="screenshots/hexagon.png" align="center">
 <br>
-<p>Depth with pixel density (examples/density.c)</p>
+<p>Depth with pixel density (examples/wall-density.c)</p>
 <img src="screenshots/pixel_density.png" align="center">
+<br>
+<p>Density blob (examples/dense-blob.math.c)</p>
+<img src="screenshots/dense_blob.png" align="center">
 <br>
 <p>Rasterized triangle (examples/raster.c)</p>
 <img src="screenshots/raster.png" align="center">
 <br>
-<p>Conway's Game of Life written using plutonem</p>
+<p>Conway's Game of Life written using plutonem (examples/tgol.c)</p>
 <img src="screenshots/conways_game_of_life.png" align="center">
 
 ### Things to do (you can contribute)
