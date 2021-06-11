@@ -2,12 +2,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
-const int wait = 45000;
-const struct timespec wts = {
-    .tv_sec = wait / 100000,
-    .tv_nsec = (wait % 100000) * 1000};
+#include <unistd.h>
 
 const float density = 0.6; // Pixel density (low => high density, high => low density)
 const int count = 4;       // Number of objects
@@ -28,7 +23,7 @@ int main()
         pluto_write_out();
         pluto_write_frame();
         fflush(stdout);
-        nanosleep(&wts, NULL);
+        usleep(45000);
     }
 
     pluto_deinit();

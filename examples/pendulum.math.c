@@ -2,12 +2,7 @@
 #include <math.h>
 #include <signal.h>
 #include <stdio.h>
-#include <time.h>
-
-const int wait = 45000;
-const struct timespec wts = {
-    .tv_sec = wait / 100000,
-    .tv_nsec = (wait % 100000) * 1000};
+#include <unistd.h>
 
 int main()
 {
@@ -21,7 +16,7 @@ int main()
         pluto_write_out();
         pluto_write_frame();
         fflush(stdout);
-        nanosleep(&wts, NULL);
+        usleep(45000);
     }
 
     pluto_deinit();

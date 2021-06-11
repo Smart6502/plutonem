@@ -34,15 +34,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <unistd.h>
 /* Conway's Game of Life - Standard Game of Life (B3/S23) */
 
 uint8_t *m_out, *m_state;
 uint64_t phase_cycles = 0;
-const int wait_t = 75000;
-const struct timespec wts = {
-    .tv_sec = wait_t / 1000000,
-    .tv_nsec = (wait_t % 1000000) * 1000};
 
 int _get_cell(int x, int y)
 {
@@ -151,7 +147,7 @@ int main()
     {
         jump_next_phase();
         phase_cycles++;
-        nanosleep(&wts, NULL);
+	usleep(50000);
     }
     return 0;
 }
