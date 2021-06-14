@@ -121,7 +121,7 @@ int main()
     _setat(40, 48, "............OO.......................");
 
     //for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++)
-      //  m_state[i] = !(rand() % 10);
+    //  m_state[i] = !(rand() % 10);
 
     /* Copperhead Spaceship */
     _setat(250, 80, ".OO..OO.");
