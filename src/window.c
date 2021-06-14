@@ -9,12 +9,6 @@
 
 pluto_lib_t _pluto_canvas;
 
-void pluto_check()
-{
-    if (_pluto_canvas.is_init)
-        pluto_deinit();
-}
-
 void pluto_init_window(bool antialias, uchar fg)
 {
     struct winsize wsize;
@@ -37,8 +31,7 @@ void pluto_init_window(bool antialias, uchar fg)
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
-    atexit(pluto_check);
-    signal(SIGINT, pluto_check);
+    signal(SIGINT, pluto_deinit);
 
     setlocale(LC_ALL, "");
     printf("\e[?25l\e[0;0H");
@@ -46,6 +39,8 @@ void pluto_init_window(bool antialias, uchar fg)
 
 void pluto_deinit()
 {
+    if (!_pluto_canvas.is_init) return;
+
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
     printf("\e[%d;%dH\e[?25h\e[0;0m\n", _pluto_canvas.height, _pluto_canvas.width);
