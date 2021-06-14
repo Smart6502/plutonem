@@ -42,9 +42,7 @@ extern pluto_lib_t _pluto_canvas;
 extern void pluto_init_window(bool antialias, uchar fg);
 /* Initialize library:
  * 	- bool antialias: use antialiased lines ?
- * 	- uchar fr: foreground red
- * 	- uchar fg: foreground green
- * 	- uchar fb: foreground blue
+ * 	- uchar fg: foreground colour (deprecated)
  */
 
 extern void pluto_write_frame();
