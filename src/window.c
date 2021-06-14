@@ -21,13 +21,19 @@ void pluto_init_window(bool antialias, uchar fg)
     _pluto_canvas.cheight = wsize.ws_row * 4;
     _pluto_canvas.cwidth = wsize.ws_col * 2;
     _pluto_canvas.bmsize = _pluto_canvas.height * _pluto_canvas.width;
-    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 3;
+    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 24;
 
     _pluto_canvas.buffer = (uchar *)malloc(_pluto_canvas.bufsize);
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
 
     _pluto_canvas.bitmap = (uchar *)malloc(_pluto_canvas.bmsize);
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
+
+    _pluto_canvas.pix_colour = (pluto_colour_t *)malloc(_pluto_canvas.bmsize * sizeof(pluto_colour_t) * 8);
+    memset(_pluto_canvas.pix_colour, 0, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
+
+    _pluto_canvas.buf_colour = (pluto_colour_t *)malloc(_pluto_canvas.bufsize * sizeof(pluto_colour_t));
+    memset(_pluto_canvas.buf_colour, 255, _pluto_canvas.bmsize * sizeof(pluto_colour_t));
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
@@ -43,6 +49,8 @@ void pluto_deinit()
 
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
+    free(_pluto_canvas.buf_colour);
+    free(_pluto_canvas.pix_colour);
     printf("\e[%d;%dH\e[?25h\e[0;0m\n", _pluto_canvas.height, _pluto_canvas.width);
 
     _pluto_canvas.antialias = false;

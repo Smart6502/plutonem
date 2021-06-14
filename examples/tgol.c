@@ -35,6 +35,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
+
 /* Conway's Game of Life - Standard Game of Life (B3/S23) */
 
 uint8_t *m_out, *m_state;
@@ -62,11 +64,13 @@ void jump_next_phase()
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
                 pluto_set_pix(x, y);
+                pluto_set_pix_colour(x, y, 255, rand() % 64 + 192, 255);
             }
             else
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 3;
                 pluto_unset_pix(x, y);
+                pluto_set_pix_colour(x, y, rand() + 32, rand() + 32, 255);
             }
         }
     }
@@ -86,18 +90,23 @@ void cleanup()
     free(m_state);
     pluto_clear();
     pluto_deinit();
-    printf("\e[2;0HTerminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
+    printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
     exit(0);
 }
 
 int main()
 {
+    srand(clock());
+
     pluto_init_window(true, 31);
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);
     memset(m_out, 0, m_size);
     memset(m_state, 0, m_size);
+
+    printf("\e[48;2;%u;%u;%um", 34, 23, 0);
+    fflush(stdout);
 
     /* Gosper's Glider */
     _setat(40, 40, "........................O............");
@@ -110,8 +119,8 @@ int main()
     _setat(40, 47, "...........O...O.....................");
     _setat(40, 48, "............OO.......................");
 
-    /*for (int i = 0; i < canvas->width * canvas->height; i++)
-	    m_state[i] = rand() % 2;*/
+    for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++)
+	    m_state[i] = !(rand() % 10);
 
     /* Copperhead Spaceship */
     _setat(250, 80, ".OO..OO.");
@@ -140,6 +149,15 @@ int main()
     _setat(SGG_X, 168, ".................................");
     _setat(SGG_X, 169, "................................");
     _setat(SGG_X, 170, ".................................");
+
+    /* MacOS Big Sur */
+    _setat(64, 25, ".OOOOOO.");
+    _setat(64, 26, "OOOOOOOO");
+    _setat(64, 27, "OOOOOOOO");
+    _setat(64, 28, "OOOOOOOO");
+    _setat(64, 29, "OOOOOOOO");
+    _setat(64, 30, "OOOOOOOO");
+    _setat(64, 31, ".OOOOOO.");
 
     signal(SIGINT, cleanup);
 

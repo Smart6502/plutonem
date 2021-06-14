@@ -1,18 +1,28 @@
 #ifndef PLUTO_LIB_H
 #define PLUTO_LIB_H
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef unsigned char uchar;
+
 typedef struct
 {
-    bool antialias;      /* If not 0, use anti-antialiasing */
-    int height, width;   /* Height and width of the terminal in chars */
-    int cheight, cwidth; /* Height and width in pixels */
-    int bufsize, bmsize; /* Bitmap and buffer sizes */
-    uchar fg;            /* Standard colour fg */
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} pluto_colour_t;
 
-    uchar *bitmap; /* Bitmap buffer */
-    uchar *buffer; /* UTF-8 output buffer */
+typedef struct
+{
+    bool antialias;             /* If not 0, use anti-antialiasing */
+    int height, width;          /* Height and width of the terminal in chars */
+    int cheight, cwidth;        /* Height and width in pixels */
+    int bufsize, bmsize;        /* Bitmap and buffer sizes */
+    uchar fg;                   /* Standard/fallback colour fg */
+    pluto_colour_t *pix_colour;  /* 24-bit colour fg */
+    uchar *bitmap;  /* Bitmap buffer */
+    pluto_colour_t *buf_colour;  /* 24-bit colour fg */
+    uchar *buffer;  /* UTF-8 output buffer */
     bool is_init;
 } pluto_lib_t;
 
@@ -45,6 +55,16 @@ extern void pluto_clear();
 
 extern void pluto_deinit();
 /* Free resources and restore states */
+
+extern void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+/* Set a pixel's colour to a 24-bit value
+ * The colors of the pixels in a block are averaged
+ * 	- int x: x position from origin
+ * 	- int y: y position from origin
+ *  - uint8_t red: red value (0 - 255)
+ *  - uint8_t green: green value (0 - 255)
+ *  - uint8_t blue: blue value (0 - 255)
+ */
 
 extern void pluto_set_pix(int x, int y);
 /* Set a pixel in the bitmap buffer:
