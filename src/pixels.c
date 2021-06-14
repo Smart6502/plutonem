@@ -11,7 +11,7 @@ const uchar _pluto_pixmap[4][2] = {
     {0x04, 0x20},
     {0x40, 0x80}};
 
-void ucp_to_u8(uchar *ret, uint16_t unichr)
+void transform_ucp(uchar *ret, uint16_t unichr)
 {
     ret[0] = (uchar)(((unichr >> 12) & 0x0F) | 0xE0);
     ret[1] = (uchar)(((unichr >> 6) & 0x3F) | 0x80);
@@ -31,8 +31,10 @@ void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue
     int bx = (x >> 1) * 2;
     int by = (y >> 2) * 4;
     int tr = 0, tg = 0, tb = 0;
-    for (y = 0; y < 4; y++) {
-        for (x = 0; x < 2; x++) {
+    for (y = 0; y < 4; y++)
+    {
+        for (x = 0; x < 2; x++)
+        {
             tr += _pluto_canvas.pix_colour[(y + by) * (_pluto_canvas.width << 1) + (x + bx)].r;
             tg += _pluto_canvas.pix_colour[(y + by) * (_pluto_canvas.width << 1) + (x + bx)].g;
             tb += _pluto_canvas.pix_colour[(y + by) * (_pluto_canvas.width << 1) + (x + bx)].b;
@@ -52,10 +54,11 @@ void pluto_unset_pix(int x, int y)
 void pluto_write_out()
 {
     char buf[20];
-    for (int i = 0; i < _pluto_canvas.bmsize; i++) {
+    for (int i = 0; i < _pluto_canvas.bmsize; i++)
+    {
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", _pluto_canvas.buf_colour[i].r, _pluto_canvas.buf_colour[i].g, _pluto_canvas.buf_colour[i].b);
         strcpy((char *)&_pluto_canvas.buffer[i * 24], buf);
-        ucp_to_u8(&_pluto_canvas.buffer[i * 24 + 19], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
+        transform_ucp(&_pluto_canvas.buffer[i * 24 + 19], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
 }
 

@@ -1,11 +1,11 @@
 #include "../src/pluto.h"
+#include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <unistd.h>
 
-const float density = 1.3;  // Pixel density (low => high density, high => low density)
+const float density = 1.3; // Pixel density (low => high density, high => low density)
 
 int main()
 {
@@ -16,8 +16,8 @@ int main()
     {
         for (y = 1; y < _pluto_canvas.cheight; y += density)
         {
-	    float r = x / y;
-	    float m = powf(r, 1 / r);
+            float r = x / y;
+            float m = powf(r, 1 / r);
 
             pluto_set_pix(m * x, _pluto_canvas.cheight - 1 - (m * y));
         }
@@ -25,7 +25,7 @@ int main()
         pluto_write_out();
         pluto_write_frame();
         fflush(stdout);
-	usleep(50000);
+        usleep(50000);
     }
 
     pluto_deinit();

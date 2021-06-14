@@ -34,8 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <time.h>
+#include <unistd.h>
 
 /* Conway's Game of Life - Standard Game of Life (B3/S23) */
 
@@ -121,7 +121,7 @@ int main()
     _setat(40, 48, "............OO.......................");
 
     for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++)
-	    m_state[i] = !(rand() % 10);
+        m_state[i] = !(rand() % 10);
 
     /* Copperhead Spaceship */
     _setat(250, 80, ".OO..OO.");
@@ -166,7 +166,7 @@ int main()
     {
         jump_next_phase();
         phase_cycles++;
-	usleep(50000);
+        usleep(50000);
     }
     return 0;
 }

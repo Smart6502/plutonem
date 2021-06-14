@@ -19,10 +19,10 @@ typedef struct
     int cheight, cwidth;        /* Height and width in pixels */
     int bufsize, bmsize;        /* Bitmap and buffer sizes */
     uchar fg;                   /* Standard/fallback colour fg */
-    pluto_colour_t *pix_colour;  /* 24-bit colour fg */
-    uchar *bitmap;  /* Bitmap buffer */
-    pluto_colour_t *buf_colour;  /* 24-bit colour fg */
-    uchar *buffer;  /* UTF-8 output buffer */
+    pluto_colour_t *pix_colour; /* 24-bit colour fg */
+    uchar *bitmap;              /* Bitmap buffer */
+    pluto_colour_t *buf_colour; /* 24-bit colour fg */
+    uchar *buffer;              /* UTF-8 output buffer */
     bool is_init;
 } pluto_lib_t;
 

@@ -23,7 +23,8 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-            if (iter >= maxi) {
+            if (iter >= maxi)
+            {
                 pluto_set_pix(col, row);
                 pluto_set_pix_colour(col, row, (int)(x * c_re * 2048), (int)(y * c_im * 4096), iter + maxi * x * col * row);
             }
@@ -31,10 +32,12 @@ void create_mandelbrot()
     }
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    if (argc > 2) return 1;
-    if (argc == 2) {
+    if (argc > 2)
+        return 1;
+    if (argc == 2)
+    {
         maxi = atoi(argv[1]);
     }
 

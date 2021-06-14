@@ -45,7 +45,8 @@ void pluto_init_window(bool antialias, uchar fg)
 
 void pluto_deinit()
 {
-    if (!_pluto_canvas.is_init) return;
+    if (!_pluto_canvas.is_init)
+        return;
 
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
