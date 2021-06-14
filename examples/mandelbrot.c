@@ -1,7 +1,9 @@
 #include "../src/pluto.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-const int maxi = 100; // Number of iter
+int maxi = 100; // Number of iter
 
 void create_mandelbrot()
 {
@@ -21,14 +23,23 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-            if (iter >= maxi)
+            if (iter >= maxi) {
                 pluto_set_pix(col, row);
+                pluto_set_pix_colour(col, row, (int)(x * c_re * 2048), (int)(y * c_im * 4096), iter + maxi * x * col * row);
+            }
         }
     }
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc > 2) return 1;
+    if (argc == 2) {
+        maxi = atoi(argv[1]);
+    }
+
+    srand(clock());
+
     pluto_init_window(true, 35);
 
     create_mandelbrot();
