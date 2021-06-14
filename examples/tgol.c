@@ -64,13 +64,14 @@ void jump_next_phase()
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
                 pluto_set_pix(x, y);
-                pluto_set_pix_colour(x, y, 255, rand() % 64 + 192, 255);
+                int c = (rand() % 64) + 192;
+                pluto_set_pix_colour(x, y, c, c, c);
             }
             else
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 3;
                 pluto_unset_pix(x, y);
-                pluto_set_pix_colour(x, y, rand() + 32, rand() + 32, 255);
+                pluto_set_pix_colour(x, y, 60, 66, 76);
             }
         }
     }
@@ -105,7 +106,7 @@ int main()
     memset(m_out, 0, m_size);
     memset(m_state, 0, m_size);
 
-    printf("\e[48;2;%u;%u;%um", 34, 23, 0);
+    printf("\e[48;2;%u;%u;%um", 20, 32, 52);
     fflush(stdout);
 
     /* Gosper's Glider */
