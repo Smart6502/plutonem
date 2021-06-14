@@ -24,16 +24,11 @@ void pluto_init_window(bool antialias, uchar fg)
     _pluto_canvas.bufsize = _pluto_canvas.bmsize * 24;
 
     _pluto_canvas.buffer = (uchar *)malloc(_pluto_canvas.bufsize);
-    memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
-
     _pluto_canvas.bitmap = (uchar *)malloc(_pluto_canvas.bmsize);
-    memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
-
     _pluto_canvas.pix_colour = (pluto_colour_t *)malloc(_pluto_canvas.bmsize * sizeof(pluto_colour_t) * 8);
-    memset(_pluto_canvas.pix_colour, 0, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
-
     _pluto_canvas.buf_colour = (pluto_colour_t *)malloc(_pluto_canvas.bufsize * sizeof(pluto_colour_t));
-    memset(_pluto_canvas.buf_colour, 255, _pluto_canvas.bmsize * sizeof(pluto_colour_t));
+
+    pluto_blank();
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;

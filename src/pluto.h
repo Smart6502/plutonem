@@ -51,10 +51,43 @@ extern void pluto_write_frame();
 extern void pluto_clear();
 /* Clear both buffers and the screen */
 
+extern void pluto_blank();
+/* Clear both buffers and the screen */
+
 extern void pluto_deinit();
 /* Free resources and restore states */
 
+#define colour_to_struct(c) (pluto_colour_t)({(uint8_t)(c >> 16), (uint8_t)(c >> 8), (uint8_t)c})
+/* Macro to transform a 24-bit colour code into a pluto_colour_t struct
+ *  - c: colour code
+ */
+
+#define colour_to_r(c) (uint8_t)(c >> 16)
+/* Macro to extract the red value from a 24-bit colour code
+ *  - c: colour code
+ */
+
+#define colour_to_g(c) (uint8_t)(c >> 8)
+/* Macro to extract the green value from a 24-bit colour code
+ *  - c: colour code
+ */
+
+#define colour_to_b(c) (uint8_t)(c)
+/* Macro to extract the blue value from a 24-bit colour code
+ *  - c: colour code
+ */
+
 extern void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+/* Set a pixel's colour to a 24-bit value
+ * The colors of the pixels in a block are averaged
+ * 	- int x: x position from origin
+ * 	- int y: y position from origin
+ *  - uint8_t red: red value (0 - 255)
+ *  - uint8_t green: green value (0 - 255)
+ *  - uint8_t blue: blue value (0 - 255)
+ */
+
+extern void pluto_set_pix_and_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 /* Set a pixel's colour to a 24-bit value
  * The colors of the pixels in a block are averaged
  * 	- int x: x position from origin
