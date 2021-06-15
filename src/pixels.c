@@ -45,6 +45,12 @@ void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue
     _pluto_canvas.buf_colour[block] = (pluto_colour_t){tr, tg, tb};
 }
 
+void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
+{
+    pluto_set_pix(x, y);
+    pluto_set_pix_colour(x, y, red, green, blue);
+}
+
 void pluto_unset_pix(int x, int y)
 {
     _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x % 2];

@@ -56,12 +56,18 @@ extern void pluto_deinit();
 
 extern void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 /* Set a pixel's colour to a 24-bit value
- * The colors of the pixels in a block are averaged
+ * The colours of the pixels in a block are averaged
  * 	- int x: x position from origin
  * 	- int y: y position from origin
  *  - uint8_t red: red value (0 - 255)
  *  - uint8_t green: green value (0 - 255)
  *  - uint8_t blue: blue value (0 - 255)
+ */
+
+extern void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+/* Set a pixel, and it's colour to a 24-bit value
+ * A wrapper for pluto_set_pix and pluto_set_pix_colour
+ * Parameters are same as those for pluto_set_pix_colour
  */
 
 extern void pluto_set_pix(int x, int y);

@@ -64,6 +64,7 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 <img src="screenshots/conways_game_of_life.png" align="center">
 
 ### To-do (you can contribute)
+- [ ] Fix colour darkening
 - [ ] Polygons, rasterization 
 
 ### Troubleshooting
