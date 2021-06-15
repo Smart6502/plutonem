@@ -101,7 +101,7 @@ void pluto_blank()
 {
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
-    memset(_pluto_canvas.pix_colour, 0, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
+    memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
 }
 void pluto_clear()
 {
