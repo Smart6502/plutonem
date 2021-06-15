@@ -20,8 +20,7 @@ int main()
             float m = powf(r, 1 / r);
             int xp = m * x, yp = _pluto_canvas.cheight - 1 - (m * y);
 
-            pluto_set_pix(xp, yp);
-            pluto_set_pix_colour(xp, yp, 94, 129, 172);
+            pluto_set_cpix(xp, yp, 94 * yp / (xp + 1), 129, 172);
         }
 
         pluto_write_out();

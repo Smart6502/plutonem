@@ -11,7 +11,7 @@ int main()
     {
         for (int y = 1; y < _pluto_canvas.cheight; y++)
         {
-            pluto_set_pix((x >> y), _pluto_canvas.cheight - 1 - (y >> x));
+            pluto_set_cpix((x >> y), _pluto_canvas.cheight - 1 - (y >> x), 94, 129, 172);
         }
 
         pluto_write_out();
