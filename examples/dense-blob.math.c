@@ -18,13 +18,14 @@ int main()
         {
             float r = x / y;
             float m = powf(r, 1 / r);
+            int xp = m * x, yp = _pluto_canvas.cheight - 1 - (m * y);
 
-            pluto_set_pix(m * x, _pluto_canvas.cheight - 1 - (m * y));
+            pluto_set_pix(xp, yp);
+            pluto_set_pix_colour(xp, yp, 94, 129, 172);
         }
 
         pluto_write_out();
         pluto_write_frame();
-        fflush(stdout);
         usleep(50000);
     }
 

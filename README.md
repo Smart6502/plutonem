@@ -48,23 +48,22 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 
 4. You're done! Just run your program now!
 
-<img src="screenshots/hexagon.png" align="center">
-<br>
 <p>Depth with pixel density (examples/wall-density.c)</p>
 <img src="screenshots/pixel_density.png" align="center">
+<br>
+<p>Perlin noise using plutonem</p>
+<img src="screenshots/perlin_noise.png" align="center">
 <br>
 <p>Density blob (examples/dense-blob.math.c)</p>
 <img src="screenshots/dense_blob.png" align="center">
 <br>
-<p>Rasterized triangle (examples/raster.c)</p>
-<img src="screenshots/raster.png" align="center">
+<p>Mandelbrot (examples/mandelbrot.c)</p>
+<img src="screenshots/mandelbrot.png" align="center">
 <br>
 <p>Conway's Game of Life written using plutonem (examples/tgol.c)</p>
 <img src="screenshots/conways_game_of_life.png" align="center">
 
-### Things to do (you can contribute)
-- [ ] Fix colours
-- [ ] Colour RGB (256, 256, 256)
+### To-do (you can contribute)
 - [ ] Polygons, rasterization 
 
 ### Troubleshooting

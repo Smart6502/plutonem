@@ -16,13 +16,15 @@ int main()
     {
         for (y = 1; y < _pluto_canvas.cheight; y += density)
         {
-            int r = (int)(x / y);
-            pluto_set_pix(r * x, r * y);
+            int r = x / y;
+            int xp = r * x;
+            int yp = r * y;
+            pluto_set_pix(xp, yp);
+            pluto_set_pix_colour(xp, yp, 94, 129, 172);
         }
 
         pluto_write_out();
         pluto_write_frame();
-        fflush(stdout);
         usleep(45000);
     }
 

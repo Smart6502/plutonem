@@ -107,7 +107,6 @@ int main()
     memset(m_state, 0, m_size);
 
     printf("\e[48;2;%u;%u;%um", 20, 32, 52);
-    fflush(stdout);
 
     /* Gosper's Glider */
     _setat(40, 40, "........................O............");

@@ -15,7 +15,6 @@ int main()
 
         pluto_write_out();
         pluto_write_frame();
-        fflush(stdout);
         usleep(45000);
     }
 
