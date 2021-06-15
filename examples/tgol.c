@@ -64,7 +64,7 @@ void jump_next_phase()
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
                 pluto_set_pix(x, y);
-                int c = (rand() % 64) + 192;
+                int c = (rand() % 72) + 184;
                 pluto_set_pix_colour(x, y, c, c, c);
             }
             else
@@ -119,9 +119,6 @@ int main()
     _setat(40, 47, "...........O...O.....................");
     _setat(40, 48, "............OO.......................");
 
-    //for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++)
-    //  m_state[i] = !(rand() % 10);
-
     /* Copperhead Spaceship */
     _setat(250, 80, ".OO..OO.");
     _setat(250, 81, "...OO...");
@@ -160,6 +157,10 @@ int main()
     _setat(64, 31, ".OOOOOO.");
 
     signal(SIGINT, cleanup);
+
+    for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++) {
+        if (!(rand() % 64)) m_state[i] = 1;
+    }
 
     while (1)
     {
