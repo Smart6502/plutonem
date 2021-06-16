@@ -62,6 +62,9 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 <br>
 <p>Conway's Game of Life written using plutonem (examples/tgol.c)</p>
 <img src="screenshots/conways_game_of_life.png" align="center">
+<br>
+<p>A first person shooter using plutonem</p>
+<img src="screenshots/fps.png" align="center">
 
 ### To-do (you can contribute)
 - [ ] Fix colour darkening
