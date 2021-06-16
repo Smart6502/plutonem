@@ -38,7 +38,7 @@ void pluto_swap(int *a, int *b)
     *b = temp;
 }
 float pluto_abs(float i) { return (i < 0) ? -i : i; }
-void pluto_draw_aa_line(pt_t p0, pt_t p1)
+void pluto_draw_aa_line(pt_t p0, pt_t p1, pluto_colour_t colour)
 {
     int steep = pluto_abs(p1.y - p0.y) > pluto_abs(p1.x - p0.x);
 
@@ -67,8 +67,8 @@ void pluto_draw_aa_line(pt_t p0, pt_t p1)
         int x;
         for (x = xpxl0; x <= xpxl1; x++)
         {
-            pluto_set_pix((int)intersect_y, x);
-            pluto_set_pix((int)intersect_y - 1, x);
+            pluto_set_cpix((int)intersect_y, x, colour.r, colour.g, colour.b);
+            pluto_set_cpix((int)intersect_y - 1, x, colour.r, colour.g, colour.b);
             intersect_y += gradient;
         }
     }
@@ -77,18 +77,18 @@ void pluto_draw_aa_line(pt_t p0, pt_t p1)
         int x;
         for (x = xpxl0; x <= xpxl1; x++)
         {
-            pluto_set_pix(x, (int)intersect_y);
-            pluto_set_pix(x, (int)intersect_y - 1);
+            pluto_set_cpix(x, (int)intersect_y, colour.r, colour.g, colour.b);
+            pluto_set_cpix(x, (int)intersect_y - 1, colour.r, colour.g, colour.b);
             intersect_y += gradient;
         }
     }
 }
 
-void pluto_draw_line(pt_t p0, pt_t p1)
+void pluto_draw_line(pt_t p0, pt_t p1, pluto_colour_t colour)
 {
     if (_pluto_canvas.antialias)
     {
-        pluto_draw_aa_line(p0, p1);
+        pluto_draw_aa_line(p0, p1, colour);
         return;
     }
 
@@ -98,7 +98,7 @@ void pluto_draw_line(pt_t p0, pt_t p1)
 
     for (;;)
     {
-        pluto_set_pix(p0.x, p0.y);
+        pluto_set_cpix(p0.x, p0.y, colour.r, colour.g, colour.b);
 
         if (p0.x == p1.x && p0.y == p1.y)
             break;
@@ -119,14 +119,14 @@ void pluto_draw_line(pt_t p0, pt_t p1)
     }
 }
 
-void pluto_draw_ellipse(pt_t p0, int a, int b)
+void pluto_draw_ellipse(pt_t p0, int a, int b, pluto_colour_t colour)
 {
     int wx, wy, t;
     int asq = a * a, bsq = b * b;
     int xa, ya;
 
-    pluto_set_pix(p0.x, p0.y + b);
-    pluto_set_pix(p0.x, p0.y - b);
+    pluto_set_cpix(p0.x, p0.y + b, colour.r, colour.g, colour.b);
+    pluto_set_cpix(p0.x, p0.y - b, colour.r, colour.g, colour.b);
 
     wx = 0;
     wy = b;
@@ -151,14 +151,14 @@ void pluto_draw_ellipse(pt_t p0, int a, int b)
         if (xa >= ya)
             break;
 
-        pluto_set_pix(p0.x + wx, p0.y - wy);
-        pluto_set_pix(p0.x - wx, p0.y - wy);
-        pluto_set_pix(p0.x + wx, p0.y + wy);
-        pluto_set_pix(p0.x - wx, p0.y + wy);
+        pluto_set_cpix(p0.x + wx, p0.y - wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x - wx, p0.y - wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x + wx, p0.y + wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x - wx, p0.y + wy, colour.r, colour.g, colour.b);
     }
 
-    pluto_set_pix(p0.x + a, p0.y);
-    pluto_set_pix(p0.x - a, p0.y);
+    pluto_set_cpix(p0.x + a, p0.y, colour.r, colour.g, colour.b);
+    pluto_set_cpix(p0.x - a, p0.y, colour.r, colour.g, colour.b);
 
     wx = a;
     wy = 0;
@@ -184,9 +184,9 @@ void pluto_draw_ellipse(pt_t p0, int a, int b)
         if (ya > xa)
             break;
 
-        pluto_set_pix(p0.x + wx, p0.y - wy);
-        pluto_set_pix(p0.x - wx, p0.y - wy);
-        pluto_set_pix(p0.x + wx, p0.y + wy);
-        pluto_set_pix(p0.x - wx, p0.y + wy);
+        pluto_set_cpix(p0.x + wx, p0.y - wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x - wx, p0.y - wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x + wx, p0.y + wy, colour.r, colour.g, colour.b);
+        pluto_set_cpix(p0.x - wx, p0.y + wy, colour.r, colour.g, colour.b);
     }
 }

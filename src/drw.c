@@ -56,26 +56,30 @@ void pluto_transform_ucp(uchar *ret, uint16_t unichr)
 
 void pluto_set_pix(int x, int y)
 {
-    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
+    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight)
+        return;
     _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] |= _pluto_pixmap[y % 4][x % 2];
 }
 
 void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 {
-    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
+    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight)
+        return;
     _pluto_canvas.pix_colour[y * (_pluto_canvas.width << 1) + x] = (pluto_colour_t){red, green, blue};
 }
 
 void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 {
-    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
+    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight)
+        return;
     pluto_set_pix(x, y);
     pluto_set_pix_colour(x, y, red, green, blue);
 }
 
 void pluto_unset_pix(int x, int y)
 {
-    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
+    if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight)
+        return;
     _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x % 2];
 }
 
@@ -105,14 +109,17 @@ void pluto_write_out()
             }
         }
 
-        if (bl) {
+        if (bl)
+        {
             tr /= bl;
             tg /= bl;
             tb /= bl;
-        } else {
+        }
+        else
+        {
             tr = 255, tg = 255, tb = 255;
         }
-        
+
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", (uint8_t)tr, (uint8_t)tg, (uint8_t)tb);
         strcpy((char *)&_pluto_canvas.buffer[i * 24], buf);
         pluto_transform_ucp(&_pluto_canvas.buffer[i * 24 + 19], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
@@ -127,7 +134,7 @@ void pluto_render()
     fflush(stdout);
 }
 
-void pluto_blank()
+void pluto_clear_buffers()
 {
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
@@ -135,6 +142,6 @@ void pluto_blank()
 }
 void pluto_clear()
 {
-    pluto_blank();
+    pluto_clear_buffers();
     printf("\e[H\e[2J\e[3J");
 }

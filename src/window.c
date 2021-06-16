@@ -56,7 +56,7 @@ void pluto_init_window(bool antialias)
     _pluto_canvas.bitmap = (uchar *)malloc(_pluto_canvas.bmsize);
     _pluto_canvas.pix_colour = (pluto_colour_t *)malloc(_pluto_canvas.bmsize * sizeof(pluto_colour_t) * 8);
 
-    pluto_blank();
+    pluto_clear_buffers();
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
