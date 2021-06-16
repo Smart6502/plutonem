@@ -1,5 +1,6 @@
 CC = gcc
 LIBSRCDIR = src/
+INSTDIR = /usr/lib/
 EXDIR := examples/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c')
@@ -39,6 +40,6 @@ lclean:
 clean: eclean lclean
 
 install: $(LIBA)
-	@cp $(LIBA) /usr/lib/
+	@cp $(LIBA) $(INSTDIR)
 	@cp $(LIBSRCDIR)pluto.h /usr/include/
-	@echo "Copied header to /usr/include/ and libpluto.a to /usr/lib/"
+	@echo "Copied header to /usr/include/ and libpluto.a to $(INSTDIR)"
