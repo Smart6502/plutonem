@@ -19,7 +19,7 @@ Pre-compiled library files are available in the releases tab
 
 Compiling CLFPS:
 ```
-g++ -o clfps_rgb clfps_rgb.cpp -lpluto -lm -lX11
+g++ -o examples/clfps_rgb examples/clfps_rgb.cpp -lpluto -lm -lX11
 ```
 
 ### Using the library

@@ -88,7 +88,8 @@ void pluto_deinit()
     _pluto_canvas.height = 0;
 }
 
-void pluto_sigint(int sig) {
+void pluto_sigint(int sig)
+{
     (void)sig;
     pluto_deinit();
     exit(0);
