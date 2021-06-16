@@ -23,10 +23,8 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-            if (iter >= maxi)
-            {
-                pluto_set_pix(col, row);
-                pluto_set_pix_colour(col, row, (int)(x * c_re * 2048), (int)(y * c_im * 4096), iter + maxi * x * col * row);
+            if (iter >= maxi) {
+                pluto_set_cpix(col, row, (int)(x * c_re * 2048), (int)(y * c_im * 4096), iter + maxi * x * col * row);
             }
         }
     }

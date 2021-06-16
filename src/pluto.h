@@ -21,7 +21,6 @@ typedef struct
     uchar fg;                   /* Standard/fallback colour fg */
     pluto_colour_t *pix_colour; /* 24-bit colour fg */
     uchar *bitmap;              /* Bitmap buffer */
-    pluto_colour_t *buf_colour; /* 24-bit colour fg */
     uchar *buffer;              /* UTF-8 output buffer */
     bool is_init;
 } pluto_lib_t;
@@ -50,6 +49,9 @@ extern void pluto_write_frame();
 
 extern void pluto_clear();
 /* Clear both buffers and the screen */
+
+extern void pluto_blank();
+/* Clear both buffers only */
 
 extern void pluto_deinit();
 /* Free resources and restore states */
