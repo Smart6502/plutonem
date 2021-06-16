@@ -158,9 +158,9 @@ int main()
 
     signal(SIGINT, cleanup);
 
-    for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++) {
-        if (!(rand() % 64)) m_state[i] = 1;
-    }
+    //for (int i = 0; i < _pluto_canvas.cwidth * _pluto_canvas.cheight; i++) {
+    //    if (!(rand() % 64)) m_state[i] = 1;
+    //}
 
     while (1)
     {
