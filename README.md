@@ -17,6 +17,11 @@ $ make exp
 ```
 Pre-compiled library files are available in the releases tab
 
+Compiling CLFPS:
+```
+g++ -o clfps_rgb clfps_rgb.cpp -lpluto -lm -lX11
+```
+
 ### Using the library
 
 1. Include the pluto header in your source file
