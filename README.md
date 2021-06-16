@@ -17,11 +17,6 @@ $ make exp
 ```
 Pre-compiled library files are available in the releases tab
 
-Compiling CLFPS:
-```
-g++ -o examples/clfps_rgb examples/clfps_rgb.cpp -lpluto -lm -lX11
-```
-
 ### Using the library
 
 1. Include the pluto header in your source file
@@ -53,6 +48,8 @@ $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -l
 ```
 
 4. You're done! Just run your program now!
+
+Comments in the pluto.h file describe what each function/data structure does
 
 <p>Perlin noise using plutonem</p>
 <img src="screenshots/perlin_noise.png" align="center">
