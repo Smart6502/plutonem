@@ -31,8 +31,8 @@ $ make exp
 
 int main()
 {
-    pluto_init_window(true, 35);	 	             	// Initializes pluto with anti-aliasing, foreground colour 35
-    pluto_draw_line((pt_t){5, 10}, (pt_t){20, 25});	        // Draws a line from (5x, 10y) to (20x, 25y)
+    pluto_init_window(true);	 	             	// Initializes pluto with anti-aliasing, foreground colour 35
+    pluto_draw_line((pt_t){5, 10}, (pt_t){20, 25}, 94, 129, 172);	        // Draws a line from (5x, 10y) to (20x, 25y) of colour #5E81AC/RGB(94, 129, 172)
     pluto_write_out();						// Writes bitmap to UTF-8 buffer
     pluto_render();					// Writes the UTF-8 buffer to STDOUT
     pluto_deinit();      	                                // De-initializes pluto
@@ -41,7 +41,7 @@ int main()
 }
 ```
 
-3. Link all of the library object files generated, for example:
+3. Link the library generated, for example:
 ```
 $ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -lpluto  # if you have installed the lib already, there is no need to use -L
 ```
