@@ -1,9 +1,10 @@
 CC = gcc
+CPPC = g++
 LIBSRCDIR = src/
 INSTDIR = /usr/lib/
 EXDIR := examples/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
-EXSRCS := $(shell find $(EXDIR) -name '*.c')
+EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 LIBA := libpluto.a
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
@@ -22,6 +23,10 @@ exp: $(EXBINS)
 %.e: %.c $(LIBA)
 	@echo "Compiling example $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lpluto
+
+%.e: %.cpp $(LIBA)
+	@echo "Compiling example $<"
+	@$(CPPC) -o $@ $< $(CFLAGS) -L. -lpluto -lX11
 
 %.o: %.c
 	@echo "Compiling object $<"

@@ -14,7 +14,7 @@ using namespace std;
 
 extern "C"
 {
-#include "src/pluto.h"
+#include "../src/pluto.h"
 }
 
 uint8_t shades[5][3] = {
