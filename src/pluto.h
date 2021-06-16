@@ -18,7 +18,6 @@ typedef struct
     int height, width;          /* Height and width of the terminal in chars */
     int cheight, cwidth;        /* Height and width in pixels */
     int bufsize, bmsize;        /* Bitmap and buffer sizes */
-    uchar fg;                   /* Standard/fallback colour fg */
     pluto_colour_t *pix_colour; /* 24-bit colour fg */
     uchar *bitmap;              /* Bitmap buffer */
     uchar *buffer;              /* UTF-8 output buffer */
@@ -38,13 +37,12 @@ typedef struct
 extern pluto_lib_t _pluto_canvas;
 /* Instance */
 
-extern void pluto_init_window(bool antialias, uchar fg);
+extern void pluto_init_window(bool antialias);
 /* Initialize library:
  * 	- bool antialias: use antialiased lines ?
- * 	- uchar fg: foreground colour (deprecated)
  */
 
-extern void pluto_write_frame();
+extern void pluto_render();
 /* Write a frame to stdout */
 
 extern void pluto_clear();

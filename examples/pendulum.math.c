@@ -6,7 +6,7 @@
 
 int main()
 {
-    pluto_init_window(true, 35);
+    pluto_init_window(true);
 
     for (int y = 0; y < _pluto_canvas.cheight / 2; y++)
     {
@@ -14,7 +14,7 @@ int main()
         pluto_draw_line((pt_t){xb, _pluto_canvas.cheight - 1}, (pt_t){xb, _pluto_canvas.cheight - 1 - y});
 
         pluto_write_out();
-        pluto_write_frame();
+        pluto_render();
         usleep(45000);
     }
 

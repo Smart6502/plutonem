@@ -9,14 +9,13 @@
 
 pluto_lib_t _pluto_canvas;
 
-void pluto_init_window(bool antialias, uchar fg)
+void pluto_init_window(bool antialias)
 {
     struct winsize wsize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
 
     _pluto_canvas.height = wsize.ws_row;
     _pluto_canvas.width = wsize.ws_col;
-    _pluto_canvas.fg = fg;
 
     _pluto_canvas.cheight = wsize.ws_row * 4;
     _pluto_canvas.cwidth = wsize.ws_col * 2;

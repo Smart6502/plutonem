@@ -1,2 +1,4 @@
 .o
-./pluto
+./libpluto.a
+.math.e
+.e

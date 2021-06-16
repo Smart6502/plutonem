@@ -6,7 +6,7 @@
 
 int main()
 {
-    pluto_init_window(true, 35);
+    pluto_init_window(true);
 
     float ang = 0;
     int org = 2 * _pluto_canvas.cheight / 3 - 1;
@@ -15,7 +15,7 @@ int main()
         pluto_set_pix(ang * 10, org - (int)powf(2, ang));
 
         pluto_write_out();
-        pluto_write_frame();
+        pluto_render();
         ang += 0.1;
         usleep(45000);
     }

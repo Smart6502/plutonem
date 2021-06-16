@@ -5,7 +5,7 @@
 
 int main()
 {
-    pluto_init_window(false, 35);
+    pluto_init_window(false);
 
     for (int x = 1; x < _pluto_canvas.cwidth; x++)
     {
@@ -15,7 +15,7 @@ int main()
         }
 
         pluto_write_out();
-        pluto_write_frame();
+        pluto_render();
         usleep(45000);
     }
 

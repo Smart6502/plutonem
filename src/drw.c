@@ -89,9 +89,9 @@ void pluto_write_out()
     }
 }
 
-void pluto_write_frame()
+void pluto_render()
 {
-    printf("\e[0;0H\e[%dm", _pluto_canvas.fg);
+    printf("\e[0;0H");
     int wret = write(STDOUT_FILENO, _pluto_canvas.buffer, _pluto_canvas.bufsize);
     (void)wret;
     fflush(stdout);

@@ -3,9 +3,9 @@ LIBSRCDIR = src/
 EXDIR := examples/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c')
-LIBOBJS := $(addsuffix .o,$(basename $(LIBSRCS)))
+LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 LIBA := libpluto.a
-EXBINS := $(basename $(EXSRCS))
+EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
 CFLAGS = -Wall -Wextra -Werror -O3
 LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 
@@ -14,11 +14,11 @@ LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 all: $(LIBA)
 exp: $(EXBINS)
 
-%.math: %.math.c $(LIBA)
+%.math.e: %.math.c $(LIBA)
 	@echo "Compiling example [m] $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lm -lpluto
 
-%: %.c $(LIBA)
+%.e: %.c $(LIBA)
 	@echo "Compiling example $<"
 	@$(CC) -o $@ $< $(CFLAGS) -L. -lpluto
 

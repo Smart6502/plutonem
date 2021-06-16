@@ -76,7 +76,7 @@ void jump_next_phase()
         }
     }
     pluto_write_out();
-    pluto_write_frame();
+    pluto_render();
 }
 
 void _setat(int x, int y, char *str)
@@ -99,7 +99,7 @@ int main()
 {
     srand(clock());
 
-    pluto_init_window(true, 31);
+    pluto_init_window(true);
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);

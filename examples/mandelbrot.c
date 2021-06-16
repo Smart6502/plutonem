@@ -41,11 +41,11 @@ int main(int argc, char **argv)
 
     srand(clock());
 
-    pluto_init_window(true, 35);
+    pluto_init_window(true);
 
     create_mandelbrot();
     pluto_write_out();
-    pluto_write_frame();
+    pluto_render();
 
     pluto_deinit();
 }
