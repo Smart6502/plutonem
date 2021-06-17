@@ -3,7 +3,59 @@
 #include <stdlib.h>
 #include <time.h>
 
-int maxi = 100; // Number of iter
+int maxi = 50; // Number of iter
+
+typedef struct HsvColor
+{
+    unsigned char h;
+    unsigned char s;
+    unsigned char v;
+} HsvColor;
+
+pluto_colour_t HsvToRgb(HsvColor hsv)
+{
+    pluto_colour_t rgb;
+    unsigned char region, remainder, p, q, t;
+
+    if (hsv.s == 0)
+    {
+        rgb.r = hsv.v;
+        rgb.g = hsv.v;
+        rgb.b = hsv.v;
+        return rgb;
+    }
+
+    region = hsv.h / 43;
+    remainder = (hsv.h - (region * 43)) * 6; 
+
+    p = (hsv.v * (255 - hsv.s)) >> 8;
+    q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
+    t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
+
+    switch (region)
+    {
+        case 0:
+            rgb.r = hsv.v; rgb.g = t; rgb.b = p;
+            break;
+        case 1:
+            rgb.r = q; rgb.g = hsv.v; rgb.b = p;
+            break;
+        case 2:
+            rgb.r = p; rgb.g = hsv.v; rgb.b = t;
+            break;
+        case 3:
+            rgb.r = p; rgb.g = q; rgb.b = hsv.v;
+            break;
+        case 4:
+            rgb.r = t; rgb.g = p; rgb.b = hsv.v;
+            break;
+        default:
+            rgb.r = hsv.v; rgb.g = p; rgb.b = q;
+            break;
+    }
+
+    return rgb;
+}
 
 void create_mandelbrot()
 {
@@ -23,9 +75,11 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-            if (iter >= maxi)
+
+            if (iter < maxi)
             {
-                pluto_set_cpix(col, row, x * c_re * 2048, y * c_im * 4096, col * row);
+                pluto_colour_t tmp = HsvToRgb((HsvColor){ (int)(255 * iter / maxi), (int)(255 * iter / maxi), (int)(255 * iter / maxi)} );
+                pluto_set_cpix(col, row, tmp.r, tmp.g, tmp.b);
             }
         }
     }
