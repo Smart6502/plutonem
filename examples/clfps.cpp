@@ -65,45 +65,48 @@
 	Last Updated: 27/02/2017
 */
 
-#include <iostream>
-#include <vector>
-#include <utility>
 #include <algorithm>
 #include <chrono>
+#include <iostream>
+#include <utility>
+#include <vector>
 using namespace std;
 
 #include <stdio.h>
 //#include <windows.h>
+#include <X11/Xlib.h>
 #include <math.h>
-#include <unistd.h>
-#include <wchar.h>
-#include <termios.h>
 #include <signal.h>
 #include <sys/ioctl.h>
-#include <X11/Xlib.h>
-extern "C" {
+#include <termios.h>
+#include <unistd.h>
+#include <wchar.h>
+extern "C"
+{
 #include "../src/pluto.h"
 }
 
-int nScreenWidth = 160;			// Console Screen Size X (columns)
-int nScreenHeight = 40;			// Console Screen Size Y (rows)
-int nMapWidth = 16;				// World Dimensions
+int nScreenWidth = 160; // Console Screen Size X (columns)
+int nScreenHeight = 40; // Console Screen Size Y (rows)
+int nMapWidth = 16;     // World Dimensions
 int nMapHeight = 16;
 
-float fPlayerX = 14.7f;			// Player Start Position
+float fPlayerX = 14.7f; // Player Start Position
 float fPlayerY = 5.09f;
-float fPlayerA = 0.0f;			// Player Start Rotation
-float fFOV = 3.14159f / 4.0f;	// Field of View
-float fDepth = 16.0f;			// Maximum rendering distance
-float fSpeed = 5.0f;			// Walking Speed
+float fPlayerA = 0.0f;        // Player Start Rotation
+float fFOV = 3.14159f / 4.0f; // Field of View
+float fDepth = 16.0f;         // Maximum rendering distance
+float fSpeed = 5.0f;          // Walking Speed
 
 struct termios tu_term, tu_old_term;
 bool tu_textlock = false;
 
-int kbhit() {
+int kbhit()
+{
     static const int STDIN = 0;
     static bool initialized = false;
-    if (!initialized) {
+    if (!initialized)
+    {
         struct termios term;
         tcgetattr(STDIN, &term);
         term.c_lflag &= ~ICANON;
@@ -116,8 +119,10 @@ int kbhit() {
     return bytes;
 }
 
-void tu_lockTerm() {
-    if (!tu_textlock) {
+void tu_lockTerm()
+{
+    if (!tu_textlock)
+    {
         tcgetattr(0, &tu_term);
         tcgetattr(0, &tu_old_term);
         tu_term.c_lflag &= ~(ICANON | ECHO);
@@ -126,36 +131,40 @@ void tu_lockTerm() {
     }
 }
 
-void tu_unlockTerm() {
-    if (tu_textlock) {
+void tu_unlockTerm()
+{
+    if (tu_textlock)
+    {
         tcsetattr(0, TCSANOW, &tu_old_term);
         tu_textlock = false;
     }
 }
 
-Display* g_pDisplay = XOpenDisplay(getenv("DISPLAY"));
+Display *g_pDisplay = XOpenDisplay(getenv("DISPLAY"));
 
 bool GetKeyState(KeySym keySym)
 {
-    if(g_pDisplay == NULL)
+    if (g_pDisplay == NULL)
     {
         return false;
     }
- 
+
     char szKey[32];
     int iKeyCodeToFind = XKeysymToKeycode(g_pDisplay, keySym);
- 
+
     XQueryKeymap(g_pDisplay, szKey);
- 
+
     return szKey[iKeyCodeToFind / 8] & (1 << (iKeyCodeToFind % 8));
 }
 
-void cleanExit(int sig) {
-    if (sig != SIGINT) exit(0);
+void cleanExit(int sig)
+{
+    if (sig != SIGINT)
+        exit(0);
     tu_unlockTerm();
     pluto_clear();
     pluto_deinit();
-	fputs("\e[H\e[2J\e[3J", stdout);
+    fputs("\e[H\e[2J\e[3J", stdout);
     exit(0);
 }
 
@@ -163,220 +172,242 @@ int main()
 {
     pluto_init_window(true);
     signal(SIGINT, cleanExit);
-    
+
     nScreenWidth = _pluto_canvas.cwidth;
     nScreenHeight = _pluto_canvas.cheight;
-    
+
     tu_lockTerm();
 
-	// Create Screen Buffer
-	//wchar_t *screen = new wchar_t[nScreenWidth*nScreenHeight];
+    // Create Screen Buffer
+    //wchar_t *screen = new wchar_t[nScreenWidth*nScreenHeight];
 
-	//wchar_t *buf = new wchar_t[256];
+    //wchar_t *buf = new wchar_t[256];
 
     setlocale(LC_CTYPE, "");
 
-	//HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	//SetConsoleActiveScreenBuffer(hConsole);
-	//uint32_t dwBytesWritten = 0;
+    //HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+    //SetConsoleActiveScreenBuffer(hConsole);
+    //uint32_t dwBytesWritten = 0;
 
-	// Create Map of world space # = wall block, . = space
-	wstring map;
-	map += L"#########.......";
-	map += L"#...............";
-	map += L"#.......########";
-	map += L"#..............#";
-	map += L"#......##......#";
-	map += L"#......##......#";
-	map += L"#..............#";
-	map += L"###............#";
-	map += L"##.............#";
-	map += L"#......####..###";
-	map += L"#......#.......#";
-	map += L"#......#.......#";
-	map += L"#..............#";
-	map += L"#......#########";
-	map += L"#..............#";
-	map += L"################";
+    // Create Map of world space # = wall block, . = space
+    wstring map;
+    map += L"#########.......";
+    map += L"#...............";
+    map += L"#.......########";
+    map += L"#..............#";
+    map += L"#......##......#";
+    map += L"#......##......#";
+    map += L"#..............#";
+    map += L"###............#";
+    map += L"##.............#";
+    map += L"#......####..###";
+    map += L"#......#.......#";
+    map += L"#......#.......#";
+    map += L"#..............#";
+    map += L"#......#########";
+    map += L"#..............#";
+    map += L"################";
 
-	auto tp1 = chrono::system_clock::now();
-	auto tp2 = chrono::system_clock::now();
-	
-	bool firstrender = true;
-	
-	while (1)
-	{
-		// We'll need time differential per frame to calculate modification
-		// to movement speeds, to ensure consistant movement, as ray-tracing
-		// is non-deterministic
-		tp2 = chrono::system_clock::now();
-		chrono::duration<float> elapsedTime = tp2 - tp1;
-		tp1 = tp2;
-		float fElapsedTime = elapsedTime.count();
+    auto tp1 = chrono::system_clock::now();
+    auto tp2 = chrono::system_clock::now();
+
+    bool firstrender = true;
+
+    while (1)
+    {
+        // We'll need time differential per frame to calculate modification
+        // to movement speeds, to ensure consistant movement, as ray-tracing
+        // is non-deterministic
+        tp2 = chrono::system_clock::now();
+        chrono::duration<float> elapsedTime = tp2 - tp1;
+        tp1 = tp2;
+        float fElapsedTime = elapsedTime.count();
 
         bool render = firstrender;
         firstrender = false;
-	    // Handle CCW Rotation
-	    if (GetKeyState((unsigned short)'A'))
-	    {
-	        render = true;
-		    fPlayerA -= (fSpeed * 0.75f) * fElapsedTime;
-	    }
+        // Handle CCW Rotation
+        if (GetKeyState((unsigned short)'A'))
+        {
+            render = true;
+            fPlayerA -= (fSpeed * 0.75f) * fElapsedTime;
+        }
 
-	    // Handle CW Rotation
-	    if (GetKeyState((unsigned short)'D'))
-	    {
-	        render = true;
-		    fPlayerA += (fSpeed * 0.75f) * fElapsedTime;
-	    }
-	    
-	    // Handle Forwards movement & collision
-	    if (GetKeyState((unsigned short)'W'))
-	    {
-	        render = true;
-		    fPlayerX += sinf(fPlayerA) * fSpeed * fElapsedTime;;
-		    fPlayerY += cosf(fPlayerA) * fSpeed * fElapsedTime;;
-		    if (map.c_str()[(int)fPlayerX * nMapWidth + (int)fPlayerY] == '#')
-		    {
-			    fPlayerX -= sinf(fPlayerA) * fSpeed * fElapsedTime;;
-			    fPlayerY -= cosf(fPlayerA) * fSpeed * fElapsedTime;;
-		    }			
-	    }
+        // Handle CW Rotation
+        if (GetKeyState((unsigned short)'D'))
+        {
+            render = true;
+            fPlayerA += (fSpeed * 0.75f) * fElapsedTime;
+        }
 
-	    // Handle backwards movement & collision
-	    if (GetKeyState((unsigned short)'S'))
-	    {
-	        render = true;
-		    fPlayerX -= sinf(fPlayerA) * fSpeed * fElapsedTime;;
-		    fPlayerY -= cosf(fPlayerA) * fSpeed * fElapsedTime;;
-		    if (map.c_str()[(int)fPlayerX * nMapWidth + (int)fPlayerY] == '#')
-		    {
-			    fPlayerX += sinf(fPlayerA) * fSpeed * fElapsedTime;;
-			    fPlayerY += cosf(fPlayerA) * fSpeed * fElapsedTime;;
-		    }
-	    }
+        // Handle Forwards movement & collision
+        if (GetKeyState((unsigned short)'W'))
+        {
+            render = true;
+            fPlayerX += sinf(fPlayerA) * fSpeed * fElapsedTime;
+            ;
+            fPlayerY += cosf(fPlayerA) * fSpeed * fElapsedTime;
+            ;
+            if (map.c_str()[(int)fPlayerX * nMapWidth + (int)fPlayerY] == '#')
+            {
+                fPlayerX -= sinf(fPlayerA) * fSpeed * fElapsedTime;
+                ;
+                fPlayerY -= cosf(fPlayerA) * fSpeed * fElapsedTime;
+                ;
+            }
+        }
 
-		for (int x = 0; x < nScreenWidth; x++)
-		{
-			// For each column, calculate the projected ray angle into world space
-			float fRayAngle = (fPlayerA - fFOV/2.0f) + ((float)x / (float)nScreenWidth) * fFOV;
+        // Handle backwards movement & collision
+        if (GetKeyState((unsigned short)'S'))
+        {
+            render = true;
+            fPlayerX -= sinf(fPlayerA) * fSpeed * fElapsedTime;
+            ;
+            fPlayerY -= cosf(fPlayerA) * fSpeed * fElapsedTime;
+            ;
+            if (map.c_str()[(int)fPlayerX * nMapWidth + (int)fPlayerY] == '#')
+            {
+                fPlayerX += sinf(fPlayerA) * fSpeed * fElapsedTime;
+                ;
+                fPlayerY += cosf(fPlayerA) * fSpeed * fElapsedTime;
+                ;
+            }
+        }
 
-			// Find distance to wall
-			float fStepSize = 0.1f;		  // Increment size for ray casting, decrease to increase										
-			float fDistanceToWall = 0.0f; //                                      resolution
+        for (int x = 0; x < nScreenWidth; x++)
+        {
+            // For each column, calculate the projected ray angle into world space
+            float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)nScreenWidth) * fFOV;
 
-			bool bHitWall = false;		// Set when ray hits wall block
-			bool bBoundary = false;		// Set when ray hits boundary between two wall blocks
+            // Find distance to wall
+            float fStepSize = 0.1f;       // Increment size for ray casting, decrease to increase
+            float fDistanceToWall = 0.0f; //                                      resolution
 
-			float fEyeX = sinf(fRayAngle); // Unit vector for ray in player space
-			float fEyeY = cosf(fRayAngle);
+            bool bHitWall = false;  // Set when ray hits wall block
+            bool bBoundary = false; // Set when ray hits boundary between two wall blocks
 
-			// Incrementally cast ray from player, along ray angle, testing for 
-			// intersection with a block
-			while (!bHitWall && fDistanceToWall < fDepth)
-			{
-				fDistanceToWall += fStepSize;
-				int nTestX = (int)(fPlayerX + fEyeX * fDistanceToWall);
-				int nTestY = (int)(fPlayerY + fEyeY * fDistanceToWall);
-				
-				// Test if ray is out of bounds
-				if (nTestX < 0 || nTestX >= nMapWidth || nTestY < 0 || nTestY >= nMapHeight)
-				{
-					bHitWall = true;			// Just set distance to maximum depth
-					fDistanceToWall = fDepth;
-				}
-				else
-				{
-					// Ray is inbounds so test to see if the ray cell is a wall block
-					if (map.c_str()[nTestX * nMapWidth + nTestY] == '#')
-					{
-						// Ray has hit wall
-						bHitWall = true;
+            float fEyeX = sinf(fRayAngle); // Unit vector for ray in player space
+            float fEyeY = cosf(fRayAngle);
 
-						// To highlight tile boundaries, cast a ray from each corner
-						// of the tile, to the player. The more coincident this ray
-						// is to the rendering ray, the closer we are to a tile 
-						// boundary, which we'll shade to add detail to the walls
-						vector<pair<float, float>> p;
+            // Incrementally cast ray from player, along ray angle, testing for
+            // intersection with a block
+            while (!bHitWall && fDistanceToWall < fDepth)
+            {
+                fDistanceToWall += fStepSize;
+                int nTestX = (int)(fPlayerX + fEyeX * fDistanceToWall);
+                int nTestY = (int)(fPlayerY + fEyeY * fDistanceToWall);
 
-						// Test each corner of hit tile, storing the distance from
-						// the player, and the calculated dot product of the two rays
-						for (int tx = 0; tx < 2; tx++)
-							for (int ty = 0; ty < 2; ty++)
-							{
-								// Angle of corner to eye
-								float vy = (float)nTestY + ty - fPlayerY;
-								float vx = (float)nTestX + tx - fPlayerX;
-								float d = sqrt(vx*vx + vy*vy); 
-								float dot = (fEyeX * vx / d) + (fEyeY * vy / d);
-								p.push_back(make_pair(d, dot));
-							}
+                // Test if ray is out of bounds
+                if (nTestX < 0 || nTestX >= nMapWidth || nTestY < 0 || nTestY >= nMapHeight)
+                {
+                    bHitWall = true; // Just set distance to maximum depth
+                    fDistanceToWall = fDepth;
+                }
+                else
+                {
+                    // Ray is inbounds so test to see if the ray cell is a wall block
+                    if (map.c_str()[nTestX * nMapWidth + nTestY] == '#')
+                    {
+                        // Ray has hit wall
+                        bHitWall = true;
 
-						// Sort Pairs from closest to farthest
-						sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right) {return left.first < right.first; });
-						
-						// First two/three are closest (we will never see all four)
-						float fBound = 0.001;
-						if (acos(p.at(0).second) < fBound) bBoundary = true;
-						if (acos(p.at(1).second) < fBound) bBoundary = true;
-						if (acos(p.at(2).second) < fBound) bBoundary = true;
-					}
-				}
-			}
-		
-			// Calculate distance to ceiling and floor
-			int nCeiling = (float)(nScreenHeight/2.0) - nScreenHeight / ((float)fDistanceToWall);
-			int nFloor = nScreenHeight - nCeiling;
+                        // To highlight tile boundaries, cast a ray from each corner
+                        // of the tile, to the player. The more coincident this ray
+                        // is to the rendering ray, the closer we are to a tile
+                        // boundary, which we'll shade to add detail to the walls
+                        vector<pair<float, float>> p;
 
-			// Shader walls based on distance
-			uint8_t nShade = 7;
-			if (fDistanceToWall <= fDepth / 4.0f)			nShade = 255;	// Very close	
-			else if (fDistanceToWall < fDepth / 3.0f)		nShade = 191;
-			else if (fDistanceToWall < fDepth / 2.0f)		nShade = 127;
-			else if (fDistanceToWall < fDepth)				nShade = 63;
-			else											nShade = 15;		// Too far away
+                        // Test each corner of hit tile, storing the distance from
+                        // the player, and the calculated dot product of the two rays
+                        for (int tx = 0; tx < 2; tx++)
+                            for (int ty = 0; ty < 2; ty++)
+                            {
+                                // Angle of corner to eye
+                                float vy = (float)nTestY + ty - fPlayerY;
+                                float vx = (float)nTestX + tx - fPlayerX;
+                                float d = sqrt(vx * vx + vy * vy);
+                                float dot = (fEyeX * vx / d) + (fEyeY * vy / d);
+                                p.push_back(make_pair(d, dot));
+                            }
 
-			if (bBoundary)		nShade = 0; // Black it out
-			
-			for (int y = 0; y < nScreenHeight; y++)
-			{
-				// Each Row
-				if(y <= nCeiling)
-					pluto_set_cpix(x, y, 0, 0, 0); 
-				else if(y > nCeiling && y <= nFloor)
-					pluto_set_cpix(x, y, nShade, nShade, nShade); 
-				else // Floor
-				{				
-					// Shade floor based on distance
-					float b = 1.0f - (((float)y -nScreenHeight/2.0f) / ((float)nScreenHeight / 2.0f));
-					if (b < 0.25)		nShade = 191;
-					else if (b < 0.5)	nShade = 143;
-					else if (b < 0.75)	nShade = 95;
-					else if (b < 0.9)	nShade = 47;
-					else				nShade = 15;
-					//screen[y*nScreenWidth + x] = nShade;
-					pluto_set_cpix(x, y, nShade, nShade, nShade); 
-				}
-			}
-		}
+                        // Sort Pairs from closest to farthest
+                        sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right) { return left.first < right.first; });
 
-		// Display Stats
-		
-		//swprintf(buf, 256, L"X=%3.2f, Y=%3.2f, A=%3.2f FPS=%3.2f ", fPlayerX, fPlayerY, fPlayerA, 1.0f/fElapsedTime);
+                        // First two/three are closest (we will never see all four)
+                        float fBound = 0.001;
+                        if (acos(p.at(0).second) < fBound)
+                            bBoundary = true;
+                        if (acos(p.at(1).second) < fBound)
+                            bBoundary = true;
+                        if (acos(p.at(2).second) < fBound)
+                            bBoundary = true;
+                    }
+                }
+            }
 
-		//wcsncpy(screen, buf, wcslen(buf));
+            // Calculate distance to ceiling and floor
+            int nCeiling = (float)(nScreenHeight / 2.0) - nScreenHeight / ((float)fDistanceToWall);
+            int nFloor = nScreenHeight - nCeiling;
 
-		// Display Map
-		/*for (int nx = 0; nx < nMapWidth; nx++)
+            // Shader walls based on distance
+            uint8_t nShade = 7;
+            if (fDistanceToWall <= fDepth / 4.0f)
+                nShade = 255; // Very close
+            else if (fDistanceToWall < fDepth / 3.0f)
+                nShade = 191;
+            else if (fDistanceToWall < fDepth / 2.0f)
+                nShade = 127;
+            else if (fDistanceToWall < fDepth)
+                nShade = 63;
+            else
+                nShade = 15; // Too far away
+
+            if (bBoundary)
+                nShade = 0; // Black it out
+
+            for (int y = 0; y < nScreenHeight; y++)
+            {
+                // Each Row
+                if (y <= nCeiling)
+                    pluto_set_cpix(x, y, 0, 0, 0);
+                else if (y > nCeiling && y <= nFloor)
+                    pluto_set_cpix(x, y, nShade, nShade, nShade);
+                else // Floor
+                {
+                    // Shade floor based on distance
+                    float b = 1.0f - (((float)y - nScreenHeight / 2.0f) / ((float)nScreenHeight / 2.0f));
+                    if (b < 0.25)
+                        nShade = 191;
+                    else if (b < 0.5)
+                        nShade = 143;
+                    else if (b < 0.75)
+                        nShade = 95;
+                    else if (b < 0.9)
+                        nShade = 47;
+                    else
+                        nShade = 15;
+                    //screen[y*nScreenWidth + x] = nShade;
+                    pluto_set_cpix(x, y, nShade, nShade, nShade);
+                }
+            }
+        }
+
+        // Display Stats
+
+        //swprintf(buf, 256, L"X=%3.2f, Y=%3.2f, A=%3.2f FPS=%3.2f ", fPlayerX, fPlayerY, fPlayerA, 1.0f/fElapsedTime);
+
+        //wcsncpy(screen, buf, wcslen(buf));
+
+        // Display Map
+        /*for (int nx = 0; nx < nMapWidth; nx++)
 			for (int ny = 0; ny < nMapWidth; ny++)
 			{
 				screen[(ny+1)*nScreenWidth + nx] = map[ny * nMapWidth + nx];
 			}
 		screen[((int)fPlayerX+1) * nScreenWidth + (int)fPlayerY] = 'P';*/
 
-		// Display Frame
-		//screen[nScreenWidth * nScreenHeight - 1] = '\0';
-		/*
+        // Display Frame
+        //screen[nScreenWidth * nScreenHeight - 1] = '\0';
+        /*
 		fputs("\e[H", stdout);
 		fflush(stdout);
 		//dwBytesWritten = write(1, screen, nScreenWidth * nScreenHeight);
@@ -388,10 +419,11 @@ int main()
         (void)ret;
         */
         pluto_write_out();
-        if (render) pluto_render();
-	}
+        if (render)
+            pluto_render();
+    }
 
-	return 0;
+    return 0;
 }
 
 // That's It!! - Jx9

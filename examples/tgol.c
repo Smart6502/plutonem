@@ -91,7 +91,7 @@ void cleanup()
     free(m_state);
     pluto_clear();
     pluto_deinit();
-#if defined (__APPLE__)
+#if defined(__APPLE__)
     printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %llu phase cycles\n", phase_cycles);
 #else
     printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %ld phase cycles\n", phase_cycles);

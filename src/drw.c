@@ -58,26 +58,30 @@ void pluto_transform_ucp(uchar *ret, uint16_t unichr)
 
 void pluto_set_pix(int x, int y)
 {
-    if (PIX_OOB(x, y)) return;
+    if (PIX_OOB(x, y))
+        return;
     _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] |= _pluto_pixmap[y % 4][x % 2];
 }
 
 void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 {
-    if (PIX_OOB(x, y)) return;
+    if (PIX_OOB(x, y))
+        return;
     _pluto_canvas.pix_colour[y * (_pluto_canvas.width << 1) + x] = (pluto_colour_t){red, green, blue};
 }
 
 void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 {
-    if (PIX_OOB(x, y)) return;
+    if (PIX_OOB(x, y))
+        return;
     pluto_set_pix(x, y);
     pluto_set_pix_colour(x, y, red, green, blue);
 }
 
 void pluto_unset_pix(int x, int y)
 {
-    if (PIX_OOB(x, y)) return;
+    if (PIX_OOB(x, y))
+        return;
     _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x % 2];
 }
 
