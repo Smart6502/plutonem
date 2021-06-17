@@ -25,7 +25,7 @@ void create_mandelbrot()
             }
             if (iter >= maxi)
             {
-                pluto_set_cpix(col, row, (int)(x * c_re * 2048), (int)(y * c_im * 4096), iter + maxi * x * col * row);
+                pluto_set_cpix(col, row, x * c_re * 2048, y * c_im * 4096, col * row);
             }
         }
     }

@@ -54,7 +54,8 @@ void pluto_transform_ucp(uchar *ret, uint16_t unichr)
     ret[2] = (uchar)(((unichr)&0x3F) | 0x80);
 }
 
-#define CHECK_PIX_POS(x, y) if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
+#define CHECK_PIX_POS(x, y) \
+	if (x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight) return;
 
 void pluto_set_pix(int x, int y)
 {
@@ -138,6 +139,7 @@ void pluto_clear_buffers()
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
     memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
 }
+
 void pluto_clear()
 {
     pluto_clear_buffers();

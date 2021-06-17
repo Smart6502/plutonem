@@ -64,13 +64,13 @@ Comments in the pluto.h file describe what each function/data structure does
 <img src="screenshots/fps.png" align="center">
 
 ### Plutonem works on:
-- [x] Operating systems which have the write() syscall i.e. Linux, BSD (I will remove this later)
+- [x] Operating systems which have the write() syscall i.e. MacOS, Linux, BSD (I will remove this later)
 - [x] UTF-8 terminals
 
 #### To-do
 - [x] RGB colours
 - [x] Fixing colour darkening
-- [ ] Porting to Windows and MacOS
+- [ ] Port to Windows
 - [ ] More geometry stuff (transforms etc.)
 
 #### Contributing:
