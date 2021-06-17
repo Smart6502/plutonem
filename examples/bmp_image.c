@@ -27,8 +27,8 @@ struct bmp_file_hdr
     uint32_t blue_mask;
 } __attribute__((packed));
 
-int w, h;
- 
+double xa, ya;
+
 struct bmp_image
 {
     struct bmp_file_hdr file_hdr;
@@ -67,7 +67,7 @@ void draw_bmp(struct bmp_image *bmp_image)
         for(uint32_t j = 0; j < bmp_image->file_hdr.bi_width; j++)
         {
             uint32_t pixel = bmp_get_pixel(j, i, bmp_image);
-            pluto_set_cpix((int)((double)j * ((double)(w) / (double)(bmp_image->file_hdr.bi_width))), (int)((double)i * ((double)(h) / (double)(bmp_image->file_hdr.bi_height))), pixel >> 16 & 0xff, pixel >> 8 & 0xff, pixel & 0xff);
+            pluto_set_cpix((uint32_t)((double)(j) * xa), (uint32_t)((double)(i) * ya), pixel >> 16 & 0xff, pixel >> 8 & 0xff, pixel & 0xff);
         }
     }
     pluto_write_out();
@@ -80,6 +80,16 @@ int main(int argc, char *argv[])
         fputs("Incorrect number of arguments.\n", stderr);
         exit(EXIT_FAILURE);
     }
+
+    if (argc == 2 && !argv[1][0]) {
+        fputs("Aguments cannot be empty.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (argc == 4 && (!argv[2][0] || !argv[3][0])) {
+        fputs("Aguments cannot be empty.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
     
     struct bmp_image bmp_image;
     if (load_bmp(argv[1], &bmp_image)) {
@@ -90,12 +100,19 @@ int main(int argc, char *argv[])
     pluto_init_window(true);
 
     if (argc == 4) {
-        w = atoi(argv[2]);
-        h = atoi(argv[3]);
+        xa = (atof(argv[2]) / (double)(bmp_image.file_hdr.bi_width));
+        ya = (atof(argv[3]) / (double)(bmp_image.file_hdr.bi_width));
+        if (!strcmp(argv[2], "n") || !strcmp(argv[2], "N")) {
+            xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
+        }
+        if (!strcmp(argv[3], "n") || !strcmp(argv[3], "N")) {
+            ya = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
+        }
     } else {
-        w = _pluto_canvas.cwidth;
-        h = _pluto_canvas.cheight;
+        xa = 1;
+        ya = 1;
     }
+    
     
     draw_bmp(&bmp_image);
 
