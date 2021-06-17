@@ -6,7 +6,7 @@
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window(false);
 
     float ang = 0;
     int org = 2 * _pluto_canvas.cheight / 3 - 1;

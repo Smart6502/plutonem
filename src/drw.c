@@ -111,12 +111,14 @@ void pluto_write_out()
             }
         }
 
+        if (_pluto_canvas.antialias) bl = 8;
+
         if (bl)
         {
             tr /= bl;
             tg /= bl;
             tb /= bl;
-        }
+       }
         else
         {
             tr = 255, tg = 255, tb = 255;
@@ -127,6 +129,8 @@ void pluto_write_out()
         pluto_transform_ucp(&_pluto_canvas.buffer[i * 24 + 19], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
 }
+
+void pluto_sigwinch(int);
 
 void pluto_render()
 {

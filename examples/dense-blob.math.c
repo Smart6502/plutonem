@@ -9,7 +9,7 @@ const float density = 1.3; // Pixel density (low => high density, high => low de
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window(false);
 
     float x, y;
     for (x = 1; x < _pluto_canvas.cwidth / 3; x += density)
