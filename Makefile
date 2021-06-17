@@ -8,7 +8,7 @@ EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 LIBA := libpluto.a
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 
 LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
 
 .PHONY: clean
@@ -26,7 +26,7 @@ exp: $(EXBINS)
 
 %.e: %.cpp $(LIBA)
 	@echo "Compiling example $<"
-	@$(CPPC) -o $@ $< $(CFLAGS) -L. -lpluto -lX11
+	@$(CPPC) -o $@ $< $(CFLAGS) -L. -lpluto -lX11 -std=c++11
 
 %.o: %.c
 	@echo "Compiling object $<"
