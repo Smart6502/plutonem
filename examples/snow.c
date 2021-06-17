@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <sys/time.h>
+#include <signal.h>
 
 int ws;
 float x[256], y[256], f[256], w[256];
@@ -30,10 +31,18 @@ void wait_us(uint64_t d) {
     #endif
 }
 
+void pluto_sigwinch(int);
+
+void sigwinch_hndl(int sig) {
+    pluto_clear();
+    pluto_sigwinch(sig);
+}
+
 int main(void) {
     srand(usTime());
     float ws = frand(150) - 75;
     pluto_init_window(false);
+    signal(SIGWINCH, sigwinch_hndl);
     for (int i = 0; i < 256; i++) {
         x[i] = (rand() % _pluto_canvas.cwidth);
         y[i] = frand(_pluto_canvas.cheight);
