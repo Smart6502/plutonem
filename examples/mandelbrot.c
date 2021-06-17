@@ -75,10 +75,9 @@ void create_mandelbrot()
                 x = x_new;
                 iter++;
             }
-
             if (iter < maxi)
             {
-                pluto_colour_t tmp = HsvToRgb((HsvColor){ (int)(255 * iter / maxi), (int)(255 * iter / maxi), (int)(255 * iter / maxi)} );
+                pluto_colour_t tmp = HsvToRgb((HsvColor){(int)(255 * iter / maxi), 255, 255});
                 pluto_set_cpix(col, row, tmp.r, tmp.g, tmp.b);
             }
         }

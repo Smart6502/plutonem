@@ -26,7 +26,9 @@ struct bmp_file_hdr
     uint32_t green_mask;
     uint32_t blue_mask;
 } __attribute__((packed));
- 
+
+double xa, ya;
+
 struct bmp_image
 {
     struct bmp_file_hdr file_hdr;
@@ -42,15 +44,17 @@ uint32_t bmp_get_pixel(uint32_t x, uint32_t y, struct bmp_image *bmp_image)
 int load_bmp(char *path, struct bmp_image *bmp_image)
 {
     FILE *fp = fopen(path, "r");
-    if(fp == NULL) 
+    if (fp == NULL) 
         return -1;
  
-    fread(&bmp_image->file_hdr, sizeof(struct bmp_file_hdr), 1, fp);
+    int ret = fread(&bmp_image->file_hdr, sizeof(struct bmp_file_hdr), 1, fp);
     
     fseek(fp, bmp_image->file_hdr.bf_offset, SEEK_SET);
     bmp_image->image_buffer = malloc(bmp_image->file_hdr.bf_size);
-    fread(bmp_image->image_buffer, bmp_image->file_hdr.bf_size, 1, fp);
- 
+    ret = fread(bmp_image->image_buffer, bmp_image->file_hdr.bf_size, 1, fp);
+
+    (void)ret;
+
     fclose(fp);
  
     return 0;
@@ -63,7 +67,7 @@ void draw_bmp(struct bmp_image *bmp_image)
         for(uint32_t j = 0; j < bmp_image->file_hdr.bi_width; j++)
         {
             uint32_t pixel = bmp_get_pixel(j, i, bmp_image);
-            pluto_set_cpix(j, i, pixel & 0xff, pixel >> 8 & 0xff, pixel >> 16 & 0xff);
+            pluto_set_cpix((uint32_t)((double)(j) * xa), (uint32_t)((double)(i) * ya), pixel >> 16 & 0xff, pixel >> 8 & 0xff, pixel & 0xff);
         }
     }
     pluto_write_out();
@@ -72,14 +76,45 @@ void draw_bmp(struct bmp_image *bmp_image)
  
 int main(int argc, char *argv[])
 {
-    if(argc <= 1)
-        return -1;
- 
+    if (argc <= 1 || (argc > 2 && argc != 4)) {
+        fputs("Incorrect number of arguments.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (argc == 2 && !argv[1][0]) {
+        fputs("Aguments cannot be empty.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (argc == 4 && (!argv[2][0] || !argv[3][0])) {
+        fputs("Aguments cannot be empty.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+    
+    struct bmp_image bmp_image;
+    if (load_bmp(argv[1], &bmp_image)) {
+        fputs("Failed to load bitmap.\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+    
     pluto_init_window(true);
 
-    struct bmp_image bmp_image;
-    if(load_bmp(argv[1], &bmp_image) == 0)
-        draw_bmp(&bmp_image);
+    if (argc == 4) {
+        xa = (atof(argv[2]) / (double)(bmp_image.file_hdr.bi_width));
+        ya = (atof(argv[3]) / (double)(bmp_image.file_hdr.bi_width));
+        if (!strcmp(argv[2], "n") || !strcmp(argv[2], "N")) {
+            xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
+        }
+        if (!strcmp(argv[3], "n") || !strcmp(argv[3], "N")) {
+            ya = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
+        }
+    } else {
+        xa = 1;
+        ya = 1;
+    }
+    
+    
+    draw_bmp(&bmp_image);
 
     pluto_deinit();
  
