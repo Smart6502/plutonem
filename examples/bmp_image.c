@@ -27,7 +27,7 @@ struct bmp_file_hdr
     uint32_t blue_mask;
 } __attribute__((packed));
 
-double xa, ya;
+float xa, ya;
 
 struct bmp_image
 {
@@ -67,7 +67,7 @@ void draw_bmp(struct bmp_image *bmp_image)
         for (uint32_t j = 0; j < bmp_image->file_hdr.bi_width; j++)
         {
             uint32_t pixel = bmp_get_pixel(j, i, bmp_image);
-            pluto_set_cpix((uint32_t)((double)(j)*xa), (uint32_t)((double)(i)*ya), pixel >> 16 & 0xff, pixel >> 8 & 0xff, pixel & 0xff);
+            pluto_set_cpix((uint32_t)((float)(j)*xa), (uint32_t)((float)(i)*ya), pixel >> 16 & 0xff, pixel >> 8 & 0xff, pixel & 0xff);
         }
     }
     pluto_write_out();
@@ -105,11 +105,11 @@ int main(int argc, char *argv[])
 
     if (argc == 4)
     {
-        xa = (atof(argv[2]) / (double)(bmp_image.file_hdr.bi_width));
-        ya = (atof(argv[3]) / (double)(bmp_image.file_hdr.bi_width));
+        xa = (atof(argv[2]) / (float)(bmp_image.file_hdr.bi_width));
+        ya = (atof(argv[3]) / (float)(bmp_image.file_hdr.bi_width));
         if (!strcmp(argv[2], "t") || !strcmp(argv[2], "T"))
         {
-            xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
+            xa = ((float)(_pluto_canvas.cwidth) / (float)(bmp_image.file_hdr.bi_width));
         }
         else if (!strcmp(argv[2], "o") || !strcmp(argv[2], "O"))
         {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
         }
         if (!strcmp(argv[3], "t") || !strcmp(argv[3], "T"))
         {
-            ya = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
+            ya = ((float)(_pluto_canvas.cheight) / (float)(bmp_image.file_hdr.bi_height));
         }
         else if (!strcmp(argv[3], "o") || !strcmp(argv[3], "O"))
         {
@@ -126,14 +126,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        if (_pluto_canvas.cwidth > _pluto_canvas.cheight)
-        {
-            ya = xa = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
-        }
-        else
-        {
-            ya = xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
-        }
+	xa = ((float)_pluto_canvas.cwidth / (float)bmp_image.file_hdr.bi_width);
+	ya = (float)_pluto_canvas.height / (float)bmp_image.file_hdr.bi_height;
     }
 
     draw_bmp(&bmp_image);
