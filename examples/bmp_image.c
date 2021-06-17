@@ -102,15 +102,22 @@ int main(int argc, char *argv[])
     if (argc == 4) {
         xa = (atof(argv[2]) / (double)(bmp_image.file_hdr.bi_width));
         ya = (atof(argv[3]) / (double)(bmp_image.file_hdr.bi_width));
-        if (!strcmp(argv[2], "n") || !strcmp(argv[2], "N")) {
+        if (!strcmp(argv[2], "t") || !strcmp(argv[2], "T")) {
             xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
+        } else if (!strcmp(argv[2], "o") || !strcmp(argv[2], "O")) {
+            xa = 1;
         }
-        if (!strcmp(argv[3], "n") || !strcmp(argv[3], "N")) {
+        if (!strcmp(argv[3], "t") || !strcmp(argv[3], "T")) {
             ya = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
+        } else if (!strcmp(argv[3], "o") || !strcmp(argv[3], "O")) {
+            ya = 1;
         }
     } else {
-        xa = 1;
-        ya = 1;
+        if (_pluto_canvas.cwidth > _pluto_canvas.cheight) {
+            ya = xa = ((double)(_pluto_canvas.cheight) / (double)(bmp_image.file_hdr.bi_height));
+        } else {
+            ya = xa = ((double)(_pluto_canvas.cwidth) / (double)(bmp_image.file_hdr.bi_width));
+        }
     }
     
     
