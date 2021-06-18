@@ -45,9 +45,9 @@ typedef struct
 typedef struct
 {
     bool antialias;             /* If not 0, use anti-antialiasing */
-    int height, width;          /* Height and width of the terminal in chars */
-    int cheight, cwidth;        /* Height and width in pixels */
-    int bufsize, bmsize;        /* Bitmap and buffer sizes */
+    int32_t height, width;          /* Height and width of the terminal in chars */
+    int32_t cheight, cwidth;        /* Height and width in pixels */
+    int32_t bufsize, bmsize;        /* Bitmap and buffer sizes */
     pluto_colour_t *pix_colour; /* 24-bit colour fg */
     uchar *bitmap;              /* Bitmap buffer */
     uchar *buffer;              /* UTF-8 output buffer */

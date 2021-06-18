@@ -126,8 +126,14 @@ int main(int argc, char *argv[])
     }
     else
     {
-	xa = ((float)_pluto_canvas.cwidth / (float)bmp_image.file_hdr.bi_width);
-	ya = (float)_pluto_canvas.height / (float)bmp_image.file_hdr.bi_height;
+        if (_pluto_canvas.cwidth > _pluto_canvas.cheight)
+        {
+            ya = xa = ((float)(_pluto_canvas.cheight) / (float)(bmp_image.file_hdr.bi_height));
+        }
+        else
+        {
+            ya = xa = ((float)(_pluto_canvas.cwidth) / (float)(bmp_image.file_hdr.bi_width));
+        }
     }
 
     draw_bmp(&bmp_image);

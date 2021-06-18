@@ -18,11 +18,11 @@ extern "C"
 }
 
 uint8_t shades[5][3] = {
-    {143, 188, 187},
-    {136, 192, 208},
-    {129, 161, 193},
-    {94, 129, 172},
-    {76, 86, 106},
+    {49, 87, 134},
+    {47, 102, 170},
+    {66, 128, 204},
+    {96, 151, 218},
+    {129, 174, 229},
 };
 
 int n_screen_width = 160;
@@ -270,7 +270,7 @@ int main()
             for (int y = 0; y < n_screen_height; y++)
             {
                 if (y <= nCeiling)
-                    pluto_set_cpix(x, y, 0, 0, 0);
+                    pluto_unset_pix(x, y);
                 else if (y > nCeiling && y <= nFloor)
                     pluto_set_cpix(x, y, shades[shade_n][0], shades[shade_n][1], shades[shade_n][2]);
                 else

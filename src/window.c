@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 pluto_lib_t _pluto_canvas;
 
 void pluto_sigint(int);
+void pluto_sigwinch(int);
 
 void pluto_init_window(bool antialias)
 {
@@ -62,7 +63,9 @@ void pluto_init_window(bool antialias)
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
+
     signal(SIGINT, pluto_sigint);
+    signal(SIGWINCH, pluto_sigwinch);
 
     setlocale(LC_ALL, "");
     printf("\e[?25l\e[0;0H");
@@ -93,4 +96,27 @@ void pluto_sigint(int sig)
     (void)sig;
     pluto_deinit();
     exit(0);
+}
+
+void pluto_sigwinch(int sig)
+{
+    (void)sig;
+
+    if (!_pluto_canvas.is_init)
+        return;
+
+    struct winsize wsize;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
+
+    _pluto_canvas.height = wsize.ws_row;
+    _pluto_canvas.width = wsize.ws_col;
+
+    _pluto_canvas.cheight = wsize.ws_row * 4;
+    _pluto_canvas.cwidth = wsize.ws_col * 2;
+    _pluto_canvas.bmsize = _pluto_canvas.height * _pluto_canvas.width;
+    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 24;
+
+    _pluto_canvas.buffer = (uchar *)realloc(_pluto_canvas.buffer, _pluto_canvas.bufsize);
+    _pluto_canvas.bitmap = (uchar *)realloc(_pluto_canvas.bitmap, _pluto_canvas.bmsize);
+    _pluto_canvas.pix_colour = (pluto_colour_t *)realloc(_pluto_canvas.pix_colour, _pluto_canvas.bmsize * sizeof(pluto_colour_t) * 8);
 }

@@ -6,7 +6,7 @@
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window(false);
 
     for (int y = 0; y < _pluto_canvas.cheight / 2; y++)
     {

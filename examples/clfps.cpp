@@ -368,7 +368,7 @@ int main()
             {
                 // Each Row
                 if (y <= nCeiling)
-                    pluto_set_cpix(x, y, 0, 0, 0);
+                    pluto_unset_pix(x, y);
                 else if (y > nCeiling && y <= nFloor)
                     pluto_set_cpix(x, y, nShade, nShade, nShade);
                 else // Floor
