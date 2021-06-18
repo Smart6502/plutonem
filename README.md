@@ -57,8 +57,8 @@ Comments in the pluto.h file describe what each function/data structure does
 <p>Mandelbrot (examples/mandelbrot.c)</p>
 <img src="screenshots/mandelbrot.png" align="center">
 <br>
-<p>Conway's Game of Life written using plutonem (examples/tgol.c)</p>
-<img src="screenshots/conways_game_of_life.png" align="center">
+<p>Image rendered using plutonem</p>
+<img src="screenshots/image_viewer.png" align="center">
 <br>
 <p>A first person shooter using plutonem</p>
 <img src="screenshots/fps.png" align="center">
