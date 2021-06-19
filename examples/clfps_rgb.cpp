@@ -110,6 +110,7 @@ void c_exit(int sig)
 int main()
 {
     pluto_init_window(true);
+    pluto_save_screen();
     signal(SIGINT, c_exit);
 
     n_screen_width = _pluto_canvas.cwidth;

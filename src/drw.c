@@ -35,6 +35,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <unistd.h>
 #include <wchar.h>
 
+//extern bool _pluto_resize_req;
+
 const uchar _pluto_pixmap[4][2] = {
     {0x01, 0x08},
     {0x02, 0x10},
@@ -51,7 +53,7 @@ void pluto_transform_ucp(uchar *ret, uint16_t unichr)
 {
     ret[0] = (uchar)(((unichr >> 12) & 0x0F) | 0xE0);
     ret[1] = (uchar)(((unichr >> 6) & 0x3F) | 0x80);
-    ret[2] = (uchar)(((unichr)&0x3F) | 0x80);
+    ret[2] = (uchar)(((unichr) & 0x3F) | 0x80);
 }
 
 #define PIX_OOB(x, y) x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight
@@ -88,7 +90,7 @@ void pluto_unset_pix(int x, int y)
 void pluto_write_out()
 {
     char buf[20];
-    for (int i = 0; i < _pluto_canvas.bmsize; i++)
+    for (int32_t i = 0; i < _pluto_canvas.bmsize; i++)
     {
         int bx = (i % _pluto_canvas.width) * 2;
         int by = (i / _pluto_canvas.width) * 4;
@@ -109,6 +111,7 @@ void pluto_write_out()
                     tb += _pluto_canvas.pix_colour[pci].b;
                 }
             }
+            
         }
 
         if (_pluto_canvas.antialias) bl = 8;
@@ -118,37 +121,29 @@ void pluto_write_out()
             tr /= bl;
             tg /= bl;
             tb /= bl;
-       }
+        }
         else
         {
             tr = 255, tg = 255, tb = 255;
         }
 
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", (uint8_t)tr, (uint8_t)tg, (uint8_t)tb);
-        strcpy((char *)&_pluto_canvas.buffer[i * 24], buf);
-        pluto_transform_ucp(&_pluto_canvas.buffer[i * 24 + 19], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
+        strcpy((char *)&_pluto_canvas.buffer[i * 22 + (i / _pluto_canvas.width)], buf);
+        pluto_transform_ucp(&_pluto_canvas.buffer[i * 22 + 19 + (i / _pluto_canvas.width)], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
+    for (int i = 1; i < _pluto_canvas.height; i++) {
+        _pluto_canvas.buffer[_pluto_canvas.width * 22 * i + i - 1] = '\n';
+    }
+     _pluto_canvas.buffer[_pluto_canvas.bufsize - 1] = 0;
 }
 
 void pluto_sigwinch(int);
 
 void pluto_render()
 {
-    printf("\e[0;0H");
-    int wret = write(STDOUT_FILENO, _pluto_canvas.buffer, _pluto_canvas.bufsize);
-    (void)wret;
+    _pluto_canvas.busy = true;
+    printf("\e[H");
+    fputs((char*)_pluto_canvas.buffer, stdout);
     fflush(stdout);
-}
-
-void pluto_clear_buffers()
-{
-    memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
-    memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
-    memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
-}
-
-void pluto_clear()
-{
-    pluto_clear_buffers();
-    printf("\e[H\e[2J\e[3J");
+    _pluto_canvas.busy = false;
 }

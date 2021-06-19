@@ -89,12 +89,11 @@ void cleanup()
 {
     free(m_out);
     free(m_state);
-    pluto_clear();
     pluto_deinit();
 #if defined(__APPLE__)
-    printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %llu phase cycles\n", phase_cycles);
+    printf("Terminal GOL exited successfully with %llu phase cycles\n", phase_cycles);
 #else
-    printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
+    printf("Terminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
 #endif
     exit(0);
 }
@@ -104,6 +103,7 @@ int main()
     srand(clock());
 
     pluto_init_window(false);
+    pluto_save_screen();
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);

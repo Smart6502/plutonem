@@ -42,33 +42,58 @@ pluto_lib_t _pluto_canvas;
 void pluto_sigint(int);
 void pluto_sigwinch(int);
 
+bool _pluto_screen_swapped = false;
+bool _pluto_resize_req = false;
+
+void pluto_save_screen()
+{
+    if (!_pluto_screen_swapped)
+    {
+        fputs("\e[?1049h\e[22;0;0t\e[0m\e[H\e[2J\e[3J", stdout);
+        fflush(stdout);
+        _pluto_screen_swapped = true;
+    }
+}
+
+void pluto_restore_screen()
+{
+    if (_pluto_screen_swapped)
+    {
+        fputs("\e[0m\e[H\e[2J\e[3J\e[?1049l\e[22;0;0t", stdout);
+        fflush(stdout);
+        _pluto_screen_swapped = false;
+    }
+}
+
+void pluto_clear_buffers()
+{
+    memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
+    memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
+    memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
+}
+
+void pluto_clear()
+{
+    pluto_clear_buffers();
+    printf("\e[H\e[2J\e[3J");
+}
+
 void pluto_init_window(bool antialias)
 {
-    struct winsize wsize;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
-
-    _pluto_canvas.height = wsize.ws_row;
-    _pluto_canvas.width = wsize.ws_col;
-
-    _pluto_canvas.cheight = wsize.ws_row * 4;
-    _pluto_canvas.cwidth = wsize.ws_col * 2;
-    _pluto_canvas.bmsize = _pluto_canvas.height * _pluto_canvas.width;
-    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 24;
-
-    _pluto_canvas.buffer = (uchar *)malloc(_pluto_canvas.bufsize);
-    _pluto_canvas.bitmap = (uchar *)malloc(_pluto_canvas.bmsize);
-    _pluto_canvas.pix_colour = (pluto_colour_t *)malloc(_pluto_canvas.bmsize * sizeof(pluto_colour_t) * 8);
+    pluto_resize();
 
     pluto_clear_buffers();
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
+    _pluto_canvas.busy = false;
 
     signal(SIGINT, pluto_sigint);
-    signal(SIGWINCH, pluto_sigwinch);
 
     setlocale(LC_ALL, "");
-    printf("\e[?25l\e[0;0H");
+
+    fputs("\e[?25l", stdout);
+    fflush(stdout);
 }
 
 void pluto_deinit()
@@ -79,10 +104,15 @@ void pluto_deinit()
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
     free(_pluto_canvas.pix_colour);
-    printf("\e[%d;%dH\e[?25h\e[0;0m\n", _pluto_canvas.height, _pluto_canvas.width);
+
+    fputs("\e[?25h", stdout);
+    fflush(stdout);
+
+    pluto_restore_screen();
 
     _pluto_canvas.antialias = false;
     _pluto_canvas.is_init = false;
+    _pluto_canvas.busy = false;
     _pluto_canvas.bmsize = 0;
     _pluto_canvas.bufsize = 0;
     _pluto_canvas.cwidth = 0;
@@ -98,13 +128,8 @@ void pluto_sigint(int sig)
     exit(0);
 }
 
-void pluto_sigwinch(int sig)
+void pluto_resize()
 {
-    (void)sig;
-
-    if (!_pluto_canvas.is_init)
-        return;
-
     struct winsize wsize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &wsize);
 
@@ -113,8 +138,9 @@ void pluto_sigwinch(int sig)
 
     _pluto_canvas.cheight = wsize.ws_row * 4;
     _pluto_canvas.cwidth = wsize.ws_col * 2;
+
     _pluto_canvas.bmsize = _pluto_canvas.height * _pluto_canvas.width;
-    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 24;
+    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 22 + _pluto_canvas.height;
 
     _pluto_canvas.buffer = (uchar *)realloc(_pluto_canvas.buffer, _pluto_canvas.bufsize);
     _pluto_canvas.bitmap = (uchar *)realloc(_pluto_canvas.bitmap, _pluto_canvas.bmsize);

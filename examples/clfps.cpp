@@ -171,6 +171,7 @@ void cleanExit(int sig)
 int main()
 {
     pluto_init_window(true);
+    pluto_save_screen();
     signal(SIGINT, cleanExit);
 
     nScreenWidth = _pluto_canvas.cwidth;
