@@ -69,6 +69,7 @@ void pluto_clear_buffers()
 {
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
+    strncpy((char*)_pluto_canvas.buffer, "\e[H", 4);
     memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
 }
 
@@ -140,7 +141,7 @@ void pluto_resize()
     _pluto_canvas.cwidth = wsize.ws_col * 2;
 
     _pluto_canvas.bmsize = _pluto_canvas.height * _pluto_canvas.width;
-    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 22 + _pluto_canvas.height;
+    _pluto_canvas.bufsize = _pluto_canvas.bmsize * 22 + _pluto_canvas.height + 3;
 
     _pluto_canvas.buffer = (uchar *)realloc(_pluto_canvas.buffer, _pluto_canvas.bufsize);
     _pluto_canvas.bitmap = (uchar *)realloc(_pluto_canvas.bitmap, _pluto_canvas.bmsize);
