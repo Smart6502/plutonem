@@ -42,34 +42,29 @@ pluto_lib_t _pluto_canvas;
 void pluto_sigint(int);
 void pluto_sigwinch(int);
 
-bool _pluto_screen_swapped = false;
-bool _pluto_resize_req = false;
-
 void pluto_save_screen()
 {
-    if (!_pluto_screen_swapped)
-    {
-        fputs("\e[?1049h\e[22;0;0t\e[0m\e[H\e[2J\e[3J", stdout);
-        fflush(stdout);
-        _pluto_screen_swapped = true;
-    }
+    if (_pluto_canvas.screen_swapped)
+        return;
+    fputs("\e[?1049h\e[22;0;0t\e[0m\e[H\e[2J\e[3J", stdout);
+    fflush(stdout);
+    _pluto_canvas.screen_swapped = true;
 }
 
 void pluto_restore_screen()
 {
-    if (_pluto_screen_swapped)
-    {
-        fputs("\e[0m\e[H\e[2J\e[3J\e[?1049l\e[22;0;0t", stdout);
-        fflush(stdout);
-        _pluto_screen_swapped = false;
-    }
+    if (!_pluto_canvas.screen_swapped)
+        return;
+    fputs("\e[0m\e[H\e[2J\e[3J\e[?1049l\e[22;0;0t", stdout);
+    fflush(stdout);
+    _pluto_canvas.screen_swapped = false;
 }
 
 void pluto_clear_buffers()
 {
     memset(_pluto_canvas.bitmap, 0, _pluto_canvas.bmsize);
     memset(_pluto_canvas.buffer, 0, _pluto_canvas.bufsize);
-    strncpy((char*)_pluto_canvas.buffer, "\e[H", 4);
+    strncpy((char *)_pluto_canvas.buffer, "\e[H", 4);
     memset(_pluto_canvas.pix_colour, 255, _pluto_canvas.bmsize * 8 * sizeof(pluto_colour_t));
 }
 

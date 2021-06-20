@@ -36,7 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <wchar.h>
 
 bool _pluto_first_out = true;
-extern bool _pluto_screen_swapped;
 
 const uchar _pluto_pixmap[4][2] = {
     {0x01, 0x08},
@@ -54,7 +53,7 @@ void pluto_transform_ucp(uchar *ret, uint16_t unichr)
 {
     ret[0] = (uchar)(((unichr >> 12) & 0x0F) | 0xE0);
     ret[1] = (uchar)(((unichr >> 6) & 0x3F) | 0x80);
-    ret[2] = (uchar)(((unichr) & 0x3F) | 0x80);
+    ret[2] = (uchar)(((unichr)&0x3F) | 0x80);
 }
 
 #define PIX_OOB(x, y) x < 0 || x >= _pluto_canvas.cwidth || y < 0 || y >= _pluto_canvas.cheight
@@ -92,7 +91,7 @@ void pluto_write_out()
 {
     _pluto_canvas.busy = true;
     char buf[20];
-    uchar* cbuf = (uchar*)&_pluto_canvas.buffer[3];
+    uchar *cbuf = (uchar *)&_pluto_canvas.buffer[3];
     for (int32_t i = 0; i < _pluto_canvas.bmsize; i++)
     {
         int bx = (i % _pluto_canvas.width) * 2;
@@ -116,7 +115,8 @@ void pluto_write_out()
             }
         }
 
-        if (_pluto_canvas.antialias) bl = 8;
+        if (_pluto_canvas.antialias)
+            bl = 8;
 
         if (bl)
         {
@@ -130,7 +130,7 @@ void pluto_write_out()
         }
 
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", (uint8_t)tr, (uint8_t)tg, (uint8_t)tb);
-        strcpy((char*)&cbuf[i * 22 + (i / _pluto_canvas.width)], buf);
+        strcpy((char *)&cbuf[i * 22 + (i / _pluto_canvas.width)], buf);
         pluto_transform_ucp(&cbuf[i * 22 + 19 + (i / _pluto_canvas.width)], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
     for (int i = 1; i < _pluto_canvas.height; i++)
@@ -146,7 +146,7 @@ void pluto_sigwinch(int);
 void pluto_render()
 {
     _pluto_canvas.busy = true;
-    if (_pluto_first_out && !_pluto_screen_swapped)
+    if (_pluto_first_out && !_pluto_canvas.screen_swapped)
     {
         for (int32_t i = 1; i < _pluto_canvas.height; i++)
         {
@@ -154,7 +154,7 @@ void pluto_render()
         }
         _pluto_first_out = false;
     }
-    fputs((char*)_pluto_canvas.buffer, stdout);
+    fputs((char *)_pluto_canvas.buffer, stdout);
     fflush(stdout);
     _pluto_canvas.busy = false;
 }

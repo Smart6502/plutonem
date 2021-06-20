@@ -8,7 +8,7 @@ EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 LIBA := libpluto.a
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
-CFLAGS = -Wall -Wextra -Werror -O3 
+CFLAGS = -Wall -Wextra -Werror -O3 -DPLUTO_PIX_CHAR_OFF=10240
 LIBCFLAGS = $(CFLAGS)
 
 .PHONY: clean

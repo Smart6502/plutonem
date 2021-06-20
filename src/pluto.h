@@ -37,23 +37,22 @@ typedef unsigned char uchar;
 
 typedef struct
 {
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
+    uint8_t r, g, b; /* RGB colour struct */
 } pluto_colour_t;
 
 typedef struct
 {
-    bool antialias;                 /* If not 0, use anti-antialiasing */
-    int32_t height, width;          /* Height and width of the terminal in chars */
-    int32_t old_height, old_width;  /* Old height and width for internal purposes */
-    int32_t cheight, cwidth;        /* Height and width in pixels */
-    int32_t bufsize, bmsize;        /* Bitmap and buffer sizes */
-    pluto_colour_t *pix_colour;  /* 24-bit colour fg */
-    uchar *bitmap;               /* Bitmap buffer */
-    uchar *buffer;               /* UTF-8 output buffer */
-    bool is_init;
-    bool busy;
+    bool antialias;                /* If not 0, use anti-antialiasing */
+    int32_t height, width;         /* Height and width of the terminal in chars */
+    int32_t old_height, old_width; /* Old height and width for internal purposes */
+    int32_t cheight, cwidth;       /* Height and width in pixels */
+    int32_t bufsize, bmsize;       /* Bitmap and buffer sizes */
+    pluto_colour_t *pix_colour;    /* 24-bit colour fg */
+    uchar *bitmap;                 /* Bitmap buffer */
+    uchar *buffer;                 /* UTF-8 output buffer */
+    bool screen_swapped;           /* Screen swapped ? */
+    bool is_init;                  /* Initialized ? */
+    bool busy;                     /* Busy ? */
 } pluto_lib_t;
 
 typedef struct
@@ -63,7 +62,7 @@ typedef struct
 /* Origin: (0x, 0y) */
 
 #ifndef PLUTO_PIX_CHAR_OFF
-#    define PLUTO_PIX_CHAR_OFF 10240/* Editor fix */
+#    define PLUTO_PIX_CHAR_OFF
 #endif
 
 extern pluto_lib_t _pluto_canvas;
