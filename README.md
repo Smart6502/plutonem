@@ -63,9 +63,9 @@ Comments in the pluto.h file describe what each function/data structure does
 <p>A first person shooter using plutonem</p>
 <img src="screenshots/fps.png" align="center">
 
-### Plutonem works on:
-- [x] Operating systems which have the write() syscall i.e. MacOS, Linux, BSD (I will remove this later)
-- [x] UTF-8 terminals
+#### Plutonem is tested on:
+- [x] Operating systems: Linux, BSD, MacOS
+- [x] Terminal emulators: Termite, Konsole
 
 #### To-do
 - [x] RGB colours
