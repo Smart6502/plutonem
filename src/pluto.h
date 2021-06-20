@@ -44,14 +44,16 @@ typedef struct
 
 typedef struct
 {
-    bool antialias;             /* If not 0, use anti-antialiasing */
+    bool antialias;                 /* If not 0, use anti-antialiasing */
     int32_t height, width;          /* Height and width of the terminal in chars */
+    int32_t old_height, old_width;  /* Old height and width for internal purposes */
     int32_t cheight, cwidth;        /* Height and width in pixels */
     int32_t bufsize, bmsize;        /* Bitmap and buffer sizes */
-    pluto_colour_t *pix_colour; /* 24-bit colour fg */
-    uchar *bitmap;              /* Bitmap buffer */
-    uchar *buffer;              /* UTF-8 output buffer */
+    pluto_colour_t *pix_colour;  /* 24-bit colour fg */
+    uchar *bitmap;               /* Bitmap buffer */
+    uchar *buffer;               /* UTF-8 output buffer */
     bool is_init;
+    bool busy;
 } pluto_lib_t;
 
 typedef struct
@@ -61,7 +63,7 @@ typedef struct
 /* Origin: (0x, 0y) */
 
 #ifndef PLUTO_PIX_CHAR_OFF
-#    define PLUTO_PIX_CHAR_OFF /* Editor fix */
+#    define PLUTO_PIX_CHAR_OFF 10240/* Editor fix */
 #endif
 
 extern pluto_lib_t _pluto_canvas;
@@ -114,6 +116,15 @@ extern void pluto_unset_pix(int x, int y);
 
 extern void pluto_write_out();
 /* Write bitmap buffer to UTF-8 buffer */
+
+extern void pluto_save_screen();
+/* Saves the screen contents */
+
+extern void pluto_restore_screen();
+/* Restores the screen contents */
+
+extern void pluto_resize();
+/* Updates the screen and canvas size */
 
 extern void pluto_draw_line(pt_t p0, pt_t p1, pluto_colour_t colour);
 /* Draw a line in the bitmap buffer from p0 to p1 */

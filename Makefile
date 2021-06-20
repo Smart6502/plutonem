@@ -9,7 +9,7 @@ LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 LIBA := libpluto.a
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
 CFLAGS = -Wall -Wextra -Werror -O3 
-LIBCFLAGS = $(CFLAGS) -D PLUTO_PIX_CHAR_OFF=0x2800
+LIBCFLAGS = $(CFLAGS)
 
 .PHONY: clean
 

@@ -159,18 +159,16 @@ bool GetKeyState(KeySym keySym)
 
 void cleanExit(int sig)
 {
-    if (sig != SIGINT)
-        exit(0);
+    (void)sig;
     tu_unlockTerm();
-    pluto_clear();
     pluto_deinit();
-    fputs("\e[H\e[2J\e[3J", stdout);
     exit(0);
 }
 
 int main()
 {
     pluto_init_window(true);
+    pluto_save_screen();
     signal(SIGINT, cleanExit);
 
     nScreenWidth = _pluto_canvas.cwidth;

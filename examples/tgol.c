@@ -62,16 +62,22 @@ void jump_next_phase()
 
             if (_get_cell(x, y) == 1)
             {
-                m_state[y * _pluto_canvas.cwidth + x] = n_nb == 2 || n_nb == 3;
+                m_state[y * _pluto_canvas.cwidth + x] = (n_nb == 2 || n_nb == 3);
                 pluto_set_pix(x, y);
-                int c = (rand() % 72) + 184;
-                pluto_set_pix_colour(x, y, c, c, c);
+                if (!m_state[y * _pluto_canvas.cwidth + x])
+                {
+                    int c = (rand() % 72) + 184;
+                    pluto_set_pix_colour(x, y, c, c, c);
+                }
+                else
+                {
+                    pluto_set_pix_colour(x, y, 255, 0, 0);
+                }
             }
             else
             {
                 m_state[y * _pluto_canvas.cwidth + x] = n_nb == 3;
                 pluto_unset_pix(x, y);
-                pluto_set_pix_colour(x, y, 60, 66, 76);
             }
         }
     }
@@ -82,19 +88,27 @@ void jump_next_phase()
 void _setat(int x, int y, char *str)
 {
     for (unsigned long i = 0; i < strlen(str); i++)
-        m_state[y * _pluto_canvas.cwidth + x + i] = str[i] == 'O' ? 1 : 0;
+    {
+        if (str[i] == 'R')
+        {
+            m_state[y * _pluto_canvas.cwidth + x + i] = rand() % 2;
+        }
+        else
+        {
+            m_state[y * _pluto_canvas.cwidth + x + i] = str[i] == 'O' ? 1 : 0;
+        }
+    }
 }
 
 void cleanup()
 {
     free(m_out);
     free(m_state);
-    pluto_clear();
     pluto_deinit();
 #if defined(__APPLE__)
-    printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %llu phase cycles\n", phase_cycles);
+    printf("Terminal GOL exited successfully with %llu phase cycles\n", phase_cycles);
 #else
-    printf("\e[0m\e[H\e[2J\e[3J\e[HTerminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
+    printf("Terminal GOL exited successfully with %ld phase cycles\n", phase_cycles);
 #endif
     exit(0);
 }
@@ -104,6 +118,7 @@ int main()
     srand(clock());
 
     pluto_init_window(false);
+    pluto_save_screen();
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);
     m_state = malloc(m_size);
@@ -152,13 +167,24 @@ int main()
     _setat(SGG_X, 170, ".................................");
 
     /* MacOS Big Sur */
-    _setat(64, 25, ".OOOOOO.");
-    _setat(64, 26, "OOOOOOOO");
-    _setat(64, 27, "OOOOOOOO");
-    _setat(64, 28, "OOOOOOOO");
-    _setat(64, 29, "OOOOOOOO");
-    _setat(64, 30, "OOOOOOOO");
-    _setat(64, 31, ".OOOOOO.");
+    _setat(148, 25, "OOOOOOOOO");
+    _setat(148, 26, "OOR.O.ROO");
+    _setat(148, 27, "OO.RRO.OO");
+    _setat(148, 28, "OO.ROR.OO");
+    _setat(148, 29, "OO.ORR.OO");
+    _setat(148, 30, "OOR.O.ROO");
+    _setat(148, 31, "OOOOOOOOO");
+
+    /* Another Gosper's Glider */
+    _setat(124, 40, "........................O............");
+    _setat(124, 41, "......................O.O............");
+    _setat(124, 42, "............OO......OO............OO.");
+    _setat(124, 43, "...........O...O....OO............OO.");
+    _setat(124, 44, "OO........O.....O...OO...............");
+    _setat(124, 45, "OO........O...O.OO....O.O............");
+    _setat(124, 46, "..........O.....O.......O............");
+    _setat(124, 47, "...........O...O.....................");
+    _setat(124, 48, "............OO.......................");
 
     signal(SIGINT, cleanup);
 
