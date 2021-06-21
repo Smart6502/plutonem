@@ -1,4 +1,4 @@
-#include <pluto.h>
+#include "../src/pluto.h"
 #include <stdlib.h>
 
 int main()
@@ -8,11 +8,12 @@ int main()
 
     for (;;)
     {
-        for (int i = 0; i < _pluto_canvas.cheight; i++)
+        for (int i = 1; i < _pluto_canvas.cheight; i++)
         {
-            for (int j = 0; j < _pluto_canvas.cwidth; j++)
+            for (int j = 1; j < _pluto_canvas.cwidth; j++)
             {
-                pluto_set_cpix(j, i, rand() % 256, rand() % 256, rand() % 256);
+		if (i & j)
+                    pluto_set_cpix(j, i, i % 256, i % 256, (i * j) % 256);
             }
         }
 

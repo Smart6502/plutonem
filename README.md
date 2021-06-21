@@ -26,9 +26,8 @@ Pre-compiled library files are available in the releases tab
 
 2. Write your source code. An example program which draws a line:
 ```
-/* examples/program.c */
 #include <stdlib.h>
-#include <pluto.h>
+#include "pluto.h"									/* Change path if needed */
 
 int main()
 {
