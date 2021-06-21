@@ -4,7 +4,6 @@
 int main()
 {
     pluto_init_window(false);
-    pluto_save_screen();
 
     for (int i = 1; i < _pluto_canvas.cheight; i++)
     {

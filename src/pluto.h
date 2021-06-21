@@ -53,6 +53,7 @@ typedef struct
     bool screen_swapped;           /* Screen swapped ? */
     bool is_init;                  /* Initialized ? */
     bool busy;                     /* Busy ? */
+    bool use_write;
 } pluto_lib_t;
 
 typedef struct

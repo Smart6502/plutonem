@@ -32,6 +32,28 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+
+struct termios _pluto_term, _pluto_old_term;
+bool _pluto_term_locked = false;
+
+void _pluto_lock_term()
+{
+    if (_pluto_term_locked) return;
+    tcgetattr(0, &_pluto_term);
+    tcgetattr(0, &_pluto_old_term);
+    _pluto_term.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(0, TCSANOW, &_pluto_term);
+    _pluto_term_locked = true;
+}
+
+void _pluto_unlock_term()
+{
+    if (!_pluto_term_locked) return;
+    tcsetattr(0, TCSANOW, &_pluto_old_term);
+    _pluto_term_locked = false;
+}
 
 bool _pluto_first_out = true;
 
@@ -144,14 +166,30 @@ void pluto_sigwinch(int);
 void pluto_render()
 {
     _pluto_canvas.busy = true;
+    _pluto_lock_term();
     if (_pluto_first_out && !_pluto_canvas.screen_swapped)
     {
         for (int32_t i = 1; i < _pluto_canvas.height; i++)
             putchar('\n');
 
         _pluto_first_out = false;
+        if (_pluto_canvas.use_write)
+            fflush(stdout);
     }
-    fputs((char *)_pluto_canvas.buffer, stdout);
-    fflush(stdout);
+    if (_pluto_canvas.use_write) // Keeping 'if' to avoid unused variable errors
+    {
+        #if defined(__unix__) || defined(__unix) || defined(unix) || defined(__APPLE__) // Systems that have write()
+        write(1, _pluto_canvas.buffer, _pluto_canvas.bufsize);
+        #else
+        fputs((char *)_pluto_canvas.buffer, stdout);
+        fflush(stdout);
+        #endif
+    }
+    else
+    {
+        fputs((char *)_pluto_canvas.buffer, stdout);
+        fflush(stdout);
+    }
+    _pluto_unlock_term();
     _pluto_canvas.busy = false;
 }
