@@ -176,9 +176,14 @@ void pluto_render()
         if (_pluto_canvas.use_write)
             fflush(stdout);
     }
-    if (_pluto_canvas.use_write)
+    if (_pluto_canvas.use_write) // Keeping 'if' to avoid unused variable errors
     {
+        #if defined(__unix__) || defined(__unix) || defined(unix) || defined(__APPLE__) // Systems that have write()
         write(1, _pluto_canvas.buffer, _pluto_canvas.bufsize);
+        #else
+        fputs((char *)_pluto_canvas.buffer, stdout);
+        fflush(stdout);
+        #endif
     }
     else
     {
