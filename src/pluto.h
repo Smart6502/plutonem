@@ -61,8 +61,8 @@ typedef struct
 } pt_t;
 /* Origin: (0x, 0y) */
 
-#ifndef PLUTO_PIX_CHAR_OFF
-#    define PLUTO_PIX_CHAR_OFF
+#ifndef PLUTO_CHAR_OFF
+#    define PLUTO_CHAR_OFF 10240
 #endif
 
 extern pluto_lib_t _pluto_canvas;

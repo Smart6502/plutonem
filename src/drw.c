@@ -29,11 +29,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 #include "pluto.h"
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <wchar.h>
 
 bool _pluto_first_out = true;
 
@@ -131,7 +129,7 @@ void pluto_write_out()
 
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", (uint8_t)tr, (uint8_t)tg, (uint8_t)tb);
         strcpy((char *)&cbuf[i * 22 + (i / _pluto_canvas.width)], buf);
-        pluto_transform_ucp(&cbuf[i * 22 + 19 + (i / _pluto_canvas.width)], PLUTO_PIX_CHAR_OFF + _pluto_canvas.bitmap[i]);
+        pluto_transform_ucp(&cbuf[i * 22 + 19 + (i / _pluto_canvas.width)], PLUTO_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
     for (int i = 1; i < _pluto_canvas.height; i++)
     {
@@ -149,9 +147,8 @@ void pluto_render()
     if (_pluto_first_out && !_pluto_canvas.screen_swapped)
     {
         for (int32_t i = 1; i < _pluto_canvas.height; i++)
-        {
             putchar('\n');
-        }
+
         _pluto_first_out = false;
     }
     fputs((char *)_pluto_canvas.buffer, stdout);

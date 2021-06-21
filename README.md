@@ -26,18 +26,30 @@ Pre-compiled library files are available in the releases tab
 
 2. Write your source code. An example program which draws a line:
 ```
-// examples/program.c
-#include "pluto.h"
-// If you have installed the library, you can do #include <pluto.h>
+/* examples/program.c */
+#include <stdlib.h>
+#include <pluto.h>
 
 int main()
 {
-    pluto_init_window(true);	 	 		            			// Initializes pluto with anti-aliasing
-    pluto_draw_line((pt_t){5, 10}, (pt_t){20, 25}, (pluto_colour_t){94, 129, 172});	// Draws a line from (5x, 10y) to (20x, 25y) of colour #5E81AC/RGB(94, 129, 172)
-    pluto_write_out();									// Converts pixels to chars
-    pluto_render();									// Render
-    pluto_deinit();      	                                			// De-initializes pluto
+    pluto_init_window(false);								/* Initialize pluto without anti-aliasing */
+    pluto_save_screen();								/* Save screen (restored later) */
 
+    for (;;)
+    {
+    	for (int i = 0; i < _pluto_canvas.cheight; i++)
+    	{
+	    for (int j = 0; j < _pluto_canvas.cwidth; j++)
+	    {
+	    	pluto_set_cpix(j, i, rand() % 256, rand() % 256, rand() % 256);		/* Set pixel with random colours */
+	    }
+    	}
+
+	pluto_write_out();								/* Write to outbuffer */
+	pluto_render();									/* Render the outbuffer */
+    }
+
+    pluto_deinit();
     return 0;
 }
 ```

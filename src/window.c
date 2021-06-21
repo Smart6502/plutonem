@@ -38,7 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <unistd.h>
 
 pluto_lib_t _pluto_canvas;
-
 void pluto_sigint(int);
 void pluto_sigwinch(int);
 
