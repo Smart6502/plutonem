@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 pluto_lib_t _pluto_canvas;
 void pluto_sigint(int);
 void pluto_sigwinch(int);
+extern void _pluto_unlock_term();
 
 void pluto_save_screen()
 {
@@ -81,6 +82,7 @@ void pluto_init_window(bool antialias)
 
     _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
+    _pluto_canvas.use_write = false;
     _pluto_canvas.busy = false;
 
     signal(SIGINT, pluto_sigint);
@@ -99,6 +101,8 @@ void pluto_deinit()
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
     free(_pluto_canvas.pix_colour);
+    
+    _pluto_unlock_term();
 
     fputs("\e[?25h", stdout);
     fflush(stdout);
@@ -106,6 +110,7 @@ void pluto_deinit()
     pluto_restore_screen();
 
     _pluto_canvas.antialias = false;
+    _pluto_canvas.use_write = false;
     _pluto_canvas.is_init = false;
     _pluto_canvas.busy = false;
     _pluto_canvas.bmsize = 0;
