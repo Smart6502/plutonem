@@ -106,7 +106,7 @@ void c_exit(int sig)
 
 int main()
 {
-    pluto_init_window(true);
+    pluto_init_window();
     pluto_save_screen();
     signal(SIGINT, c_exit);
 

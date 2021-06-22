@@ -117,7 +117,7 @@ int main()
 {
     srand(clock());
 
-    pluto_init_window(false);
+    pluto_init_window();
     pluto_save_screen();
     long m_size = _pluto_canvas.cwidth * _pluto_canvas.cheight * sizeof(uint8_t);
     m_out = malloc(m_size);

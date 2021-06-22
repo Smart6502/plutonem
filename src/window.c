@@ -74,13 +74,12 @@ void pluto_clear()
     printf("\e[H\e[2J\e[3J");
 }
 
-void pluto_init_window(bool antialias)
+void pluto_init_window()
 {
     pluto_resize();
 
     pluto_clear_buffers();
 
-    _pluto_canvas.antialias = antialias;
     _pluto_canvas.is_init = true;
     _pluto_canvas.use_write = false;
     _pluto_canvas.busy = false;
@@ -101,7 +100,7 @@ void pluto_deinit()
     free(_pluto_canvas.buffer);
     free(_pluto_canvas.bitmap);
     free(_pluto_canvas.pix_colour);
-    
+
     _pluto_unlock_term();
 
     fputs("\e[?25h", stdout);
@@ -109,7 +108,6 @@ void pluto_deinit()
 
     pluto_restore_screen();
 
-    _pluto_canvas.antialias = false;
     _pluto_canvas.use_write = false;
     _pluto_canvas.is_init = false;
     _pluto_canvas.busy = false;

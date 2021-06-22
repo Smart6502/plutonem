@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 
     srand(clock());
 
-    pluto_init_window(false);
+    pluto_init_window();
 
     create_mandelbrot();
     pluto_write_out();

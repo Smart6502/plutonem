@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    pluto_init_window(false);
+    pluto_init_window();
 
     if (argc == 4)
     {

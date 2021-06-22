@@ -67,7 +67,7 @@ int main(void)
 {
     srand(usTime());
     float ws = frand(150) - 75;
-    pluto_init_window(false);
+    pluto_init_window();
     pluto_save_screen();
     signal(SIGWINCH, sigwinch_hndl);
 brk:

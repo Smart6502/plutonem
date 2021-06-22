@@ -42,7 +42,6 @@ typedef struct
 
 typedef struct
 {
-    bool antialias;                /* If not 0, use anti-antialiasing */
     int32_t height, width;         /* Height and width of the terminal in chars */
     int32_t old_height, old_width; /* Old height and width for internal purposes */
     int32_t cheight, cwidth;       /* Height and width in pixels */
@@ -69,7 +68,7 @@ typedef struct
 extern pluto_lib_t _pluto_canvas;
 /* Instance */
 
-extern void pluto_init_window(bool antialias);
+extern void pluto_init_window();
 /* Initialize library:
  * 	- bool antialias: use antialiased lines ?
  */
@@ -125,36 +124,5 @@ extern void pluto_restore_screen();
 
 extern void pluto_resize();
 /* Updates the screen and canvas size */
-
-extern void pluto_draw_line(pt_t p0, pt_t p1, pluto_colour_t colour);
-/* Draw a line in the bitmap buffer from p0 to p1 */
-
-extern void pluto_rast_bftri(pt_t p0, pt_t p1, pt_t p2, pluto_colour_t colour);
-/* Rasterize a bottom-flat triangle:
- * 	- pt_t p0: highest point 
- * 	- pt_t p0: lower point 
- * 	- pt_t p0 lowest point
- */
-
-extern void pluto_rast_tftri(pt_t p0, pt_t p1, pt_t p2, pluto_colour_t colour);
-/* Rasterize a top-flat triangle:
- * 	- pt_t p0: highest point 
- * 	- pt_t p0: lower point 
- * 	- pt_t p0 lowest point
- */
-
-extern void pluto_rast_tri(pt_t p0, pt_t p1, pt_t p2, pluto_colour_t colour);
-/* Rasterize any triangle:
- * 	- pt_t p0: highest point 
- * 	- pt_t p0: lower point 
- * 	- pt_t p0 lowest point
- */
-
-extern void pluto_draw_ellipse(pt_t p0, int a, int b, pluto_colour_t colour);
-/* Draw an ellipse
- * 	- pt_t p0: centre
- * 	- int a: a offset
- * 	- int b: b offset
- */
 
 #endif
