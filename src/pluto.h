@@ -59,7 +59,7 @@ typedef struct
 {
     int x, y;
 } pt_t;
-/* Origin: (0x, 0y) */
+/* Origin: (0x, 0y) (top-left) */
 
 #ifndef PLUTO_CHAR_OFF
 #    define PLUTO_CHAR_OFF 10240
@@ -68,13 +68,11 @@ typedef struct
 extern pluto_lib_t _pluto_canvas;
 /* Instance */
 
-extern void pluto_init_window();
-/* Initialize library:
- * 	- bool antialias: use antialiased lines ?
- */
-
 extern void pluto_render();
-/* Write a frame to stdout */
+/* Draw frame to stdout */
+
+extern void pluto_write_out();
+/* Write bitmap buffer to UTF-8 buffer */
 
 extern void pluto_clear();
 /* Clear both buffers and the screen */
@@ -112,9 +110,6 @@ extern void pluto_unset_pix(int x, int y);
  * 	- int x: x position from origin
  * 	- int y: y position from origin
  */
-
-extern void pluto_write_out();
-/* Write bitmap buffer to UTF-8 buffer */
 
 extern void pluto_save_screen();
 /* Saves the screen contents */
