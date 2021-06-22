@@ -7,7 +7,7 @@ To generate `libpluto.a`, run:
 ```
 $ make
 ```
-To install it so that gcc can use it directly, run:
+To install it so that your compiler can use it directly, run:
 ```
 # make install
 ```
@@ -15,7 +15,7 @@ To compile some examples, run:
 ```
 $ make exp
 ```
-Pre-compiled library files are available in the releases tab
+Pre-compiled library files are available in the releases tab (only for Linux x86-64)
 
 ### Using the library
 
@@ -55,7 +55,7 @@ int main()
 
 3. Link the library generated, for example:
 ```
-$ gcc -o program program.c -L<path to the FOLDER where libpluto.a is located> -lpluto  # if you have installed the lib already, there is no need to use -L
+$ gcc -o program program.c -lpluto  # install it before or use -L<lib_folder_path>
 ```
 
 4. You're done! Just run your program now!
@@ -90,7 +90,7 @@ Comments in the pluto.h file describe what each function/data structure does
 
 ### Troubleshooting
 
-1. Check if proper fonts are installed. Pluto uses Unicode characters from `\u2800` to `\u28FF`. I recommend the `Cascadia Mono` font for best quality.
+1. Check if proper fonts are installed. Pluto uses Unicode characters from `U+10240(10)` to `U+10495(10)`. I recommend the `Cascadia Mono` font.
 2. Check if your terminal supports Unicode
 3. Check your locale, lang (pluto only supports UTF-8 currently). I have my locale set to `en_US.UTF-8`. On Arch Linux, which I use, I would use this command to set it:
 ```
