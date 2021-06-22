@@ -68,6 +68,8 @@ typedef struct
 extern pluto_lib_t _pluto_canvas;
 /* Instance */
 
+extern void pluto_init_window();
+
 extern void pluto_render();
 /* Draw frame to stdout */
 

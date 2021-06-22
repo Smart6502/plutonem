@@ -31,7 +31,7 @@ Pre-compiled library files are available in the releases tab (only for Linux x86
 
 int main()
 {
-    pluto_init_window(false);								/* Initialize pluto without anti-aliasing */
+    pluto_init_window();								/* Initialize pluto */
     pluto_save_screen();								/* Save screen (restored later) */
 
     for (;;)
@@ -44,8 +44,8 @@ int main()
 	    	}
     	}
 
-		pluto_write_out();								/* Write to outbuffer */
-		pluto_render();									/* Render the outbuffer */
+	pluto_write_out();								/* Write to outbuffer */
+	pluto_render();									/* Render the outbuffer */
     }
 
     pluto_deinit();
