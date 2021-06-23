@@ -85,7 +85,14 @@ extern void pluto_clear_buffers();
 extern void pluto_deinit();
 /* Free resources and restore states */
 
+/* Pixel functions where 'pix' is prefixed with 'u' are unsafe functions (without bounds checking) */
+
 extern void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+/* Set a pixel's colour to a 24-bit value
+ * Same as pluto_set_upix_colour()
+ */
+
+extern void pluto_set_upix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 /* Set a pixel's colour to a 24-bit value
  * The colours of the pixels in a block are averaged
  * 	- int x: x position from origin
@@ -97,17 +104,32 @@ extern void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8
 
 extern void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 /* Set a pixel, and it's colour to a 24-bit value
+ * Same as pluto_set_ucpix()
+ */
+
+extern void pluto_set_ucpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+/* Set a pixel, and it's colour to a 24-bit value
  * A wrapper for pluto_set_pix and pluto_set_pix_colour
  * Parameters are same as those for pluto_set_pix_colour
  */
 
 extern void pluto_set_pix(int x, int y);
 /* Set a pixel in the bitmap buffer:
+ * Same as pluto_set_upix()
+ */
+
+extern void pluto_set_upix(int x, int y);
+/* Set a pixel in the bitmap buffer:
  * 	- int x: x position from origin
  * 	- int y: y position from origin
  */
 
 extern void pluto_unset_pix(int x, int y);
+/* Unset a pixel in the bitmap buffer:
+ * Same as pluto_unset_upix()
+ */
+
+extern void pluto_unset_upix(int x, int y);
 /* Unset a pixel in the bitmap buffer:
  * 	- int x: x position from origin
  * 	- int y: y position from origin

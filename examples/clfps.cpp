@@ -366,9 +366,9 @@ int main()
             {
                 // Each Row
                 if (y <= nCeiling)
-                    pluto_unset_pix(x, y);
+                    pluto_unset_upix(x, y);
                 else if (y > nCeiling && y <= nFloor)
-                    pluto_set_cpix(x, y, nShade, nShade, nShade);
+                    pluto_set_ucpix(x, y, nShade, nShade, nShade);
                 else // Floor
                 {
                     // Shade floor based on distance
@@ -384,7 +384,7 @@ int main()
                     else
                         nShade = 15;
                     //screen[y*nScreenWidth + x] = nShade;
-                    pluto_set_cpix(x, y, nShade, nShade, nShade);
+                    pluto_set_ucpix(x, y, nShade, nShade, nShade);
                 }
             }
         }

@@ -268,9 +268,9 @@ int main()
             for (int y = 0; y < n_screen_height; y++)
             {
                 if (y <= nCeiling)
-                    pluto_unset_pix(x, y);
+                    pluto_unset_upix(x, y);
                 else if (y > nCeiling && y <= nFloor)
-                    pluto_set_cpix(x, y, shades[shade_n][0], shades[shade_n][1], shades[shade_n][2]);
+                    pluto_set_ucpix(x, y, shades[shade_n][0], shades[shade_n][1], shades[shade_n][2]);
                 else
                 {
                     float b = 1.0f - (((float)y - n_screen_height / 2.0f) / ((float)n_screen_height / 2.0f));
@@ -285,7 +285,7 @@ int main()
                     else
                         shade_n = 15;
 
-                    pluto_set_cpix(x, y, shade_n, shade_n, shade_n);
+                    pluto_set_ucpix(x, y, shade_n, shade_n, shade_n);
                 }
             }
         }
