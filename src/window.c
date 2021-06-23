@@ -39,7 +39,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 pluto_lib_t _pluto_canvas;
 void pluto_sigint(int);
-void pluto_sigwinch(int);
 extern void _pluto_unlock_term();
 
 void pluto_save_screen()

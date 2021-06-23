@@ -144,4 +144,4 @@ extern void pluto_restore_screen();
 extern void pluto_resize();
 /* Updates the screen and canvas size */
 
-#endif
+#endif /* pluto.h */

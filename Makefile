@@ -18,7 +18,7 @@ exp: $(EXBINS)
 
 %.math.e: %.math.c $(LIBA)
 	@echo "Compiling example [m] $<"
-	@$(CC) -o $@ $< $(CFLAGS) -L. -lm -lpluto
+	@$(CC) -o $@ $< $(CFLAGS) -L. -lpluto -lm
 
 %.e: %.c $(LIBA)
 	@echo "Compiling example $<"
@@ -32,9 +32,9 @@ exp: $(EXBINS)
 	@echo "Compiling object $<"
 	@$(CC) $(LIBCFLAGS) -c $< -o $@
 
-%.a: $(LIBOBJS)
-	@echo "Generating $(LIBA)"
-	@ar rcs $@ $(LIBOBJS)
+$(LIBA): $(LIBOBJS)
+	@echo "Generating $@"
+	@$(AR) rcs $@ $(LIBOBJS)
 
 eclean:
 	@$(RM) $(EXBINS)

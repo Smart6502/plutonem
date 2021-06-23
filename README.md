@@ -32,20 +32,20 @@ Pre-compiled library files are available in the releases tab (only for Linux x86
 int main()
 {
     pluto_init_window();								/* Initialize pluto */
-    pluto_save_screen();								/* Save screen (restored later) */
+    pluto_save_screen();								/* Save screen */
 
     for (;;)
     {
     	for (int i = 0; i < _pluto_canvas.cheight; i++)
     	{
-	    	for (int j = 0; j < _pluto_canvas.cwidth; j++)
-	    	{
-	    		pluto_set_cpix(j, i, rand() % 256, rand() % 256, rand() % 256);		/* Set pixel with random colours */
-	    	}
+	    for (int j = 0; j < _pluto_canvas.cwidth; j++)
+	    {
+	    	pluto_set_cpix(j, i, rand() % 256, rand() % 256, rand() % 256);		/* Set pixel with random colours */
+	    }
     	}
 
-	pluto_write_out();								/* Write to outbuffer */
-	pluto_render();									/* Render the outbuffer */
+	pluto_write_out();								/* Write to output buffer */
+	pluto_render();									/* Render the output buffer */
     }
 
     pluto_deinit();
@@ -74,9 +74,9 @@ Comments in the pluto.h file describe what each function/data structure does
 <p>A first person shooter using plutonem</p>
 <img src="screenshots/fps.png" align="center">
 
-#### Plutonem is tested on:
+#### Plutonem is tested and works on:
 - [x] Operating systems: Linux, BSD, MacOS
-- [x] Terminal emulators: XTerm, Termite, Konsole, Alacritty and Kitty
+- [x] Terminal emulators: XTerm, Termite, Konsole, Alacritty (best performance) and Kitty
 
 #### To-do
 - [x] RGB colours
@@ -85,7 +85,7 @@ Comments in the pluto.h file describe what each function/data structure does
 
 #### Contributing:
 - Bug fixes
-- Small features (do not pull request a bunch of files together)
+- Features (don't pull request too many files at once)
 - Issue (GitHub issues tab) fixing
 
 ### Troubleshooting

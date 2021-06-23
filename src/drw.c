@@ -90,5 +90,3 @@ void pluto_set_ucpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
     pluto_set_upix(x, y);
     pluto_set_upix_colour(x, y, red, green, blue);
 }
-
-void pluto_sigwinch(int);
