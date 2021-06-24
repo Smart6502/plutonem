@@ -11,6 +11,8 @@ int main()
 {
     pluto_init_window();
 
+    FILE *fp = fopen("wall", "w");
+
     float x, y;
     for (x = 1; x < _pluto_canvas.cwidth / count; x += density)
     {
@@ -22,11 +24,10 @@ int main()
             pluto_set_pix(xp, yp);
             pluto_set_pix_colour(xp, yp, 94, 129, 172);
         }
-
-        pluto_write_out();
-        pluto_render();
-        usleep(45000);
     }
+    pluto_write_out();
+    fputs((char *)_pluto_canvas.buffer, fp);	// Write buffer to file
+    fclose(fp);
 
     pluto_deinit();
 }

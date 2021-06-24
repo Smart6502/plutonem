@@ -60,7 +60,7 @@ $ gcc -o program program.c -lpluto  # install it before or use -L<lib_folder_pat
 
 4. You're done! Just run your program now!
 
-Comments in the pluto.h file describe what each function/data structure does
+Comments in the [pluto.h](https://github.com/smart6502/plutonem/tree/main/src/pluto.h) file describe what each function/data structure does
 
 <p>Perlin noise using plutonem</p>
 <img src="screenshots/perlin_noise.png" align="center">
@@ -71,7 +71,7 @@ Comments in the pluto.h file describe what each function/data structure does
 <p>Image rendered using plutonem</p>
 <img src="screenshots/image_viewer.png" align="center">
 <br>
-<p>A first person shooter using plutonem</p>
+<p>A raycaster written with plutonem</p>
 <img src="screenshots/fps.png" align="center">
 
 #### Plutonem is tested and works on:
@@ -96,4 +96,4 @@ Comments in the pluto.h file describe what each function/data structure does
 ```
 # localectl set-locale LANG=en_US.UTF-8
 ```
-4. Open an issue in the issues tab, provide your terminal name, what locale it is set to `$(locale)`, your font
+4. Open an issue in the issues tab, provide your terminal name, what locale it is set to, and your font

@@ -19,7 +19,7 @@ int main()
 
         pluto_write_out();
         pluto_render();
-        usleep(350000);
+        usleep(500000);
     }
 
     pluto_deinit();
