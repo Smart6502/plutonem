@@ -142,7 +142,8 @@ void pluto_render()
     if (_pluto_canvas.use_write)
     {
 #if defined(__unix__) || defined(__linux__) || defined(BSD) || defined(__APPLE__)
-        (void)write(STDOUT_FILENO, _pluto_canvas.buffer, _pluto_canvas.bufsize);
+        int wr = write(STDOUT_FILENO, _pluto_canvas.buffer, _pluto_canvas.bufsize);
+	(void)wr; /* Debian fix */
 #else
         fputs((char *)_pluto_canvas.buffer, stdout);
         fflush(stdout);
