@@ -235,7 +235,8 @@ int main()
                                 p.push_back(make_pair(d, dot));
                             }
 
-                        sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right) { return left.first < right.first; });
+                        sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right)
+                             { return left.first < right.first; });
 
                         float f_bound = 0.001;
                         if (acos(p.at(0).second) < f_bound)

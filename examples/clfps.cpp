@@ -328,7 +328,8 @@ int main()
                             }
 
                         // Sort Pairs from closest to farthest
-                        sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right) { return left.first < right.first; });
+                        sort(p.begin(), p.end(), [](const pair<float, float> &left, const pair<float, float> &right)
+                             { return left.first < right.first; });
 
                         // First two/three are closest (we will never see all four)
                         float fBound = 0.001;

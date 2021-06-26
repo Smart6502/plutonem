@@ -26,7 +26,7 @@ int main()
         }
     }
     pluto_write_out();
-    fputs((char *)_pluto_canvas.buffer, fp);	// Write buffer to file
+    fputs((char *)_pluto_canvas.buffer, fp); // Write buffer to file
     fclose(fp);
 
     pluto_deinit();
