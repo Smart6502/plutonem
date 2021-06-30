@@ -75,8 +75,8 @@ Comments in the [pluto.h](https://github.com/smart6502/plutonem/tree/main/src/pl
 <img src="screenshots/fps.png" align="center">
 
 #### Plutonem is tested and works on:
-- [x] Operating systems: Linux, BSD, MacOS, Windows (Cygwin needed)
-- [x] Terminal emulators: XTerm, Termite, Konsole, Alacritty (best performance) and Kitty
+- [x] Operating systems: Linux, BSD, MacOS, Windows (Cygwin or MinGW needed)
+- [x] Terminal emulators: XTerm, Termite, Konsole, GNOME-terminal, Alacritty (best performance) and Kitty
 
 #### To-do
 - [x] RGB colours
