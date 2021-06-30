@@ -55,11 +55,7 @@ typedef struct
     bool use_write;
 } pluto_lib_t;
 
-const uchar _pluto_pixmap[4][2] = {
-    {0x01, 0x08},
-    {0x02, 0x10},
-    {0x04, 0x20},
-    {0x40, 0x80}};
+extern const uchar _pluto_pixmap[4][2];
 
 #ifndef PLUTO_CHAR_OFF
 #    define PLUTO_CHAR_OFF 10240
