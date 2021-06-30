@@ -1,9 +1,9 @@
 LIBA := libpluto.a
 CC = gcc
 CPPC = g++
-LIBSRCDIR = src/
-INSTDIR = /usr/lib/
-EXDIR := examples/
+LIBSRCDIR = src
+INSTDIR = /usr/lib
+EXDIR := examples
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
@@ -46,5 +46,12 @@ clean: eclean lclean
 
 install: $(LIBA)
 	@cp $(LIBA) $(INSTDIR)
-	@cp $(LIBSRCDIR)pluto.h /usr/include/
+	@cp $(LIBSRCDIR)/pluto.h /usr/include/
 	@echo "Copied header to /usr/include/ and libpluto.a to $(INSTDIR)"
+
+uninstall:
+	@$(RM) $(INSTDIR)/$(LIBA)
+	@$(RM) $(INSTDIR)/pluto.h
+	@echo "Uninstalled pluto"
+
+reinstall: uninstall clean $(LIBA) install
