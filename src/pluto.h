@@ -55,11 +55,11 @@ typedef struct
     bool use_write;
 } pluto_lib_t;
 
-typedef struct
-{
-    int x, y;
-} pt_t;
-/* Origin: (0x, 0y) (top-left) */
+const uchar _pluto_pixmap[4][2] = {
+    {0x01, 0x08},
+    {0x02, 0x10},
+    {0x04, 0x20},
+    {0x40, 0x80}};
 
 #ifndef PLUTO_CHAR_OFF
 #    define PLUTO_CHAR_OFF 10240
@@ -143,5 +143,11 @@ extern void pluto_restore_screen();
 
 extern void pluto_resize();
 /* Updates the screen and canvas size */
+
+/* Buffer functions */
+void pluto_set_buffer_pix(uint8_t *bitmap, int x, int y);
+void pluto_unset_buffer_pix(uint8_t *bitmap, int x, int y);
+void pluto_set_buffer_pix_colour(pluto_colour_t *buffer, int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+void pluto_set_buffer_cpix(uint8_t *bitmap, pluto_colour_t *buffer, int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 
 #endif /* pluto.h */

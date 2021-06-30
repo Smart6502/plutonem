@@ -1,3 +1,4 @@
+LIBA := libpluto.a
 CC = gcc
 CPPC = g++
 LIBSRCDIR = src/
@@ -6,7 +7,6 @@ EXDIR := examples/
 LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
-LIBA := libpluto.a
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
 CFLAGS = -Wall -Wextra -Werror -O4
 LIBCFLAGS = $(CFLAGS)
