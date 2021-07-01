@@ -2,6 +2,8 @@
 
 <p> A library to draw graphics with pixels in the terminal </p>
 
+### Who needs a GUI when you have a terminal ?
+
 ### Building
 To generate `libpluto.a`, run:
 ```
@@ -77,10 +79,6 @@ Comments in the [pluto.h](https://github.com/smart6502/plutonem/tree/main/src/pl
 #### Plutonem is tested and works on:
 - [x] Operating systems: Linux, BSD, MacOS, Windows (Cygwin or MinGW needed)
 - [x] Terminal emulators: XTerm, Termite, Konsole, GNOME-terminal, Alacritty (best performance) and Kitty
-
-#### To-do
-- [x] RGB colours
-- [x] Fixing colour darkening
 
 #### Contributing:
 - Bug fixes
