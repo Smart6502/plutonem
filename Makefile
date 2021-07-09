@@ -8,7 +8,7 @@ LIBSRCS := $(shell find $(LIBSRCDIR) -name '*.c')
 EXSRCS := $(shell find $(EXDIR) -name '*.c' -o -name '*.cpp')
 LIBOBJS := $(addsuffix .o, $(basename $(LIBSRCS)))
 EXBINS := $(addsuffix .e, $(basename $(EXSRCS)))
-CFLAGS = -Wall -Wextra -Werror -O4
+CFLAGS = -Wall -Wextra -Werror -O3
 LIBCFLAGS = $(CFLAGS)
 
 .PHONY: clean
