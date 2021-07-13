@@ -42,7 +42,7 @@ void pluto_set_pix(int x, int y)
 
 void pluto_set_upix(int x, int y)
 {
-    _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] |= _pluto_pixmap[y % 4][x % 2];
+    pluto_set_buffer_pix(_pluto_canvas.bitmap, x, y);
 }
 
 void pluto_unset_pix(int x, int y)
@@ -55,7 +55,7 @@ void pluto_unset_pix(int x, int y)
 
 void pluto_unset_upix(int x, int y)
 {
-    _pluto_canvas.bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x % 2];
+    pluto_unset_buffer_pix(_pluto_canvas.bitmap, x, y);
 }
 
 void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
@@ -68,7 +68,7 @@ void pluto_set_pix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue
 
 void pluto_set_upix_colour(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 {
-    _pluto_canvas.pix_colour[y * (_pluto_canvas.width << 1) + x] = (pluto_colour_t){red, green, blue};
+    pluto_set_buffer_pix_colour(_pluto_canvas.pix_colour, x, y, red, green, blue);
 }
 
 void pluto_set_cpix(int x, int y, uint8_t red, uint8_t green, uint8_t blue)

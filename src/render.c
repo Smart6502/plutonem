@@ -117,9 +117,9 @@ void pluto_write_out()
         }
 
         sprintf(buf, "\e[38;2;%03u;%03u;%03um", (uint8_t)tr, (uint8_t)tg, (uint8_t)tb);
-        int iw = i / _pluto_canvas.width;
-        strcpy((char *)&cbuf[i * 22 + iw], buf);
-        pluto_transform_ucp(&cbuf[i * 22 + 19 + iw], PLUTO_CHAR_OFF + _pluto_canvas.bitmap[i]);
+        int in = i * 22 + i / _pluto_canvas.width;
+        strcpy((char *)&cbuf[in], buf);
+        pluto_transform_ucp(&cbuf[in + 19], PLUTO_CHAR_OFF + _pluto_canvas.bitmap[i]);
     }
 
     for (int i = 1; i < _pluto_canvas.height; i++)

@@ -38,12 +38,12 @@ const uchar _pluto_pixmap[4][2] = {
 
 void pluto_set_buffer_pix(uint8_t *bitmap, int x, int y)
 {
-    bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] |= _pluto_pixmap[y % 4][x % 2];
+    bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] |= _pluto_pixmap[y % 4][x & 1];
 }
 
 void pluto_unset_buffer_pix(uint8_t *bitmap, int x, int y)
 {
-    bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x % 2];
+    bitmap[(y >> 2) * _pluto_canvas.width + (x >> 1)] &= ~_pluto_pixmap[y % 4][x & 1];
 }
 
 void pluto_set_buffer_pix_colour(pluto_colour_t *buffer, int x, int y, uint8_t red, uint8_t green, uint8_t blue)

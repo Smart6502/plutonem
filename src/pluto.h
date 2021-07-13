@@ -55,8 +55,6 @@ typedef struct
     bool use_write;
 } pluto_lib_t;
 
-extern const uchar _pluto_pixmap[4][2];
-
 #ifndef PLUTO_CHAR_OFF
 #    define PLUTO_CHAR_OFF 10240
 #endif
