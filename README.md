@@ -27,6 +27,7 @@ Pre-compiled library files are available in the releases tab (only for Linux x86
 ```
 
 2. Write your source code. An example program which draws a line:
+Documentation for the library is in src/pluto.h where functions and structures have been commented
 ```
 #include <stdlib.h>
 #include "pluto.h"									/* Change path if needed */
