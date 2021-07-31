@@ -291,9 +291,12 @@ int main()
             }
         }
 
-        pluto_write_out();
+        //pluto_write_out();
         if (render)
+	{
+	    pluto_write_out();
             pluto_render();
+   	}
     }
 
     return 0;

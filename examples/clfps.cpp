@@ -417,9 +417,12 @@ int main()
         ret = freopen(NULL, "w", stdout);
         (void)ret;
         */
-        pluto_write_out();
+	//pluto_write_out();
         if (render)
-            pluto_render();
+	{
+	    pluto_write_out();
+            pluto_render();  
+   	}
     }
 
     return 0;
