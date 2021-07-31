@@ -8,11 +8,11 @@ typedef struct
 } point;
 
 const int sx = 10;	// Start X
-const int ex = 60;	// End X
+const int ex = 100;	// End X
 const int ty = 10;	// Top Y
-const int by = 90;	// Extended bottom Y
+const int by = 10;	// Extended bottom Y
 const int my = 90;	// Extended max Y
-const int iter = 1000;	// Iterations
+const int iter = 2000;	// Iterations
 const int mid = sx + (ex - sx) / 2;
 
 point vx[3] = { {sx, ty}, {ex, ty}, {mid, 0} };
