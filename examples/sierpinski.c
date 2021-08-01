@@ -42,6 +42,8 @@ void animate()
 		pluto_write_out();
 		pluto_render();
 		pluto_clear_buffers();
+
+		usleep(40000);
 	}
 }
 
