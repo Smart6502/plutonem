@@ -11,7 +11,7 @@ $ make
 ```
 To install it so that your compiler can use it directly, run:
 ```
-# make install
+$ make install
 ```
 To compile some examples, run:
 ```
@@ -79,7 +79,7 @@ Comments in the [pluto.h](https://github.com/smart6502/plutonem/tree/main/src/pl
 
 #### Plutonem is tested and works on:
 - [x] Operating systems: Linux, BSD, MacOS, (idk windows cuz cringe)
-- [x] Terminal emulators: XTerm, Termite, Konsole, GNOME-terminal, Alacritty (best performance) and Kitty
+- [x] Terminal emulators: XTerm, Termite, Konsole, GNOME-terminal, Alacritty (best performance), st, and Kitty
 
 #### Contributing:
 - Bug fixes
