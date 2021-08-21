@@ -9,7 +9,7 @@ To generate `libpluto.a`, run:
 ```
 $ make
 ```
-To install it so that your compiler can use it directly, run:
+To install it so that your compiler can use it directly, run the following as root:
 ```
 $ make install
 ```
