@@ -102,7 +102,7 @@ void pluto_deinit()
 
     _pluto_unlock_term();
 
-    fputs("\e[?25h", stdout);
+    fputs("\e[?25h\e[0m", stdout);
     fflush(stdout);
 
     pluto_restore_screen();
