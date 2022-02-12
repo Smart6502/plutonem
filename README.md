@@ -22,13 +22,13 @@ Pre-compiled library files are available in the releases tab (only for Linux x86
 ### Using the library
 
 1. Include the pluto header in your source file
-```
+```c
 #include <path to pluto.h> // do #include <pluto.h> if the lib is already installed
 ```
 
 2. Write your source code. An example program which draws a line:
 Documentation for the library is in src/pluto.h where functions and structures have been commented
-```
+```c
 #include <stdlib.h>
 #include "pluto.h"									/* Change path if needed */
 
@@ -57,7 +57,7 @@ int main()
 ```
 
 3. Link the library generated, for example:
-```
+```sh
 $ gcc -o program program.c -lpluto  # install it before or use -L<lib_folder_path>
 ```
 
@@ -79,7 +79,7 @@ Comments in the [pluto.h](https://github.com/smart6502/plutonem/tree/main/src/pl
 
 #### Plutonem is tested and works on:
 - [x] Operating systems: Linux, BSD, MacOS, (idk windows cuz cringe)
-- [x] Terminal emulators: XTerm, Termite, Konsole, GNOME-terminal, Alacritty (best performance) and Kitty
+- [x] Terminal emulators: XTerm, URxvt, Termite, Konsole, GNOME-terminal, Alacritty (best performance) and Kitty
 
 #### Contributing:
 - Bug fixes
